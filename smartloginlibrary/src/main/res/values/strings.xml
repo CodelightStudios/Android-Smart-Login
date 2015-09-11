@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Smart Login Library</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="fb_login_text">Sign in with Facebook</string>
+    <string name="twitter_login_text">Sign in with Twitter</string>
+    <string name="or">or</string>
+
+    <!-- hints -->
+    <string name="email_hint">Email</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+
+    <string name="forgot">forgot?</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_smart_login">SmartLoginActivity</string>
+
+
+</resources>

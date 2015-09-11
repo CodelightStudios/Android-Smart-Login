@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+        <EditText
+        android:id="@+id/userName"
+        android:inputType="textPersonName"
+        android:hint="@string/username_hint"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/password"
+                android:inputType="textPassword"
+                android:hint="@string/password_hint"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            style="?android:attr/buttonBarStyle">
+
+            <Button
+                android:id="@+id/custom_signin_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/sign_in"
+                android:background="@color/primary_color"
+                android:textColor="@color/white"
+                android:layout_margin="5dp"/>
+
+            <Button
+                android:id="@+id/custom_signup_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/primary_color"
+                android:textColor="@color/white"
+                android:text="@string/sign_up"
+                android:layout_margin="5dp"/>
+
+        </LinearLayout>
+
+</LinearLayout>
