@@ -13,5 +13,6 @@ public abstract class SmartLoginHelper {
         //implement twitter login
     }
 
-    protected abstract void customkLogin();
+    protected abstract void customSignin();
+    protected abstract void customSignup();
 }

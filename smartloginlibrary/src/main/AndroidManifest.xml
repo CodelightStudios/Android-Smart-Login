@@ -3,8 +3,6 @@
     package="studios.codelight.smartloginlibrary" >
 
     <application
-        android:allowBackup="false"
-        android:fullBackupContent="false"
         android:label="@string/app_name" >
         <activity
             android:name=".SmartLoginActivity"
