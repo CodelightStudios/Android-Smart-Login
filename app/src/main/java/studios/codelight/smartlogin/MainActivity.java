@@ -1,24 +1,30 @@
 package studios.codelight.smartlogin;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import studios.codelight.smartloginlibrary.SmartFacebookResult;
-import studios.codelight.smartloginlibrary.SmartLoginActivity;
+import studios.codelight.smartloginlibrary.SmartLoginBuilder;
 
 
 public class MainActivity extends AppCompatActivity {
-    SmartFacebookResult smartFacebookResult;
+    //SmartFacebookResult smartFacebookResult;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = new Intent(this, SmartLoginActivity.class);
-        startActivity(intent);
-        smartFacebookResult.getAccessToken().getUserId();
+
+        SmartLoginBuilder loginBuilder = new SmartLoginBuilder(this);
+
+        startActivity(loginBuilder.isFacebookLoginEnabled(true)
+                .isTwitterLoginEnabled(false)
+                .isGoogleLoginEnabled(false)
+                .build());
+
+//        Intent intent = new Intent(this, SmartLoginActivity.class);
+//        startActivity(intent);
+//        smartFacebookResult.getAccessToken().getUserId();
     }
 
     @Override

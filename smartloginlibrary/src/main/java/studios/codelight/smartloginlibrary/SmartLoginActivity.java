@@ -21,15 +21,54 @@ public class SmartLoginActivity extends AppCompatActivity {
 
     CallbackManager callbackManager;
     LoginResult mLoginResult;
+    SmartLoginConfig config;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_smart_login);
+
         callbackManager = CallbackManager.Factory.create();
-        Button customSignin = (Button) findViewById(R.id.custom_signin_button);
+        config = new SmartLoginConfig();
+
+        Button customSigninButton = (Button) findViewById(R.id.custom_signin_button);
         Button facebookLoginButton = (Button) findViewById(R.id.login_fb_button);
+        Button twitterLoginButton = (Button) findViewById(R.id.login_twitter_button);
+        Button customSignupButton = (Button) findViewById(R.id.custom_signup_button);
+
+
+        if(config.isFacebookEnabled()) {
+            doFacebookLogin(facebookLoginButton);
+        }
+        if(config.isTwitterEnabled()){
+            doTwitterLogin(twitterLoginButton);
+        }
+        if(config.isCustomLoginEnabled()){
+            doCustomSignin(customSigninButton);
+        }
+        customSignupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                config.getLoginHelper().customSignup();
+            }
+        });
+    }
+
+    private void doCustomSignin(Button customSigninButton) {
+        customSigninButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                config.getLoginHelper().customSignin();
+            }
+        });
+    }
+
+    private void doTwitterLogin(Button twitterLoginButton) {
+        //Implement Twitter login
+    }
+
+    private void doFacebookLogin(Button facebookLoginButton) {
 
         facebookLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +95,7 @@ public class SmartLoginActivity extends AppCompatActivity {
         });
     }
 
+    //Required for Facebook login
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);

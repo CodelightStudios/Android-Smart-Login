@@ -31,16 +31,12 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2192e16e-a582-420f-8bcb-6360489651b8" name="Default" comment="Add Facebook SDK 4.0.1 and changed min sdk version to 9">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartFacebookResult.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smartloginlibrary/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/smartloginlibrary/src/main/AndroidManifest.xml" />
+    <list default="true" id="2192e16e-a582-420f-8bcb-6360489651b8" name="Default" comment="Implement Facebook login with sample app id">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/studios/codelight/smartlogin/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/studios/codelight/smartlogin/MainActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginActivity.java" afterPath="$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginBuilder.java" afterPath="$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smartloginlibrary/src/main/res/layout/fragment_social_login.xml" afterPath="$PROJECT_DIR$/smartloginlibrary/src/main/res/layout/fragment_social_login.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smartloginlibrary/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/smartloginlibrary/src/main/res/values/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginConfig.java" afterPath="$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginConfig.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginHelper.java" afterPath="$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginHelper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SmartLogin.iws" />
@@ -69,25 +65,45 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SmartLoginBuilder.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SmartLoginBuilder.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3717694">
-              <caret line="11" column="41" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="35" column="20" selection-start-line="35" selection-start-column="20" selection-end-line="35" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#295#296#0" expanded="true" />
+                <element signature="e#1016#1017#0" expanded="true" />
+                <element signature="e#1084#1085#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SmartLoginActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginActivity.java">
+      <file leaf-file-name="SmartLoginHelper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginHelper.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+              <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SmartLoginActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.30218688">
+              <caret line="74" column="44" selection-start-line="74" selection-start-column="44" selection-end-line="74" selection-end-column="44" />
+              <folding>
+                <element signature="e#1696#1871#0" expanded="true" />
+                <element signature="e#1870#1871#0" expanded="true" />
+                <element signature="e#1988#2163#0" expanded="true" />
+                <element signature="e#2162#2163#0" expanded="true" />
+                <element signature="e#2386#2648#0" expanded="true" />
+                <element signature="e#2647#2648#0" expanded="true" />
+                <element signature="e#2840#2841#0" expanded="true" />
+                <element signature="e#2898#2899#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -96,9 +112,25 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/studios/codelight/smartlogin/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
+              <caret line="21" column="44" selection-start-line="21" selection-start-column="44" selection-end-line="21" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SmartLoginConfig.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginConfig.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="13" column="46" selection-start-line="13" selection-start-column="46" selection-end-line="13" selection-end-column="46" />
+              <folding>
+                <element signature="e#421#422#0" expanded="true" />
+                <element signature="e#485#486#0" expanded="true" />
+                <element signature="e#531#532#0" expanded="true" />
+                <element signature="e#1321#1322#0" expanded="true" />
+                <element signature="e#1362#1363#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2318,10 +2350,8 @@
         <option value="$PROJECT_DIR$/smartloginlibrary/src/main/res/layout/fragment_divider.xml" />
         <option value="$PROJECT_DIR$/smartloginlibrary/src/main/res/layout/activity_smart_login.xml" />
         <option value="$PROJECT_DIR$/smartloginlibrary/src/main/res/layout/fragment_custom_login.xml" />
-        <option value="$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginConfig.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/LICENSE" />
-        <option value="$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/studios/codelight/smartlogin/LoginHelper.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/gradle.properties" />
@@ -2330,11 +2360,13 @@
         <option value="$PROJECT_DIR$/smartloginlibrary/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/smartloginlibrary/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/smartloginlibrary/src/main/res/layout/fragment_social_login.xml" />
-        <option value="$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginActivity.java" />
         <option value="$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartFacebookResult.java" />
         <option value="$PROJECT_DIR$/smartloginlibrary/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/studios/codelight/smartlogin/MainActivity.java" />
+        <option value="$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginHelper.java" />
+        <option value="$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginConfig.java" />
         <option value="$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginBuilder.java" />
+        <option value="$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginActivity.java" />
       </list>
     </option>
   </component>
@@ -2806,7 +2838,13 @@
       <option name="project" value="LOCAL" />
       <updated>1442028280471</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Implement Facebook login with sample app id">
+      <created>1442032758862</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1442032758862</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2856,7 +2894,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add README and LICENSE" />
     <MESSAGE value="Add Facebook SDK 4.0.1 and changed min sdk version to 9" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Facebook SDK 4.0.1 and changed min sdk version to 9" />
+    <MESSAGE value="Implement Facebook login with sample app id" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement Facebook login with sample app id" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -2882,14 +2921,14 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="27" column="38" selection-start-line="27" selection-start-column="38" selection-end-line="27" selection-end-column="38" />
           <folding>
-            <element signature="e#328#329#0" expanded="false" />
-            <element signature="e#358#359#0" expanded="false" />
-            <element signature="e#401#402#0" expanded="false" />
-            <element signature="e#439#440#0" expanded="false" />
-            <element signature="e#481#482#0" expanded="false" />
-            <element signature="e#521#522#0" expanded="false" />
-            <element signature="e#882#883#0" expanded="false" />
-            <element signature="e#921#922#0" expanded="false" />
+            <element signature="e#562#563#0" expanded="false" />
+            <element signature="e#592#593#0" expanded="false" />
+            <element signature="e#635#636#0" expanded="false" />
+            <element signature="e#673#674#0" expanded="false" />
+            <element signature="e#715#716#0" expanded="false" />
+            <element signature="e#755#756#0" expanded="false" />
+            <element signature="e#1116#1117#0" expanded="false" />
+            <element signature="e#1155#1156#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3075,35 +3114,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="5" selection-start-line="46" selection-start-column="5" selection-end-line="46" selection-end-column="5" />
-          <folding>
-            <element signature="e#328#329#0" expanded="false" />
-            <element signature="e#358#359#0" expanded="false" />
-            <element signature="e#401#402#0" expanded="false" />
-            <element signature="e#439#440#0" expanded="false" />
-            <element signature="e#481#482#0" expanded="false" />
-            <element signature="e#521#522#0" expanded="false" />
-            <element signature="e#882#883#0" expanded="false" />
-            <element signature="e#921#922#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/smartloginlibrary/src/main/res/menu/menu_smart_login.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="40" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
           <folding />
         </state>
       </provider>
@@ -3282,24 +3296,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/studios/codelight/smartlogin/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/AppData/Local/Android/sdk/platforms/android-23/android.jar!/android/content/Intent.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5991091">
@@ -3311,13 +3307,63 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginBuilder.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/studios/codelight/smartlogin/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3717694">
-          <caret line="11" column="41" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="44" selection-start-line="21" selection-start-column="44" selection-end-line="21" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#295#296#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="46" selection-start-line="13" selection-start-column="46" selection-end-line="13" selection-end-column="46" />
+          <folding>
+            <element signature="e#421#422#0" expanded="true" />
+            <element signature="e#485#486#0" expanded="true" />
+            <element signature="e#531#532#0" expanded="true" />
+            <element signature="e#1321#1322#0" expanded="true" />
+            <element signature="e#1362#1363#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="35" column="20" selection-start-line="35" selection-start-column="20" selection-end-line="35" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1016#1017#0" expanded="true" />
+            <element signature="e#1084#1085#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/smartloginlibrary/src/main/java/studios/codelight/smartloginlibrary/SmartLoginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30218688">
+          <caret line="74" column="44" selection-start-line="74" selection-start-column="44" selection-end-line="74" selection-end-column="44" />
+          <folding>
+            <element signature="e#1696#1871#0" expanded="true" />
+            <element signature="e#1870#1871#0" expanded="true" />
+            <element signature="e#1988#2163#0" expanded="true" />
+            <element signature="e#2162#2163#0" expanded="true" />
+            <element signature="e#2386#2648#0" expanded="true" />
+            <element signature="e#2647#2648#0" expanded="true" />
+            <element signature="e#2840#2841#0" expanded="true" />
+            <element signature="e#2898#2899#0" expanded="true" />
           </folding>
         </state>
       </provider>

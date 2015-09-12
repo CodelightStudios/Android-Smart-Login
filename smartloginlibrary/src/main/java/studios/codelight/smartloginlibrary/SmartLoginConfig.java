@@ -9,6 +9,15 @@ public class SmartLoginConfig {
     private boolean isFacebookEnabled;
     private boolean isGoogleEnabled;
     private boolean isTwitterEnabled;
+    private SmartLoginHelper loginHelper;
+
+    public SmartLoginHelper getLoginHelper() {
+        return loginHelper;
+    }
+
+    public void setLoginHelper(SmartLoginHelper loginHelper) {
+        this.loginHelper = loginHelper;
+    }
 
     public int getAppLogo() {
         return appLogo;

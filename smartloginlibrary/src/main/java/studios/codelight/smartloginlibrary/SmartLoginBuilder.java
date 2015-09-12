@@ -8,8 +8,35 @@ import android.content.Intent;
  */
 public class SmartLoginBuilder {
 
+    private Context context;
+    private SmartLoginConfig config;
 
-    public Intent build(Context context){
+    public SmartLoginBuilder(Context context) {
+        this.context = context;
+        config = new SmartLoginConfig();
+    }
+
+    public SmartLoginBuilder isFacebookLoginEnabled(boolean facebookLogin){
+        config.setIsFacebookEnabled(facebookLogin);
+        return this;
+    }
+
+    public SmartLoginBuilder isTwitterLoginEnabled(boolean twitterLogin){
+        config.setIsTwitterEnabled(twitterLogin);
+        return this;
+    }
+
+    public SmartLoginBuilder isGoogleLoginEnabled(boolean googleLogin){
+        config.setIsTwitterEnabled(googleLogin);
+        return this;
+    }
+
+    public SmartLoginBuilder setCustomLoginHelper(SmartLoginHelper loginHelper){
+        config.setLoginHelper(loginHelper);
+        return this;
+    }
+
+    public Intent build(){
         return new Intent(context, SmartLoginActivity.class);
     }
 
