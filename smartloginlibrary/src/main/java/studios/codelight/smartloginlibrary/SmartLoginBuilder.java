@@ -1,5 +1,6 @@
 package studios.codelight.smartloginlibrary;
 
+import android.content.Context;
 import android.content.Intent;
 
 /**
@@ -8,9 +9,8 @@ import android.content.Intent;
 public class SmartLoginBuilder {
 
 
-    public Intent build(){
-
-        return null;
+    public Intent build(Context context){
+        return new Intent(context, SmartLoginActivity.class);
     }
 
 }
