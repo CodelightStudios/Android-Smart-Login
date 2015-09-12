@@ -15,9 +15,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SmartLoginBuilder loginBuilder = new SmartLoginBuilder(this);
+        SmartLoginBuilder loginBuilder = new SmartLoginBuilder();
 
-        startActivity(loginBuilder.isFacebookLoginEnabled(true)
+        startActivity(loginBuilder.with(this).isFacebookLoginEnabled(true)
                 .isTwitterLoginEnabled(false)
                 .isGoogleLoginEnabled(false)
                 .build());

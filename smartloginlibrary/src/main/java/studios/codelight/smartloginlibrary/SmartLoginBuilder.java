@@ -11,9 +11,17 @@ public class SmartLoginBuilder {
     private Context context;
     private SmartLoginConfig config;
 
-    public SmartLoginBuilder(Context context) {
-        this.context = context;
+    public SmartLoginBuilder() {
         config = new SmartLoginConfig();
+        config.setIsFacebookEnabled(false);
+        config.setIsTwitterEnabled(false);
+        config.setIsGoogleEnabled(false);
+        config.setCustomLoginEnabled(false);
+    }
+
+    public SmartLoginBuilder with(Context context){
+        this.context = context;
+        return this;
     }
 
     public SmartLoginBuilder isFacebookLoginEnabled(boolean facebookLogin){
