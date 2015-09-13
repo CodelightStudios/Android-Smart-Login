@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 23
@@ -27,4 +28,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.0'
     //Facebook sdk
     compile 'com.facebook.android:facebook-android-sdk:4.0.1'
+    //Google Play Services
+    compile 'com.google.android.gms:play-services:7.8.0'
 }

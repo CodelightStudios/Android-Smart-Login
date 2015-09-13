@@ -43,4 +43,23 @@
         android:background="@color/twitter_brand_color"
         android:textAllCaps="false"/>
 
+    <!--<Button-->
+        <!--android:id="@+id/login_google_button"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:padding="16dp"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:text="@string/twitter_login_text"-->
+        <!--android:drawableLeft="@drawable/twitter_white"-->
+        <!--android:drawableStart="@drawable/twitter_white"-->
+        <!--android:textSize="20sp"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:background="@color/twitter_brand_color"-->
+        <!--android:textAllCaps="false"/>-->
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/google_sign_in_button"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp" />
+
 </LinearLayout>
