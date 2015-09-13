@@ -1,5 +1,7 @@
 #Android Smart Login
-A smart way to add login page to your app
+A smart way to add login page to your app.
+Thanks for your interest, this project is currently under developement.
+Keep an eye for the updates.
 
 
 #License
