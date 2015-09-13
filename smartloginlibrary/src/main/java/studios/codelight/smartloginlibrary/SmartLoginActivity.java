@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -30,23 +31,32 @@ public class SmartLoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_smart_login);
 
         callbackManager = CallbackManager.Factory.create();
-        config = new SmartLoginConfig();
+        Bundle bundle = getIntent().getBundleExtra(getString(R.string.config_data));
+        config = SmartLoginConfig.unpack(bundle);
 
         Button customSigninButton = (Button) findViewById(R.id.custom_signin_button);
         Button facebookLoginButton = (Button) findViewById(R.id.login_fb_button);
         Button twitterLoginButton = (Button) findViewById(R.id.login_twitter_button);
         Button customSignupButton = (Button) findViewById(R.id.custom_signup_button);
 
-
         if(config.isFacebookEnabled()) {
             doFacebookLogin(facebookLoginButton);
         }
+
         if(config.isTwitterEnabled()){
             doTwitterLogin(twitterLoginButton);
         }
-        if(config.isCustomLoginEnabled()){
+        if(config.getLoginHelper() != null){
             doCustomSignin(customSigninButton);
         }
+
+        if(config.getLoginHelper() != null){
+            doCustomSignup(customSignupButton);
+        }
+
+    }
+
+    private void doCustomSignup(Button customSignupButton) {
         customSignupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +76,12 @@ public class SmartLoginActivity extends AppCompatActivity {
 
     private void doTwitterLogin(Button twitterLoginButton) {
         //Implement Twitter login
+        twitterLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(SmartLoginActivity.this, "Twitter login", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void doFacebookLogin(Button facebookLoginButton) {
@@ -73,6 +89,7 @@ public class SmartLoginActivity extends AppCompatActivity {
         facebookLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(SmartLoginActivity.this, "Facebook login", Toast.LENGTH_SHORT).show();
                 LoginManager.getInstance().logInWithReadPermissions(SmartLoginActivity.this, Arrays.asList("public_profile", "user_friends"));
             }
         });

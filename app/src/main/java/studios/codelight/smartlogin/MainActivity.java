@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import studios.codelight.smartloginlibrary.SmartLoginBuilder;
+import studios.codelight.smartloginlibrary.SmartLoginHelper;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -16,10 +17,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SmartLoginBuilder loginBuilder = new SmartLoginBuilder();
+        SmartLoginHelper loginHelper = new LoginHelper();
 
-        startActivity(loginBuilder.with(this).isFacebookLoginEnabled(true)
-                .isTwitterLoginEnabled(false)
+        startActivity(loginBuilder.with(this)
+                .isTwitterLoginEnabled(true)
+                .isFacebookLoginEnabled(true)
                 .isGoogleLoginEnabled(false)
+                .setCustomLoginHelper(loginHelper)
                 .build());
 
 //        Intent intent = new Intent(this, SmartLoginActivity.class);

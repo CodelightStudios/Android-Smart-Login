@@ -10,13 +10,14 @@ public class SmartLoginBuilder {
 
     private Context context;
     private SmartLoginConfig config;
+    //private static final String CONFIGDATA = "config";
 
     public SmartLoginBuilder() {
         config = new SmartLoginConfig();
+        config.setAppLogo(0);
         config.setIsFacebookEnabled(false);
         config.setIsTwitterEnabled(false);
         config.setIsGoogleEnabled(false);
-        config.setCustomLoginEnabled(false);
     }
 
     public SmartLoginBuilder with(Context context){
@@ -35,7 +36,7 @@ public class SmartLoginBuilder {
     }
 
     public SmartLoginBuilder isGoogleLoginEnabled(boolean googleLogin){
-        config.setIsTwitterEnabled(googleLogin);
+        config.setIsGoogleEnabled(googleLogin);
         return this;
     }
 
@@ -45,7 +46,10 @@ public class SmartLoginBuilder {
     }
 
     public Intent build(){
-        return new Intent(context, SmartLoginActivity.class);
+        Intent intent = new Intent(context, SmartLoginActivity.class);
+        //intent.putExtra(context.getString(R.string.config_data), config);
+        intent.putExtra(context.getString(R.string.config_data), config.pack());
+        return intent;
     }
 
 }

@@ -29,14 +29,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            style="?android:attr/buttonBarStyle">
+            android:layout_marginTop="10dp">
 
             <Button
                 android:id="@+id/custom_signin_button"
-                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:text="@string/sign_in"
                 android:background="@color/primary_color"
@@ -45,9 +43,8 @@
 
             <Button
                 android:id="@+id/custom_signup_button"
-                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:background="@color/primary_color"
                 android:textColor="@color/white"

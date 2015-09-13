@@ -19,7 +19,8 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_smart_login">SmartLoginActivity</string>
 
-    <string name="facebook_app_id">1684610991767698</string>
+    <string name="facebook_app_id">221623114699507</string>
+    <string name="config_data">config</string>
 
 
 </resources>
