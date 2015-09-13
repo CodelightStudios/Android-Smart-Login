@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import studios.codelight.smartloginlibrary.SmartLoginBuilder;
 import studios.codelight.smartloginlibrary.SmartLoginHelper;
@@ -15,20 +17,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button loginButton = (Button) findViewById(R.id.login_button);
 
-        SmartLoginBuilder loginBuilder = new SmartLoginBuilder();
-        SmartLoginHelper loginHelper = new LoginHelper();
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SmartLoginBuilder loginBuilder = new SmartLoginBuilder();
+                SmartLoginHelper loginHelper = new LoginHelper();
 
-        startActivity(loginBuilder.with(this)
-                .isTwitterLoginEnabled(true)
-                .isFacebookLoginEnabled(true)
-                .isGoogleLoginEnabled(false)
-                .setCustomLoginHelper(loginHelper)
-                .build());
-
-//        Intent intent = new Intent(this, SmartLoginActivity.class);
-//        startActivity(intent);
-//        smartFacebookResult.getAccessToken().getUserId();
+                startActivity(loginBuilder.with(MainActivity.this)
+                        .isTwitterLoginEnabled(true)
+                        .isFacebookLoginEnabled(true)
+                        .isGoogleLoginEnabled(false)
+                        .setCustomLoginHelper(loginHelper)
+                        .build());
+            }
+        });
+        //smartFacebookResult.getAccessToken().getUserId();
     }
 
     @Override
