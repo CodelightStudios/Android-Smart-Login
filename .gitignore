@@ -29,3 +29,6 @@ proguard/
 #IntelliJ files
 *.iml
 .idea/
+*.aar
+*.zip
+google-services.json
