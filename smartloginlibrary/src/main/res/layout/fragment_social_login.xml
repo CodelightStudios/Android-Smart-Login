@@ -58,7 +58,7 @@
         <!--android:textAllCaps="false"/>-->
 
     <com.google.android.gms.common.SignInButton
-        android:id="@+id/google_sign_in_button"
+        android:id="@+id/login_google_button"
         android:layout_width="fill_parent"
         android:layout_height="60dp" />
 

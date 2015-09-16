@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -24,6 +23,7 @@ import com.google.android.gms.plus.Plus;
 import java.util.Arrays;
 
 public class SmartLoginActivity extends AppCompatActivity implements
+        View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener{
 
@@ -40,8 +40,9 @@ public class SmartLoginActivity extends AppCompatActivity implements
 
         //Facebook login callback
         callbackManager = CallbackManager.Factory.create();
+
         //Google signin requirements
-        // Build GoogleApiClient with access to basic profile
+        //Build GoogleApiClient with access to basic profile
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -52,82 +53,12 @@ public class SmartLoginActivity extends AppCompatActivity implements
         Bundle bundle = getIntent().getBundleExtra(getString(R.string.config_data));
         config = SmartLoginConfig.unpack(bundle);
 
-        Button customSigninButton = (Button) findViewById(R.id.custom_signin_button);
-        Button facebookLoginButton = (Button) findViewById(R.id.login_fb_button);
-        Button twitterLoginButton = (Button) findViewById(R.id.login_twitter_button);
-        Button customSignupButton = (Button) findViewById(R.id.custom_signup_button);
-
-        if(config.isFacebookEnabled()) {
-            doFacebookLogin(facebookLoginButton);
-        }
-
-        if(config.isTwitterEnabled()){
-            doTwitterLogin(twitterLoginButton);
-        }
-        if(config.getLoginHelper() != null){
-            doCustomSignin(customSigninButton);
-        }
-
-        if(config.getLoginHelper() != null){
-            doCustomSignup(customSignupButton);
-        }
-
-    }
-
-    private void doCustomSignup(Button customSignupButton) {
-        customSignupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                config.getLoginHelper().customSignup();
-            }
-        });
-    }
-
-    private void doCustomSignin(Button customSigninButton) {
-        customSigninButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                config.getLoginHelper().customSignin();
-            }
-        });
-    }
-
-    private void doTwitterLogin(Button twitterLoginButton) {
-        //Implement Twitter login
-        twitterLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(SmartLoginActivity.this, "Twitter login", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void doFacebookLogin(Button facebookLoginButton) {
-
-        facebookLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(SmartLoginActivity.this, "Facebook login", Toast.LENGTH_SHORT).show();
-                LoginManager.getInstance().logInWithReadPermissions(SmartLoginActivity.this, Arrays.asList("public_profile", "user_friends"));
-            }
-        });
-
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                mLoginResult = loginResult;
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException e) {
-
-            }
-        });
+        //set the listeners for the buttons
+        findViewById(R.id.login_fb_button).setOnClickListener(this);
+        findViewById(R.id.login_twitter_button).setOnClickListener(this);
+        findViewById(R.id.login_google_button).setOnClickListener(this);
+        findViewById(R.id.custom_signin_button).setOnClickListener(this);
+        findViewById(R.id.custom_signup_button).setOnClickListener(this);
     }
 
     //Required for Facebook login
@@ -187,5 +118,70 @@ public class SmartLoginActivity extends AppCompatActivity implements
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        if(id == R.id.login_fb_button){
+            //do facebook login
+            doFacebookLogin();
+        } else if(id == R.id.login_twitter_button){
+            //do twitter login
+            doTwitterLogin();
+        } else if(id == R.id.login_google_button){
+            //do google login
+            Toast.makeText(SmartLoginActivity.this, "Google login", Toast.LENGTH_SHORT).show();
+        } else if(id == R.id.custom_signin_button){
+            //custom signin implementation
+            doCustomSignin();
+        } else if(id == R.id.custom_signup_button){
+            //custom signup implementation
+            doCustomSignup();
+        }
+    }
+
+    private void doCustomSignup() {
+        if(config.getLoginHelper() != null) {
+            Toast.makeText(SmartLoginActivity.this, "Custom signup", Toast.LENGTH_SHORT).show();
+            config.getLoginHelper().customSignup();
+        }
+    }
+
+    private void doCustomSignin() {
+        if(config.getLoginHelper() != null) {
+            Toast.makeText(SmartLoginActivity.this, "Custom login", Toast.LENGTH_SHORT).show();
+            config.getLoginHelper().customSignin();
+        }
+    }
+
+    private void doTwitterLogin() {
+        //Implement Twitter login
+        if(config.isTwitterEnabled()) {
+            Toast.makeText(SmartLoginActivity.this, "Twitter login", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void doFacebookLogin() {
+        if(config.isFacebookEnabled()) {
+            Toast.makeText(SmartLoginActivity.this, "Facebook login", Toast.LENGTH_SHORT).show();
+            LoginManager.getInstance().logInWithReadPermissions(SmartLoginActivity.this, Arrays.asList("public_profile", "user_friends"));
+            LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    mLoginResult = loginResult;
+                }
+
+                @Override
+                public void onCancel() {
+
+                }
+
+                @Override
+                public void onError(FacebookException e) {
+
+                }
+            });
+        }
     }
 }
