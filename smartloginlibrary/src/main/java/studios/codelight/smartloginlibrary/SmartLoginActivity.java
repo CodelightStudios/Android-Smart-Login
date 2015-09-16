@@ -30,7 +30,15 @@ public class SmartLoginActivity extends AppCompatActivity implements
     CallbackManager callbackManager;
     LoginResult mLoginResult;
     SmartLoginConfig config;
+
+    //Google Sign in related
     private GoogleApiClient mGoogleApiClient;
+    /* Is there a ConnectionResult resolution in progress? */
+    private boolean mIsResolving = false;
+
+    /* Should we automatically resolve ConnectionResults when possible? */
+    private boolean mShouldResolve = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

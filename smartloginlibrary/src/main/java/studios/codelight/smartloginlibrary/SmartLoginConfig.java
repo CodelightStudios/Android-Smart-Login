@@ -12,7 +12,7 @@ public class SmartLoginConfig{
     private boolean isFacebookEnabled;
     private boolean isGoogleEnabled;
     private boolean isTwitterEnabled;
-    private SmartLoginHelper loginHelper;
+    private SmartCustomLoginHelper loginHelper;
 
     public static final String APPLOGO = "studios.codelight.applogo";
     public static final String FACEBOOKFLAG = "studios.codelight.facebook_flag";
@@ -24,11 +24,11 @@ public class SmartLoginConfig{
     }
 
 
-    public SmartLoginHelper getLoginHelper() {
+    public SmartCustomLoginHelper getLoginHelper() {
         return loginHelper;
     }
 
-    public void setLoginHelper(SmartLoginHelper loginHelper) {
+    public void setLoginHelper(SmartCustomLoginHelper loginHelper) {
         this.loginHelper = loginHelper;
     }
 
@@ -94,7 +94,7 @@ public class SmartLoginConfig{
             loginConfig.setIsGoogleEnabled(bundle.getBoolean(GOOGLEFLAG));
         }
         if(keys.contains(LOGINHELPER)){
-            loginConfig.setLoginHelper((SmartLoginHelper) bundle.getSerializable(LOGINHELPER));
+            loginConfig.setLoginHelper((SmartCustomLoginHelper) bundle.getSerializable(LOGINHELPER));
         }
 
         return loginConfig;

@@ -2,13 +2,14 @@ package studios.codelight.smartlogin;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import studios.codelight.smartloginlibrary.SmartCustomLoginHelper;
 import studios.codelight.smartloginlibrary.SmartLoginBuilder;
-import studios.codelight.smartloginlibrary.SmartLoginHelper;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -23,7 +24,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 SmartLoginBuilder loginBuilder = new SmartLoginBuilder();
-                SmartLoginHelper loginHelper = new LoginHelper();
+                SmartCustomLoginHelper loginHelper = new SmartCustomLoginHelper() {
+                    @Override
+                    protected void customSignin() {
+                        Log.d("Custom", "Custom sign in");
+                    }
+
+                    @Override
+                    protected void customSignup() {
+                        Log.d("Custom", "Custom sign up");
+                    }
+                };
 
                 startActivity(loginBuilder.with(MainActivity.this)
                         .isTwitterLoginEnabled(true)

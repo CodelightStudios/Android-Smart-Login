@@ -40,7 +40,7 @@ public class SmartLoginBuilder {
         return this;
     }
 
-    public SmartLoginBuilder setCustomLoginHelper(SmartLoginHelper loginHelper){
+    public SmartLoginBuilder setCustomLoginHelper(SmartCustomLoginHelper loginHelper){
         config.setLoginHelper(loginHelper);
         return this;
     }

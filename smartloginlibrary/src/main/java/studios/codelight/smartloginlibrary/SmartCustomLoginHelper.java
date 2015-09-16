@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Kalyan on 9/11/2015.
  */
-public abstract class SmartLoginHelper implements Serializable {
+public abstract class SmartCustomLoginHelper implements Serializable {
 //    protected Context context;
 //
 //    public Context getContext() {
@@ -16,7 +16,7 @@ public abstract class SmartLoginHelper implements Serializable {
 //        this.context = context;
 //    }
 
-    //    public SmartLoginHelper(Context context) {
+    //    public SmartCustomLoginHelper(Context context) {
 //        this.context = context;
 //    }
 
