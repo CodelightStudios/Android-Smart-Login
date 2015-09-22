@@ -16,7 +16,6 @@ public class SmartLoginBuilder {
         config = new SmartLoginConfig();
         config.setAppLogo(0);
         config.setIsFacebookEnabled(false);
-        config.setIsTwitterEnabled(false);
         config.setIsGoogleEnabled(false);
     }
 
@@ -27,11 +26,6 @@ public class SmartLoginBuilder {
 
     public SmartLoginBuilder isFacebookLoginEnabled(boolean facebookLogin){
         config.setIsFacebookEnabled(facebookLogin);
-        return this;
-    }
-
-    public SmartLoginBuilder isTwitterLoginEnabled(boolean twitterLogin){
-        config.setIsTwitterEnabled(twitterLogin);
         return this;
     }
 

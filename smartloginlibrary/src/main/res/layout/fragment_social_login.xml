@@ -24,24 +24,23 @@
         android:text="@string/fb_login_text"
         android:drawableLeft="@drawable/facebook_white_small"
         android:drawableStart="@drawable/facebook_white_small"
-        android:textSize="20sp"
         android:textColor="@color/white"
         android:background="@color/facebook_brand_color"
-        android:textAllCaps="false"/>
+        android:layout_margin="5dp" />
 
-    <Button
-        android:id="@+id/login_twitter_button"
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:padding="16dp"
-        android:layout_marginBottom="10dp"
-        android:text="@string/twitter_login_text"
-        android:drawableLeft="@drawable/twitter_white"
-        android:drawableStart="@drawable/twitter_white"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:background="@color/twitter_brand_color"
-        android:textAllCaps="false"/>
+    <!--<Button-->
+        <!--android:id="@+id/login_twitter_button"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:padding="16dp"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:text="@string/twitter_login_text"-->
+        <!--android:drawableLeft="@drawable/twitter_white"-->
+        <!--android:drawableStart="@drawable/twitter_white"-->
+        <!--android:textSize="20sp"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:background="@color/twitter_brand_color"-->
+        <!--android:textAllCaps="false"/>-->
 
     <!--<Button-->
         <!--android:id="@+id/login_google_button"-->

@@ -63,7 +63,6 @@ public class SmartLoginActivity extends AppCompatActivity implements
 
         //set the listeners for the buttons
         findViewById(R.id.login_fb_button).setOnClickListener(this);
-        findViewById(R.id.login_twitter_button).setOnClickListener(this);
         findViewById(R.id.login_google_button).setOnClickListener(this);
         findViewById(R.id.custom_signin_button).setOnClickListener(this);
         findViewById(R.id.custom_signup_button).setOnClickListener(this);
@@ -134,9 +133,6 @@ public class SmartLoginActivity extends AppCompatActivity implements
         if(id == R.id.login_fb_button){
             //do facebook login
             doFacebookLogin();
-        } else if(id == R.id.login_twitter_button){
-            //do twitter login
-            doTwitterLogin();
         } else if(id == R.id.login_google_button){
             //do google login
             Toast.makeText(SmartLoginActivity.this, "Google login", Toast.LENGTH_SHORT).show();
@@ -160,13 +156,6 @@ public class SmartLoginActivity extends AppCompatActivity implements
         if(config.getLoginHelper() != null) {
             Toast.makeText(SmartLoginActivity.this, "Custom login", Toast.LENGTH_SHORT).show();
             config.getLoginHelper().customSignin();
-        }
-    }
-
-    private void doTwitterLogin() {
-        //Implement Twitter login
-        if(config.isTwitterEnabled()) {
-            Toast.makeText(SmartLoginActivity.this, "Twitter login", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -37,14 +37,12 @@ public class MainActivity extends AppCompatActivity {
                 };
 
                 startActivity(loginBuilder.with(MainActivity.this)
-                        .isTwitterLoginEnabled(true)
                         .isFacebookLoginEnabled(true)
                         .isGoogleLoginEnabled(false)
                         .setCustomLoginHelper(loginHelper)
                         .build());
             }
         });
-        //smartFacebookResult.getAccessToken().getUserId();
     }
 
     @Override
