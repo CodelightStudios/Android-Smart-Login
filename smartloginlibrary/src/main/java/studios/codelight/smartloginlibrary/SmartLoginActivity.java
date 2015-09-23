@@ -1,8 +1,10 @@
 package studios.codelight.smartloginlibrary;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +14,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.common.ConnectionResult;
@@ -22,14 +25,18 @@ import com.google.android.gms.plus.Plus;
 
 import java.util.Arrays;
 
+import studios.codelight.smartloginlibrary.users.SmartFacebookUser;
+
 public class SmartLoginActivity extends AppCompatActivity implements
         View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener{
 
     CallbackManager callbackManager;
-    LoginResult mLoginResult;
+    LoginResult mFacebookLoginResult;
     SmartLoginConfig config;
+    SmartCustomLoginHelper mSmartCustomLoginHelper;
+
 
     //Google Sign in related
     private GoogleApiClient mGoogleApiClient;
@@ -58,7 +65,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
                 .addScope(new Scope(Scopes.PROFILE))
                 .build();
 
-        Bundle bundle = getIntent().getBundleExtra(getString(R.string.config_data));
+        Bundle bundle = getIntent().getExtras();
         config = SmartLoginConfig.unpack(bundle);
 
         //set the listeners for the buttons
@@ -146,39 +153,77 @@ public class SmartLoginActivity extends AppCompatActivity implements
     }
 
     private void doCustomSignup() {
-        if(config.getLoginHelper() != null) {
-            Toast.makeText(SmartLoginActivity.this, "Custom signup", Toast.LENGTH_SHORT).show();
-            config.getLoginHelper().customSignup();
+        final ProgressDialog progress = ProgressDialog.show(this, "", "Logging in...", true);
+        if(SmartLoginBuilder.mSmartCustomLoginHelper != null) {
+            if(SmartLoginBuilder.mSmartCustomLoginHelper.customSignup()){
+                progress.dismiss();
+                setResult(SmartLoginConfig.CUSTOM_SIGNUP_REQUEST);
+            }else {
+                setResult(RESULT_CANCELED);
+            }
+            finish();
         }
     }
 
     private void doCustomSignin() {
-        if(config.getLoginHelper() != null) {
-            Toast.makeText(SmartLoginActivity.this, "Custom login", Toast.LENGTH_SHORT).show();
-            config.getLoginHelper().customSignin();
+        if(SmartLoginBuilder.mSmartCustomLoginHelper != null) {
+            final ProgressDialog progress = ProgressDialog.show(this, "", "Logging in...", true);
+            if(SmartLoginBuilder.mSmartCustomLoginHelper.customSignin()) {
+                progress.dismiss();
+                setResult(SmartLoginConfig.CUSTOM_LOGIN_REQUEST);
+            }else {
+                setResult(RESULT_CANCELED);
+            }
+            finish();
         }
     }
 
     private void doFacebookLogin() {
         if(config.isFacebookEnabled()) {
             Toast.makeText(SmartLoginActivity.this, "Facebook login", Toast.LENGTH_SHORT).show();
+            final ProgressDialog progress = ProgressDialog.show(this, "", "Logging in...", true);
             LoginManager.getInstance().logInWithReadPermissions(SmartLoginActivity.this, Arrays.asList("public_profile", "user_friends"));
             LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                 @Override
                 public void onSuccess(LoginResult loginResult) {
-                    mLoginResult = loginResult;
+                    mFacebookLoginResult = loginResult;
+                    progress.dismiss();
+
+                    //Populate the SmartFacebookUser from Facebook's Profile object
+                    Profile profile = Profile.getCurrentProfile();
+                    SmartFacebookUser currentUser = new SmartFacebookUser();
+                    currentUser.setUserId(profile.getId());
+                    currentUser.setFirstName(profile.getFirstName());
+                    currentUser.setLastName(profile.getLastName());
+                    currentUser.setProfileName(profile.getName());
+                    currentUser.setMiddleName(profile.getMiddleName());
+                    currentUser.setProfileLink(profile.getLinkUri());
+
+                    Intent intent = new Intent();
+                    intent.putExtra("smartUser", currentUser);
+                    setResult(SmartLoginConfig.FACEBOOK_LOGIN_REQUEST, intent);
+                    finish();
                 }
 
                 @Override
                 public void onCancel() {
-
+                    progress.dismiss();
+                    finish();
+                    Log.d("Facebook Login", "User cancelled the login process");
                 }
 
                 @Override
                 public void onError(FacebookException e) {
-
+                    progress.dismiss();
+                    finish();
+                    Toast.makeText(SmartLoginActivity.this, R.string.network_error, Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
+
+    private LoginResult getFacebookResult() {
+        return mFacebookLoginResult;
+    }
+
 }

@@ -10,6 +10,7 @@ public class SmartLoginBuilder {
 
     private Context context;
     private SmartLoginConfig config;
+    public static SmartCustomLoginHelper mSmartCustomLoginHelper;
     //private static final String CONFIGDATA = "config";
 
     public SmartLoginBuilder() {
@@ -34,15 +35,15 @@ public class SmartLoginBuilder {
         return this;
     }
 
-    public SmartLoginBuilder setCustomLoginHelper(SmartCustomLoginHelper loginHelper){
-        config.setLoginHelper(loginHelper);
+    public SmartLoginBuilder setmSmartCustomLoginHelper(SmartCustomLoginHelper mSmartCustomLoginHelper) {
+        SmartLoginBuilder.mSmartCustomLoginHelper = mSmartCustomLoginHelper;
         return this;
     }
 
     public Intent build(){
         Intent intent = new Intent(context, SmartLoginActivity.class);
         //intent.putExtra(context.getString(R.string.config_data), config);
-        intent.putExtra(context.getString(R.string.config_data), config.pack());
+        intent.putExtras(config.pack());
         return intent;
     }
 

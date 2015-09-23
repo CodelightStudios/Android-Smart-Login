@@ -11,7 +11,6 @@ public class SmartLoginConfig{
     private int appLogo;
     private boolean isFacebookEnabled;
     private boolean isGoogleEnabled;
-    private SmartCustomLoginHelper loginHelper;
 
     public static final String APPLOGO = "studios.codelight.applogo";
     public static final String FACEBOOKFLAG = "studios.codelight.facebook_flag";
@@ -19,16 +18,12 @@ public class SmartLoginConfig{
     public static final String GOOGLEFLAG = "studios.codelight.google_flag";
     public static final String LOGINHELPER = "studios.codelight.loginhelper";
 
+    public static final int FACEBOOK_LOGIN_REQUEST = 1;
+    public static final int GOOGLE_LOGIN_REQUEST = 2;
+    public static final int CUSTOM_LOGIN_REQUEST = 3;
+    public static final int CUSTOM_SIGNUP_REQUEST = 4;
+
     public SmartLoginConfig() {
-    }
-
-
-    public SmartCustomLoginHelper getLoginHelper() {
-        return loginHelper;
-    }
-
-    public void setLoginHelper(SmartCustomLoginHelper loginHelper) {
-        this.loginHelper = loginHelper;
     }
 
     public int getAppLogo() {
@@ -62,26 +57,23 @@ public class SmartLoginConfig{
         }
         bundle.putBoolean(FACEBOOKFLAG, isFacebookEnabled);
         bundle.putBoolean(GOOGLEFLAG, isGoogleEnabled);
-        bundle.putSerializable(LOGINHELPER, loginHelper);
+//        bundle.putSerializable(LOGINHELPER, loginHelper);
         return bundle;
     }
 
     public static SmartLoginConfig unpack(Bundle bundle){
         //new LoginConfig to return
         SmartLoginConfig loginConfig = new SmartLoginConfig();
-        Set<String> keys =  bundle.keySet();
+        Set<String> keys = bundle.keySet();
 
         if(keys.contains(APPLOGO)){
             loginConfig.setAppLogo(bundle.getInt(APPLOGO));
         }
-        if(keys.contains(FACEBOOKFLAG)){
+        if (keys.contains(FACEBOOKFLAG)){
             loginConfig.setIsFacebookEnabled(bundle.getBoolean(FACEBOOKFLAG));
         }
         if(keys.contains(GOOGLEFLAG)){
             loginConfig.setIsGoogleEnabled(bundle.getBoolean(GOOGLEFLAG));
-        }
-        if(keys.contains(LOGINHELPER)){
-            loginConfig.setLoginHelper((SmartCustomLoginHelper) bundle.getSerializable(LOGINHELPER));
         }
 
         return loginConfig;

@@ -22,5 +22,6 @@
     <string name="facebook_app_id">221623114699507</string>
     <string name="config_data">config</string>
 
+    <string name="network_error">Something went wrong. Please check Network Connection.</string>
 
 </resources>
