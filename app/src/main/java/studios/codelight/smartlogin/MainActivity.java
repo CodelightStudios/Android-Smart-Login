@@ -96,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
         if(resultCode == SmartLoginConfig.CUSTOM_SIGNUP_REQUEST){
             loginResult.setText("Custom Signed up");
         }
+        if(resultCode == SmartLoginConfig.GOOGLE_LOGIN_REQUEST){
+            loginResult.setText(data.getStringExtra("currentUser"));
+        }
         if(resultCode == RESULT_CANCELED){
             loginResult.setText("login failed");
         }

@@ -2,6 +2,7 @@ package studios.codelight.smartloginlibrary;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,10 +19,12 @@ import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
+import com.google.android.gms.plus.model.people.Person;
 
 import java.util.Arrays;
 
@@ -35,7 +38,6 @@ public class SmartLoginActivity extends AppCompatActivity implements
     CallbackManager callbackManager;
     LoginResult mFacebookLoginResult;
     SmartLoginConfig config;
-    SmartCustomLoginHelper mSmartCustomLoginHelper;
 
 
     //Google Sign in related
@@ -65,6 +67,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
                 .addScope(new Scope(Scopes.PROFILE))
                 .build();
 
+
         Bundle bundle = getIntent().getExtras();
         config = SmartLoginConfig.unpack(bundle);
 
@@ -78,7 +81,22 @@ public class SmartLoginActivity extends AppCompatActivity implements
     //Required for Facebook login
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+        Log.d("GOOGLE LOGIN", "onActivityResult:" + requestCode + ":" + resultCode + ":" + data);
+
+        if (requestCode == SmartLoginConfig.GOOGLE_LOGIN_REQUEST) {
+            // If the error resolution was not successful we should not resolve further.
+            if (resultCode != RESULT_OK) {
+                mShouldResolve = false;
+            }
+
+            mIsResolving = false;
+            mGoogleApiClient.connect();
+
+            //setResult(SmartLoginConfig.GOOGLE_LOGIN_REQUEST, data);
+            //finish();
+        }
     }
 
     @Override
@@ -121,7 +139,31 @@ public class SmartLoginActivity extends AppCompatActivity implements
 
     @Override
     public void onConnected(Bundle bundle) {
+        // onConnected indicates that an account was selected on the device, that the selected
+        // account has granted any requested permissions to our app and that we were able to
+        // establish a service connection to Google Play services.
+        Log.d("GOOGLE LOGIN", "onConnected:" + bundle);
+        mShouldResolve = false;
 
+        //Get Google profile info
+        if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+            Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+            String personName = currentPerson.getDisplayName();
+            String personPhoto = currentPerson.getImage().getUrl();
+            String personGooglePlusProfile = currentPerson.getUrl();
+
+
+            //SmartGoogleUser smartGoogleUser = new SmartGoogleUser();
+            Intent data = new Intent();
+            data.putExtra("currentUser", personName);
+            setResult(SmartLoginConfig.GOOGLE_LOGIN_REQUEST, data);
+            finish();
+        }
+
+
+
+        // Show the signed-in UI
+        //showSignedInUI();
     }
 
     @Override
@@ -131,7 +173,36 @@ public class SmartLoginActivity extends AppCompatActivity implements
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+        // Could not connect to Google Play Services.  The user needs to select an account,
+        // grant permissions or resolve an error in order to sign in. Refer to the javadoc for
+        // ConnectionResult to see possible error codes.
+        final String TAG = "GOOGLE LOGIN";
+        Log.d(TAG, "onConnectionFailed:" + connectionResult);
 
+        if (!mIsResolving && mShouldResolve) {
+            if (connectionResult.hasResolution()) {
+                try {
+                    connectionResult.startResolutionForResult(this, SmartLoginConfig.GOOGLE_LOGIN_REQUEST);
+                    mIsResolving = true;
+                } catch (IntentSender.SendIntentException e) {
+                    Log.e(TAG, "Could not resolve ConnectionResult.", e);
+                    mIsResolving = false;
+                    mGoogleApiClient.connect();
+                }
+            } else {
+                // Could not resolve the connection result, show the user an
+                // error dialog.
+                //showErrorDialog(connectionResult);
+                GooglePlayServicesUtil.getErrorDialog(connectionResult.getErrorCode(), this, 0).show();
+//                Intent intent = new Intent();
+//                intent.putExtra("smartUser", "failed");
+//                setResult(SmartLoginConfig.GOOGLE_LOGIN_REQUEST, intent);
+//                finish();
+            }
+        } else {
+            // Show the signed-out UI
+            //showSignedOutUI();
+        }
     }
 
     @Override
@@ -142,7 +213,8 @@ public class SmartLoginActivity extends AppCompatActivity implements
             doFacebookLogin();
         } else if(id == R.id.login_google_button){
             //do google login
-            Toast.makeText(SmartLoginActivity.this, "Google login", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(SmartLoginActivity.this, "Google login", Toast.LENGTH_SHORT).show();
+            doGoogleLogin();
         } else if(id == R.id.custom_signin_button){
             //custom signin implementation
             doCustomSignin();
@@ -150,6 +222,13 @@ public class SmartLoginActivity extends AppCompatActivity implements
             //custom signup implementation
             doCustomSignup();
         }
+    }
+
+    private void doGoogleLogin() {
+        // User clicked the sign-in button, so begin the sign-in process and automatically
+        // attempt to resolve any errors that occur.
+        mShouldResolve = true;
+        mGoogleApiClient.connect();
     }
 
     private void doCustomSignup() {
@@ -222,8 +301,6 @@ public class SmartLoginActivity extends AppCompatActivity implements
         }
     }
 
-    private LoginResult getFacebookResult() {
-        return mFacebookLoginResult;
-    }
+
 
 }
