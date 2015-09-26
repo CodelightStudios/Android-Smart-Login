@@ -15,6 +15,7 @@ public class SmartUser implements Parcelable{
     private String email;
     private String birthday;
     private int gender;
+    private String profileLink;
 
     public SmartUser() {
     }
@@ -27,6 +28,7 @@ public class SmartUser implements Parcelable{
         email = in.readString();
         birthday = in.readString();
         gender = in.readInt();
+        profileLink = in.readString();
     }
 
     @Override
@@ -38,6 +40,7 @@ public class SmartUser implements Parcelable{
         dest.writeString(email);
         dest.writeString(birthday);
         dest.writeInt(gender);
+        dest.writeString(profileLink);
     }
 
     @Override
@@ -111,5 +114,13 @@ public class SmartUser implements Parcelable{
 
     public void setGender(int gender) {
         this.gender = gender;
+    }
+
+    public String getProfileLink() {
+        return profileLink;
+    }
+
+    public void setProfileLink(String profileLink) {
+        this.profileLink = profileLink;
     }
 }

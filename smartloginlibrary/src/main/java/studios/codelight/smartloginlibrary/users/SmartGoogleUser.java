@@ -11,7 +11,6 @@ public class SmartGoogleUser extends SmartUser implements Parcelable{
     private String displayName;
     private String aboutMe;
     private String nickname;
-    private String profileUrl;
     private String braggingRights;
     private String fullName;
     private String language;
@@ -24,7 +23,6 @@ public class SmartGoogleUser extends SmartUser implements Parcelable{
         displayName = in.readString();
         aboutMe = in.readString();
         nickname = in.readString();
-        profileUrl = in.readString();
         braggingRights = in.readString();
         fullName = in.readString();
         language = in.readString();
@@ -36,7 +34,6 @@ public class SmartGoogleUser extends SmartUser implements Parcelable{
         dest.writeString(displayName);
         dest.writeString(aboutMe);
         dest.writeString(nickname);
-        dest.writeString(profileUrl);
         dest.writeString(braggingRights);
         dest.writeString(fullName);
         dest.writeString(language);
@@ -81,14 +78,6 @@ public class SmartGoogleUser extends SmartUser implements Parcelable{
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
-    }
-
-    public String getProfileUrl() {
-        return profileUrl;
-    }
-
-    public void setProfileUrl(String profileUrl) {
-        this.profileUrl = profileUrl;
     }
 
     public String getBraggingRights() {

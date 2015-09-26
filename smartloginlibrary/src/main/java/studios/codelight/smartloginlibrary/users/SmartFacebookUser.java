@@ -1,6 +1,5 @@
 package studios.codelight.smartloginlibrary.users;
 
-import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -9,7 +8,6 @@ import android.os.Parcelable;
  */
 public class SmartFacebookUser extends SmartUser implements Parcelable {
     private String profileName;
-    private Uri profileLink;
 
     public SmartFacebookUser() {
     }
@@ -17,14 +15,12 @@ public class SmartFacebookUser extends SmartUser implements Parcelable {
     protected SmartFacebookUser(Parcel in) {
         super(in);
         profileName = in.readString();
-        profileLink = in.readParcelable(Uri.class.getClassLoader());
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(profileName);
-        dest.writeParcelable(profileLink, flags);
     }
 
     @Override
@@ -50,13 +46,5 @@ public class SmartFacebookUser extends SmartUser implements Parcelable {
 
     public void setProfileName(String profileName) {
         this.profileName = profileName;
-    }
-
-    public Uri getProfileLink() {
-        return profileLink;
-    }
-
-    public void setProfileLink(Uri profileLink) {
-        this.profileLink = profileLink;
     }
 }

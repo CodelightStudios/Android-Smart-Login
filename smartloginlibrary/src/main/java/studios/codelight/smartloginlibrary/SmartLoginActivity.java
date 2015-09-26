@@ -15,7 +15,8 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.Profile;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.common.ConnectionResult;
@@ -25,6 +26,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Collections;
 
@@ -37,7 +41,6 @@ public class SmartLoginActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener{
 
     CallbackManager callbackManager;
-    LoginResult mFacebookLoginResult;
     SmartLoginConfig config;
 
 
@@ -84,9 +87,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //for facebook login
-        if(requestCode == SmartLoginConfig.FACEBOOK_LOGIN_REQUEST) {
-            callbackManager.onActivityResult(requestCode, resultCode, data);
-        }
+        callbackManager.onActivityResult(requestCode, resultCode, data);
 
         //For google login
         if (requestCode == SmartLoginConfig.GOOGLE_LOGIN_REQUEST) {
@@ -265,25 +266,52 @@ public class SmartLoginActivity extends AppCompatActivity implements
             LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                 @Override
                 public void onSuccess(LoginResult loginResult) {
-                    mFacebookLoginResult = loginResult;
-                    SmartFacebookUser currentUser = new SmartFacebookUser();
+                    progress.setMessage("Getting User Info...");
+                    GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(JSONObject object, GraphResponse response) {
+                            SmartFacebookUser facebookUser = new SmartFacebookUser();
+                            progress.dismiss();
+                            try {
+                                if(object.has(SmartLoginConfig.FacebookFields.EMAIL))
+                                    facebookUser.setEmail(object.getString(SmartLoginConfig.FacebookFields.EMAIL));
+                                if(object.has(SmartLoginConfig.FacebookFields.BIRTHDAY))
+                                    facebookUser.setBirthday(object.getString(SmartLoginConfig.FacebookFields.BIRTHDAY));
+                                if(object.has(SmartLoginConfig.FacebookFields.GENDER)) {
+                                    SmartLoginConfig.Gender gender = SmartLoginConfig.Gender.valueOf(object.getString(SmartLoginConfig.FacebookFields.GENDER));
+                                    switch (gender) {
+                                        case male:
+                                            facebookUser.setGender(0);
+                                            break;
+                                        case female:
+                                            facebookUser.setGender(1);
+                                            break;
+                                    }
+                                }
+                                if(object.has(SmartLoginConfig.FacebookFields.LINK))
+                                    facebookUser.setProfileLink(object.getString(SmartLoginConfig.FacebookFields.LINK));
+                                if(object.has(SmartLoginConfig.FacebookFields.ID))
+                                    facebookUser.setUserId(object.getString(SmartLoginConfig.FacebookFields.ID));
+                                if(object.has(SmartLoginConfig.FacebookFields.NAME))
+                                    facebookUser.setProfileName(object.getString(SmartLoginConfig.FacebookFields.NAME));
+                                if(object.has(SmartLoginConfig.FacebookFields.FIRST_NAME))
+                                    facebookUser.setFirstName(object.getString(SmartLoginConfig.FacebookFields.FIRST_NAME));
+                                if(object.has(SmartLoginConfig.FacebookFields.MIDDLE_NAME))
+                                    facebookUser.setMiddleName(object.getString(SmartLoginConfig.FacebookFields.MIDDLE_NAME));
+                                if(object.has(SmartLoginConfig.FacebookFields.LAST_NAME))
+                                    facebookUser.setLastName(object.getString(SmartLoginConfig.FacebookFields.LAST_NAME));
 
-
-                    //Populate the SmartFacebookUser from Facebook's Profile object
-                    Profile profile = Profile.getCurrentProfile();
-
-                    currentUser.setUserId(profile.getId());
-                    currentUser.setFirstName(profile.getFirstName());
-                    currentUser.setLastName(profile.getLastName());
-                    currentUser.setProfileName(profile.getName());
-                    currentUser.setMiddleName(profile.getMiddleName());
-                    currentUser.setProfileLink(profile.getLinkUri());
-//                    currentUser.setEmail(profile.get);
-
-                    Intent intent = new Intent();
-                    intent.putExtra(SmartLoginConfig.USER, currentUser);
-                    setResult(SmartLoginConfig.FACEBOOK_LOGIN_REQUEST, intent);
-                    finish();
+                                Intent intent = new Intent();
+                                intent.putExtra(SmartLoginConfig.USER, facebookUser);
+                                setResult(SmartLoginConfig.FACEBOOK_LOGIN_REQUEST, intent);
+                                finish();
+                            } catch (JSONException e) {
+                                Log.e(getClass().getSimpleName(), e.getMessage());
+                                finish();
+                            }
+                        }
+                    });
+                    request.executeAsync();
                 }
 
                 @Override

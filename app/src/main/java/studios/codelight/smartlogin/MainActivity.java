@@ -86,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
             SmartFacebookUser user;
             try {
                 user = data.getParcelableExtra(SmartLoginConfig.USER);
-                loginResult.setText(user.getProfileName());
+                String userDetails = user.getProfileName() + " " + user.getEmail() + " " + user.getBirthday();
+                loginResult.setText(userDetails);
             }catch (Exception e){
                 loginResult.setText("login failed");
             }
