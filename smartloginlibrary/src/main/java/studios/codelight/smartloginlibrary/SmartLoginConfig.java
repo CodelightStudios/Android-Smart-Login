@@ -13,6 +13,7 @@ public class SmartLoginConfig{
     private boolean isGoogleEnabled;
 
     public static final String APPLOGO = "studios.codelight.applogo";
+    public static final String USER = "studios.codelight.user";
     public static final String FACEBOOKFLAG = "studios.codelight.facebook_flag";
     //public static final String TWITTERFLAG = "studios.codelight.twitter_flag";
     public static final String GOOGLEFLAG = "studios.codelight.google_flag";

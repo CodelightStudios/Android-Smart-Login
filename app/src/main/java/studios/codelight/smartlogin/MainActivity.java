@@ -14,6 +14,7 @@ import studios.codelight.smartloginlibrary.SmartCustomLoginHelper;
 import studios.codelight.smartloginlibrary.SmartLoginBuilder;
 import studios.codelight.smartloginlibrary.SmartLoginConfig;
 import studios.codelight.smartloginlibrary.users.SmartFacebookUser;
+import studios.codelight.smartloginlibrary.users.SmartGoogleUser;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         if(resultCode == SmartLoginConfig.FACEBOOK_LOGIN_REQUEST){
             SmartFacebookUser user;
             try {
-                user = data.getParcelableExtra("smartUser");
+                user = data.getParcelableExtra(SmartLoginConfig.USER);
                 loginResult.setText(user.getProfileName());
             }catch (Exception e){
                 loginResult.setText("login failed");
@@ -97,7 +98,9 @@ public class MainActivity extends AppCompatActivity {
             loginResult.setText("Custom Signed up");
         }
         if(resultCode == SmartLoginConfig.GOOGLE_LOGIN_REQUEST){
-            loginResult.setText(data.getStringExtra("currentUser"));
+            SmartGoogleUser user = data.getParcelableExtra(SmartLoginConfig.USER);
+            String userDetails = user.getEmail() + " " + user.getBirthday() + " " + user.getAboutMe();
+            loginResult.setText(userDetails);
         }
         if(resultCode == RESULT_CANCELED){
             loginResult.setText("login failed");

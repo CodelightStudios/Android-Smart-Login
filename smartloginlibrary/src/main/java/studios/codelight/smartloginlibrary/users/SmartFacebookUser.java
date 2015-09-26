@@ -9,7 +9,6 @@ import android.os.Parcelable;
  */
 public class SmartFacebookUser extends SmartUser implements Parcelable {
     private String profileName;
-    private String middleName;
     private Uri profileLink;
 
     public SmartFacebookUser() {
@@ -18,7 +17,6 @@ public class SmartFacebookUser extends SmartUser implements Parcelable {
     protected SmartFacebookUser(Parcel in) {
         super(in);
         profileName = in.readString();
-        middleName = in.readString();
         profileLink = in.readParcelable(Uri.class.getClassLoader());
     }
 
@@ -26,7 +24,6 @@ public class SmartFacebookUser extends SmartUser implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(profileName);
-        dest.writeString(middleName);
         dest.writeParcelable(profileLink, flags);
     }
 
@@ -53,14 +50,6 @@ public class SmartFacebookUser extends SmartUser implements Parcelable {
 
     public void setProfileName(String profileName) {
         this.profileName = profileName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
     }
 
     public Uri getProfileLink() {

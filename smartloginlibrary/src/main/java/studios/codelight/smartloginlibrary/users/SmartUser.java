@@ -7,9 +7,14 @@ import android.os.Parcelable;
  * Created by Kalyan on 9/23/2015.
  */
 public class SmartUser implements Parcelable{
+
     private String  userId;
     private String firstName;
+    private String middleName;
     private String lastName;
+    private String email;
+    private String birthday;
+    private int gender;
 
     public SmartUser() {
     }
@@ -17,14 +22,22 @@ public class SmartUser implements Parcelable{
     protected SmartUser(Parcel in) {
         userId = in.readString();
         firstName = in.readString();
+        middleName = in.readString();
         lastName = in.readString();
+        email = in.readString();
+        birthday = in.readString();
+        gender = in.readInt();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(userId);
         dest.writeString(firstName);
+        dest.writeString(middleName);
         dest.writeString(lastName);
+        dest.writeString(email);
+        dest.writeString(birthday);
+        dest.writeInt(gender);
     }
 
     @Override
@@ -66,5 +79,37 @@ public class SmartUser implements Parcelable{
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 }

@@ -26,9 +26,10 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 import studios.codelight.smartloginlibrary.users.SmartFacebookUser;
+import studios.codelight.smartloginlibrary.users.SmartGoogleUser;
 
 public class SmartLoginActivity extends AppCompatActivity implements
         View.OnClickListener,
@@ -82,9 +83,12 @@ public class SmartLoginActivity extends AppCompatActivity implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-        Log.d("GOOGLE LOGIN", "onActivityResult:" + requestCode + ":" + resultCode + ":" + data);
+        //for facebook login
+        if(requestCode == SmartLoginConfig.FACEBOOK_LOGIN_REQUEST) {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
 
+        //For google login
         if (requestCode == SmartLoginConfig.GOOGLE_LOGIN_REQUEST) {
             // If the error resolution was not successful we should not resolve further.
             if (resultCode != RESULT_OK) {
@@ -93,9 +97,6 @@ public class SmartLoginActivity extends AppCompatActivity implements
 
             mIsResolving = false;
             mGoogleApiClient.connect();
-
-            //setResult(SmartLoginConfig.GOOGLE_LOGIN_REQUEST, data);
-            //finish();
         }
     }
 
@@ -128,7 +129,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
     @Override
     protected void onStart() {
         super.onStart();
-        mGoogleApiClient.connect();
+        mGoogleApiClient.disconnect();
     }
 
     @Override
@@ -147,15 +148,14 @@ public class SmartLoginActivity extends AppCompatActivity implements
 
         //Get Google profile info
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+            //Get the Person object of the current logged in user.
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
-            String personName = currentPerson.getDisplayName();
-            String personPhoto = currentPerson.getImage().getUrl();
-            String personGooglePlusProfile = currentPerson.getUrl();
 
+            //From that obtained Person object populate the SmartGoogleUser object
+            SmartGoogleUser googleUser = populateGoogleuser(currentPerson);
 
-            //SmartGoogleUser smartGoogleUser = new SmartGoogleUser();
             Intent data = new Intent();
-            data.putExtra("currentUser", personName);
+            data.putExtra(SmartLoginConfig.USER, googleUser);
             setResult(SmartLoginConfig.GOOGLE_LOGIN_REQUEST, data);
             finish();
         }
@@ -261,25 +261,27 @@ public class SmartLoginActivity extends AppCompatActivity implements
         if(config.isFacebookEnabled()) {
             Toast.makeText(SmartLoginActivity.this, "Facebook login", Toast.LENGTH_SHORT).show();
             final ProgressDialog progress = ProgressDialog.show(this, "", "Logging in...", true);
-            LoginManager.getInstance().logInWithReadPermissions(SmartLoginActivity.this, Arrays.asList("public_profile", "user_friends"));
+            LoginManager.getInstance().logInWithReadPermissions(SmartLoginActivity.this, Collections.singletonList("public_profile, email, user_birthday, user_friends"));
             LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                 @Override
                 public void onSuccess(LoginResult loginResult) {
                     mFacebookLoginResult = loginResult;
-                    progress.dismiss();
+                    SmartFacebookUser currentUser = new SmartFacebookUser();
+
 
                     //Populate the SmartFacebookUser from Facebook's Profile object
                     Profile profile = Profile.getCurrentProfile();
-                    SmartFacebookUser currentUser = new SmartFacebookUser();
+
                     currentUser.setUserId(profile.getId());
                     currentUser.setFirstName(profile.getFirstName());
                     currentUser.setLastName(profile.getLastName());
                     currentUser.setProfileName(profile.getName());
                     currentUser.setMiddleName(profile.getMiddleName());
                     currentUser.setProfileLink(profile.getLinkUri());
+//                    currentUser.setEmail(profile.get);
 
                     Intent intent = new Intent();
-                    intent.putExtra("smartUser", currentUser);
+                    intent.putExtra(SmartLoginConfig.USER, currentUser);
                     setResult(SmartLoginConfig.FACEBOOK_LOGIN_REQUEST, intent);
                     finish();
                 }
@@ -301,6 +303,39 @@ public class SmartLoginActivity extends AppCompatActivity implements
         }
     }
 
-
+    private SmartGoogleUser populateGoogleuser(Person person){
+        //Create a new google user
+        SmartGoogleUser googleUser = new SmartGoogleUser();
+        //populate the user
+        if(person.hasName()) {
+            Person.Name name = person.getName();
+            if (name.hasGivenName())
+                googleUser.setFirstName(name.getGivenName());
+            if (name.hasFamilyName())
+                googleUser.setLastName(name.getFamilyName());
+            if (name.hasFormatted())
+                googleUser.setFullName(name.getFormatted());
+            if (name.hasMiddleName())
+                googleUser.setMiddleName(name.getMiddleName());
+        }
+        if(person.hasId())
+            googleUser.setUserId(person.getId());
+        if(person.hasNickname())
+            googleUser.setNickname(person.getNickname());
+        if(person.hasDisplayName())
+            googleUser.setDisplayName(person.getDisplayName());
+        if(person.hasBirthday())
+            googleUser.setBirthday(person.getBirthday());
+        if(person.hasAboutMe())
+            googleUser.setAboutMe(person.getAboutMe());
+        if(person.hasLanguage())
+            googleUser.setLanguage(person.getLanguage());
+        if(person.hasGender())
+            googleUser.setGender(person.getGender());
+        if(person.hasBraggingRights())
+            googleUser.setBraggingRights(person.getBraggingRights());
+        //return the populated google user
+        return googleUser;
+    }
 
 }
