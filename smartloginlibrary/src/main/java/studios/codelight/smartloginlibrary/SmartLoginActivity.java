@@ -278,14 +278,20 @@ public class SmartLoginActivity extends AppCompatActivity implements
                                 if(object.has(SmartLoginConfig.FacebookFields.BIRTHDAY))
                                     facebookUser.setBirthday(object.getString(SmartLoginConfig.FacebookFields.BIRTHDAY));
                                 if(object.has(SmartLoginConfig.FacebookFields.GENDER)) {
-                                    SmartLoginConfig.Gender gender = SmartLoginConfig.Gender.valueOf(object.getString(SmartLoginConfig.FacebookFields.GENDER));
-                                    switch (gender) {
-                                        case male:
-                                            facebookUser.setGender(0);
-                                            break;
-                                        case female:
-                                            facebookUser.setGender(1);
-                                            break;
+                                    try {
+                                        SmartLoginConfig.Gender gender = SmartLoginConfig.Gender.valueOf(object.getString(SmartLoginConfig.FacebookFields.GENDER));
+                                        switch (gender) {
+                                            case male:
+                                                facebookUser.setGender(0);
+                                                break;
+                                            case female:
+                                                facebookUser.setGender(1);
+                                                break;
+                                        }
+                                    }catch (Exception e){
+                                        //if gender is not in the enum it is set to unspecified value (2)
+                                        facebookUser.setGender(2);
+                                        Log.e(getClass().getSimpleName(), e.getMessage());
                                     }
                                 }
                                 if(object.has(SmartLoginConfig.FacebookFields.LINK))
