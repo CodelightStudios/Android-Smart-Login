@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -34,6 +35,7 @@ import java.util.Collections;
 
 import studios.codelight.smartloginlibrary.users.SmartFacebookUser;
 import studios.codelight.smartloginlibrary.users.SmartGoogleUser;
+import studios.codelight.smartloginlibrary.util.DialogUtil;
 
 public class SmartLoginActivity extends AppCompatActivity implements
         View.OnClickListener,
@@ -42,6 +44,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
 
     CallbackManager callbackManager;
     SmartLoginConfig config;
+    EditText usernameEditText, passwordEditText;
 
 
     //Google Sign in related
@@ -58,6 +61,10 @@ public class SmartLoginActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_smart_login);
+
+        //bind the views
+        usernameEditText = (EditText) findViewById(R.id.userNameEditText);
+        passwordEditText = (EditText) findViewById(R.id.passwordEditText);
 
         //Facebook login callback
         callbackManager = CallbackManager.Factory.create();
@@ -200,10 +207,11 @@ public class SmartLoginActivity extends AppCompatActivity implements
 //                setResult(SmartLoginConfig.GOOGLE_LOGIN_REQUEST, intent);
 //                finish();
             }
-        } else {
-            // Show the signed-out UI
-            //showSignedOutUI();
         }
+//        else {
+//            // Show the signed-out UI
+//            //showSignedOutUI();
+//        }
     }
 
     @Override
@@ -233,28 +241,37 @@ public class SmartLoginActivity extends AppCompatActivity implements
     }
 
     private void doCustomSignup() {
-        final ProgressDialog progress = ProgressDialog.show(this, "", "Logging in...", true);
-        if(SmartLoginBuilder.mSmartCustomLoginHelper != null) {
-            if(SmartLoginBuilder.mSmartCustomLoginHelper.customSignup()){
-                progress.dismiss();
-                setResult(SmartLoginConfig.CUSTOM_SIGNUP_REQUEST);
-            }else {
-                setResult(RESULT_CANCELED);
-            }
-            finish();
-        }
+//        final ProgressDialog progress = ProgressDialog.show(this, "", "Logging in...", true);
+//        if(SmartLoginBuilder.mSmartCustomLoginListener != null) {
+//            if(SmartLoginBuilder.mSmartCustomLoginListener.customSignup()){
+//                progress.dismiss();
+//                setResult(SmartLoginConfig.CUSTOM_SIGNUP_REQUEST);
+//            }else {
+//                setResult(RESULT_CANCELED);
+//            }
+//            finish();
+//        }
     }
 
     private void doCustomSignin() {
-        if(SmartLoginBuilder.mSmartCustomLoginHelper != null) {
-            final ProgressDialog progress = ProgressDialog.show(this, "", "Logging in...", true);
-            if(SmartLoginBuilder.mSmartCustomLoginHelper.customSignin()) {
-                progress.dismiss();
-                setResult(SmartLoginConfig.CUSTOM_LOGIN_REQUEST);
-            }else {
-                setResult(RESULT_CANCELED);
+        String username = usernameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        if(username.equals("")){
+            DialogUtil.getErrorDialog(R.string.username_error, this).show();
+        } else if(password.equals("")){
+            DialogUtil.getErrorDialog(R.string.password_error, this).show();
+        } else {
+            if (SmartLoginBuilder.mSmartCustomLoginListener != null) {
+                final ProgressDialog progress = ProgressDialog.show(this, "", "Logging in...", true);
+                if (SmartLoginBuilder.mSmartCustomLoginListener.customSignin(username, password)) {
+                    progress.dismiss();
+                    setResult(SmartLoginConfig.CUSTOM_LOGIN_REQUEST);
+                } else {
+                    progress.dismiss();
+                    setResult(RESULT_CANCELED);
+                }
+                finish();
             }
-            finish();
         }
     }
 

@@ -23,5 +23,7 @@
     <string name="config_data">config</string>
 
     <string name="network_error">Something went wrong. Please check Network Connection.</string>
+    <string name="username_error">Please enter your username or email</string>
+    <string name="password_error">Hope you have a password</string>
 
 </resources>

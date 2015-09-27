@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import studios.codelight.smartloginlibrary.SmartCustomLoginHelper;
+import studios.codelight.smartloginlibrary.SmartCustomLoginListener;
 import studios.codelight.smartloginlibrary.SmartLoginBuilder;
 import studios.codelight.smartloginlibrary.SmartLoginConfig;
 import studios.codelight.smartloginlibrary.users.SmartFacebookUser;
@@ -37,17 +37,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = loginBuilder.with(getApplicationContext())
                         .isFacebookLoginEnabled(true)
                         .isGoogleLoginEnabled(false)
-                        .setmSmartCustomLoginHelper(new SmartCustomLoginHelper() {
+                        .setmSmartCustomLoginHelper(new SmartCustomLoginListener() {
                             @Override
-                            public boolean customSignin() {
-                                Toast.makeText(MainActivity.this, "Custom login", Toast.LENGTH_SHORT).show();
+                            public boolean customSignin(String username, String password) {
+                                Toast.makeText(MainActivity.this, username + " " + password, Toast.LENGTH_SHORT).show();
                                 return true;
-                            }
-
-                            @Override
-                            public boolean customSignup() {
-                                Toast.makeText(MainActivity.this, "Custom signup", Toast.LENGTH_SHORT).show();
-                                return false;
                             }
                         })
                         .build();
@@ -92,18 +86,18 @@ public class MainActivity extends AppCompatActivity {
                 loginResult.setText("login failed");
             }
         }
-        if(resultCode == SmartLoginConfig.CUSTOM_LOGIN_REQUEST){
-            loginResult.setText("Custom logged in");
-        }
-        if(resultCode == SmartLoginConfig.CUSTOM_SIGNUP_REQUEST){
-            loginResult.setText("Custom Signed up");
-        }
-        if(resultCode == SmartLoginConfig.GOOGLE_LOGIN_REQUEST){
+        else if(resultCode == SmartLoginConfig.GOOGLE_LOGIN_REQUEST){
             SmartGoogleUser user = data.getParcelableExtra(SmartLoginConfig.USER);
             String userDetails = user.getEmail() + " " + user.getBirthday() + " " + user.getAboutMe();
             loginResult.setText(userDetails);
         }
-        if(resultCode == RESULT_CANCELED){
+        else if(resultCode == SmartLoginConfig.CUSTOM_LOGIN_REQUEST){
+            loginResult.setText("Custom logged in");
+        }
+        else if(resultCode == SmartLoginConfig.CUSTOM_SIGNUP_REQUEST){
+            loginResult.setText("Custom Signed up");
+        }
+        else if(resultCode == RESULT_CANCELED){
             loginResult.setText("login failed");
         }
 

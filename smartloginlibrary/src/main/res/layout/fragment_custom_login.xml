@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
         <EditText
-        android:id="@+id/userName"
+        android:id="@+id/userNameEditText"
         android:inputType="textPersonName"
         android:hint="@string/username_hint"
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/passwordEditText"
                 android:inputType="textPassword"
                 android:hint="@string/password_hint"
                 android:layout_width="match_parent"

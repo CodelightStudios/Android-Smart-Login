@@ -10,7 +10,7 @@ public class SmartLoginBuilder {
 
     private Context context;
     private SmartLoginConfig config;
-    public static SmartCustomLoginHelper mSmartCustomLoginHelper;
+    public static SmartCustomLoginListener mSmartCustomLoginListener;
     //private static final String CONFIGDATA = "config";
 
     public SmartLoginBuilder() {
@@ -35,8 +35,8 @@ public class SmartLoginBuilder {
         return this;
     }
 
-    public SmartLoginBuilder setmSmartCustomLoginHelper(SmartCustomLoginHelper mSmartCustomLoginHelper) {
-        SmartLoginBuilder.mSmartCustomLoginHelper = mSmartCustomLoginHelper;
+    public SmartLoginBuilder setmSmartCustomLoginHelper(SmartCustomLoginListener mSmartCustomLoginListener) {
+        SmartLoginBuilder.mSmartCustomLoginListener = mSmartCustomLoginListener;
         return this;
     }
 
