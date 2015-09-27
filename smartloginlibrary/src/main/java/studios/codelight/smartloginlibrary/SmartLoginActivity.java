@@ -59,6 +59,12 @@ public class SmartLoginActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //get the cofile object first
+        Bundle bundle = getIntent().getExtras();
+        config = SmartLoginConfig.unpack(bundle);
+
+        FacebookSdk.setApplicationId(config.getFacebookAppId());
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_smart_login);
 
@@ -77,10 +83,6 @@ public class SmartLoginActivity extends AppCompatActivity implements
                 .addApi(Plus.API)
                 .addScope(new Scope(Scopes.PROFILE))
                 .build();
-
-
-        Bundle bundle = getIntent().getExtras();
-        config = SmartLoginConfig.unpack(bundle);
 
         //set the listeners for the buttons
         findViewById(R.id.login_fb_button).setOnClickListener(this);

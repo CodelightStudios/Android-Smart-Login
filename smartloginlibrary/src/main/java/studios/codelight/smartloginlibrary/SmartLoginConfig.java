@@ -11,12 +11,14 @@ public class SmartLoginConfig{
     private int appLogo;
     private boolean isFacebookEnabled;
     private boolean isGoogleEnabled;
+    private String facebookAppId;
 
     public static final String APPLOGO = "studios.codelight.applogo";
     public static final String USER = "studios.codelight.user";
     public static final String FACEBOOKFLAG = "studios.codelight.facebook_flag";
     //public static final String TWITTERFLAG = "studios.codelight.twitter_flag";
     public static final String GOOGLEFLAG = "studios.codelight.google_flag";
+    public static final String FACEBOOKID = "studios.codelight.facebook_id";
     public static final String LOGINHELPER = "studios.codelight.loginhelper";
 
     public static final int FACEBOOK_LOGIN_REQUEST = 1;
@@ -51,6 +53,14 @@ public class SmartLoginConfig{
         this.isGoogleEnabled = isGoogleEnabled;
     }
 
+    public String getFacebookAppId() {
+        return facebookAppId;
+    }
+
+    public void setFacebookAppId(String facebookAppId) {
+        this.facebookAppId = facebookAppId;
+    }
+
     public Bundle pack(){
         Bundle bundle = new Bundle();
         if(appLogo != 0) {
@@ -58,6 +68,7 @@ public class SmartLoginConfig{
         }
         bundle.putBoolean(FACEBOOKFLAG, isFacebookEnabled);
         bundle.putBoolean(GOOGLEFLAG, isGoogleEnabled);
+        bundle.putString(FACEBOOKID, facebookAppId);
 //        bundle.putSerializable(LOGINHELPER, loginHelper);
         return bundle;
     }
@@ -75,6 +86,9 @@ public class SmartLoginConfig{
         }
         if(keys.contains(GOOGLEFLAG)){
             loginConfig.setIsGoogleEnabled(bundle.getBoolean(GOOGLEFLAG));
+        }
+        if(keys.contains(FACEBOOKID)){
+            loginConfig.setFacebookAppId(bundle.getString(FACEBOOKID));
         }
 
         return loginConfig;

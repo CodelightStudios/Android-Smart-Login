@@ -40,6 +40,11 @@ public class SmartLoginBuilder {
         return this;
     }
 
+    public SmartLoginBuilder withFacebookAppId(String appId){
+        config.setFacebookAppId(appId);
+        return this;
+    }
+
     public Intent build(){
         Intent intent = new Intent(context, SmartLoginActivity.class);
         //intent.putExtra(context.getString(R.string.config_data), config);

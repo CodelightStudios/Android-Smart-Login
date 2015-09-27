@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 Intent intent = loginBuilder.with(getApplicationContext())
-                        .isFacebookLoginEnabled(true)
+                        .isFacebookLoginEnabled(true).withFacebookAppId(getString(R.string.facebook_app_id))
                         .isGoogleLoginEnabled(false)
                         .setmSmartCustomLoginHelper(new SmartCustomLoginListener() {
                             @Override
