@@ -45,6 +45,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
     CallbackManager callbackManager;
     SmartLoginConfig config;
     EditText usernameEditText, passwordEditText;
+    ProgressDialog progress;
 
 
     //Google Sign in related
@@ -81,7 +82,8 @@ public class SmartLoginActivity extends AppCompatActivity implements
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(Plus.API)
-                .addScope(new Scope(Scopes.PROFILE))
+                .addScope(new Scope(Scopes.PLUS_LOGIN))
+                .addScope(new Scope(Scopes.EMAIL))
                 .build();
 
         //set the listeners for the buttons
@@ -155,6 +157,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
         // establish a service connection to Google Play services.
         Log.d("GOOGLE LOGIN", "onConnected:" + bundle);
         mShouldResolve = false;
+        progress = ProgressDialog.show(this, "", "Logging in...", true);
 
         //Get Google profile info
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
@@ -163,7 +166,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
 
             //From that obtained Person object populate the SmartGoogleUser object
             SmartGoogleUser googleUser = populateGoogleuser(currentPerson);
-
+            progress.dismiss();
             Intent data = new Intent();
             data.putExtra(SmartLoginConfig.USER, googleUser);
             setResult(SmartLoginConfig.GOOGLE_LOGIN_REQUEST, data);
@@ -188,6 +191,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
         // ConnectionResult to see possible error codes.
         final String TAG = "GOOGLE LOGIN";
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
+        progress.dismiss();
 
         if (!mIsResolving && mShouldResolve) {
             if (connectionResult.hasResolution()) {
@@ -224,7 +228,12 @@ public class SmartLoginActivity extends AppCompatActivity implements
             doFacebookLogin();
         } else if(id == R.id.login_google_button){
             //do google login
-            //Toast.makeText(SmartLoginActivity.this, "Google login", Toast.LENGTH_SHORT).show();
+            //Temporarily add code to logout in sign click and login again for testing
+            //if (mGoogleApiClient.isConnected()) {
+                //Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+                //Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient);
+                //mGoogleApiClient.disconnect();
+            //}
             doGoogleLogin();
         } else if(id == R.id.custom_signin_button){
             //custom signin implementation
@@ -238,6 +247,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
     private void doGoogleLogin() {
         // User clicked the sign-in button, so begin the sign-in process and automatically
         // attempt to resolve any errors that occur.
+        progress = ProgressDialog.show(this, "", "Logging in...", true);
         mShouldResolve = true;
         mGoogleApiClient.connect();
     }
@@ -387,6 +397,10 @@ public class SmartLoginActivity extends AppCompatActivity implements
             googleUser.setGender(person.getGender());
         if(person.hasBraggingRights())
             googleUser.setBraggingRights(person.getBraggingRights());
+        String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+        if(email != null){
+            googleUser.setEmail(email);
+        }
         //return the populated google user
         return googleUser;
     }
