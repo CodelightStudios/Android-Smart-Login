@@ -13,8 +13,10 @@ import android.widget.Toast;
 import studios.codelight.smartloginlibrary.SmartCustomLoginListener;
 import studios.codelight.smartloginlibrary.SmartLoginBuilder;
 import studios.codelight.smartloginlibrary.SmartLoginConfig;
+import studios.codelight.smartloginlibrary.UserSessionManager;
 import studios.codelight.smartloginlibrary.users.SmartFacebookUser;
 import studios.codelight.smartloginlibrary.users.SmartGoogleUser;
+import studios.codelight.smartloginlibrary.users.SmartUser;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +29,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button loginButton = (Button) findViewById(R.id.login_button);
         loginResult = (TextView) findViewById(R.id.login_result);
+
+        //get the current user details
+        SmartUser currentUser = UserSessionManager.getCurrentUser(this);
+        if(currentUser != null) {
+            String display = "no user";
+            if (currentUser instanceof SmartFacebookUser) {
+                SmartFacebookUser facebookUser = (SmartFacebookUser) currentUser;
+                display = facebookUser.getProfileName() + " is logged in";
+            } else if (currentUser instanceof SmartGoogleUser) {
+                display = ((SmartGoogleUser) currentUser).getDisplayName() + " is logged in";
+            }
+            //display = currentUser.getUserId() + " is logged in";
+            loginResult.setText(display);
+        }
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -19,7 +19,9 @@ public class SmartLoginConfig{
     //public static final String TWITTERFLAG = "studios.codelight.twitter_flag";
     public static final String GOOGLEFLAG = "studios.codelight.google_flag";
     public static final String FACEBOOKID = "studios.codelight.facebook_id";
-    public static final String LOGINHELPER = "studios.codelight.loginhelper";
+    public static final String CUSTOMUSERFLAG = "studios.codelight.custom_user";
+
+    public static final String USER_TYPE = "user_type";
 
     public static final int FACEBOOK_LOGIN_REQUEST = 1;
     public static final int GOOGLE_LOGIN_REQUEST = 2;

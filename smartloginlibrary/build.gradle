@@ -31,4 +31,6 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.0.1'
     //Google Play Services
     compile 'com.google.android.gms:play-services:7.8.0'
+    //GSON lib
+    compile 'com.google.code.gson:gson:2.3.1'
 }

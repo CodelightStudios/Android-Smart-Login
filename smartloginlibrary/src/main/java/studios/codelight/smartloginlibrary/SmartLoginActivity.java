@@ -35,6 +35,7 @@ import java.util.Collections;
 
 import studios.codelight.smartloginlibrary.users.SmartFacebookUser;
 import studios.codelight.smartloginlibrary.users.SmartGoogleUser;
+import studios.codelight.smartloginlibrary.users.SmartUser;
 import studios.codelight.smartloginlibrary.util.DialogUtil;
 
 public class SmartLoginActivity extends AppCompatActivity implements
@@ -167,10 +168,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
             //From that obtained Person object populate the SmartGoogleUser object
             SmartGoogleUser googleUser = populateGoogleuser(currentPerson);
             progress.dismiss();
-            Intent data = new Intent();
-            data.putExtra(SmartLoginConfig.USER, googleUser);
-            setResult(SmartLoginConfig.GOOGLE_LOGIN_REQUEST, data);
-            finish();
+            finishLogin(googleUser);
         }
 
 
@@ -228,12 +226,6 @@ public class SmartLoginActivity extends AppCompatActivity implements
             doFacebookLogin();
         } else if(id == R.id.login_google_button){
             //do google login
-            //Temporarily add code to logout in sign click and login again for testing
-            //if (mGoogleApiClient.isConnected()) {
-                //Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-                //Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient);
-                //mGoogleApiClient.disconnect();
-            //}
             doGoogleLogin();
         } else if(id == R.id.custom_signin_button){
             //custom signin implementation
@@ -336,10 +328,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
                                 if(object.has(SmartLoginConfig.FacebookFields.LAST_NAME))
                                     facebookUser.setLastName(object.getString(SmartLoginConfig.FacebookFields.LAST_NAME));
 
-                                Intent intent = new Intent();
-                                intent.putExtra(SmartLoginConfig.USER, facebookUser);
-                                setResult(SmartLoginConfig.FACEBOOK_LOGIN_REQUEST, intent);
-                                finish();
+                                finishLogin(facebookUser);
                             } catch (JSONException e) {
                                 Log.e(getClass().getSimpleName(), e.getMessage());
                                 finish();
@@ -403,6 +392,24 @@ public class SmartLoginActivity extends AppCompatActivity implements
         }
         //return the populated google user
         return googleUser;
+    }
+
+    private void finishLogin(SmartUser smartUser){
+        UserSessionManager sessionManager = new UserSessionManager();
+        if(sessionManager.setUserSession(this, smartUser)){
+            Intent intent = new Intent();
+            intent.putExtra(SmartLoginConfig.USER, smartUser);
+            if(smartUser instanceof SmartFacebookUser) {
+                setResult(SmartLoginConfig.FACEBOOK_LOGIN_REQUEST, intent);
+            } else if(smartUser instanceof SmartGoogleUser) {
+                setResult(SmartLoginConfig.GOOGLE_LOGIN_REQUEST, intent);
+            } else {
+                setResult(SmartLoginConfig.CUSTOM_LOGIN_REQUEST, intent);
+            }
+            finish();
+        } else {
+            DialogUtil.getErrorDialog(R.string.network_error, this);
+        }
     }
 
 }
