@@ -32,17 +32,17 @@ public class MainActivity extends AppCompatActivity {
 
         //get the current user details
         SmartUser currentUser = UserSessionManager.getCurrentUser(this);
+        String display = "no user";
         if(currentUser != null) {
-            String display = "no user";
             if (currentUser instanceof SmartFacebookUser) {
                 SmartFacebookUser facebookUser = (SmartFacebookUser) currentUser;
-                display = facebookUser.getProfileName() + " is logged in";
+                display = facebookUser.getProfileName() + " (FacebookUser)is logged in";
             } else if (currentUser instanceof SmartGoogleUser) {
-                display = ((SmartGoogleUser) currentUser).getDisplayName() + " is logged in";
+                display = ((SmartGoogleUser) currentUser).getDisplayName() + " (GoogleUser) is logged in";
             }
             //display = currentUser.getUserId() + " is logged in";
-            loginResult.setText(display);
         }
+        loginResult.setText(display);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

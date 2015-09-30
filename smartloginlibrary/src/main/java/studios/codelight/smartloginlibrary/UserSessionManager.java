@@ -1,6 +1,5 @@
 package studios.codelight.smartloginlibrary;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -17,11 +16,12 @@ import studios.codelight.smartloginlibrary.users.SmartUser;
 public class UserSessionManager {
 
     static final String SESSION_KEY = "user_session_key";
+    static final String USER_PREFS = "codelight_studios_user_prefs";
     static final String DEFAULT_SESSION_VALUE = "No logged in user";
 
-    public static SmartUser getCurrentUser(Activity activity){
+    public static SmartUser getCurrentUser(Context context){
         SmartUser smartUser = null;
-        SharedPreferences preferences = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences(USER_PREFS, Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String sessionUser = preferences.getString(SESSION_KEY, DEFAULT_SESSION_VALUE);
         String user_type = preferences.getString(SmartLoginConfig.USER_TYPE, SmartLoginConfig.CUSTOMUSERFLAG);
@@ -45,11 +45,11 @@ public class UserSessionManager {
         return smartUser;
     }
 
-    public boolean setUserSession(Activity activity, SmartUser smartUser){
+    public boolean setUserSession(Context context, SmartUser smartUser){
         SharedPreferences preferences;
         SharedPreferences.Editor editor;
         try {
-            preferences = activity.getPreferences(Context.MODE_PRIVATE);
+            preferences = context.getSharedPreferences(USER_PREFS, Context.MODE_PRIVATE);
             editor = preferences.edit();
 
             if (smartUser instanceof SmartFacebookUser){
