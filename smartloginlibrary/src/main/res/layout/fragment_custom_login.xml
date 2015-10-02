@@ -37,7 +37,7 @@
             <Button
                 android:id="@+id/custom_signin_button"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/sign_in"
                 android:background="@color/primary_color"
@@ -47,7 +47,7 @@
             <Button
                 android:id="@+id/custom_signup_button"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/primary_color"
                 android:textColor="@color/white"

@@ -33,6 +33,7 @@ import org.json.JSONObject;
 
 import java.util.Collections;
 
+import studios.codelight.smartloginlibrary.manager.UserSessionManager;
 import studios.codelight.smartloginlibrary.users.SmartFacebookUser;
 import studios.codelight.smartloginlibrary.users.SmartGoogleUser;
 import studios.codelight.smartloginlibrary.users.SmartUser;
