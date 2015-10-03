@@ -15,6 +15,12 @@
         android:orientation="vertical"
         android:animateLayoutChanges="true">
 
+        <LinearLayout
+            android:id="@+id/signin_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
         <include
             android:id="@+id/custom_login_panel"
             layout="@layout/fragment_custom_login"/>
@@ -26,10 +32,19 @@
         <include
             android:id="@+id/social_panel"
             layout="@layout/fragment_social_login"/>
+        </LinearLayout>
 
-        <include
+        <LinearLayout
+            android:id="@+id/signup_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
             android:id="@+id/signup_panel"
             layout="@layout/fragment_signup"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 </ScrollView>
 

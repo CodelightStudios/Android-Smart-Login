@@ -55,10 +55,19 @@ public class MainActivity extends AppCompatActivity {
                         .isGoogleLoginEnabled(false)
                         .setmSmartCustomLoginHelper(new SmartCustomLoginListener() {
                             @Override
-                            public boolean customSignin(String username, String password) {
-                                Toast.makeText(MainActivity.this, username + " " + password, Toast.LENGTH_SHORT).show();
+                            public boolean customSignin(SmartUser user) {
+                                //This "user" will have only username and password set.
+                                Toast.makeText(MainActivity.this, user.getUsername() + " " + user.getPassword(), Toast.LENGTH_SHORT).show();
                                 return true;
                             }
+
+                            @Override
+                            public boolean customSignup(SmartUser newUser) {
+                                //Implement your our custom sign up logic and return true if success
+                                return true;
+                            }
+
+
                         })
                         .build();
 

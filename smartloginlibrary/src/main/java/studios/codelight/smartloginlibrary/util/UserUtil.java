@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import studios.codelight.smartloginlibrary.SmartLoginConfig;
 import studios.codelight.smartloginlibrary.users.SmartFacebookUser;
 import studios.codelight.smartloginlibrary.users.SmartGoogleUser;
+import studios.codelight.smartloginlibrary.users.SmartUser;
 
 /**
  * Created by Kalyan on 10/3/2015.
@@ -98,6 +99,14 @@ public class UserUtil {
             facebookUser = null;
         }
         return facebookUser;
+    }
+
+    public SmartUser populateCustomUser(String username, String email, String password){
+        SmartUser user = new SmartUser();
+        user.setEmail(email);
+        user.setUsername(username);
+        user.setPassword(password);
+        return user;
     }
 
 }

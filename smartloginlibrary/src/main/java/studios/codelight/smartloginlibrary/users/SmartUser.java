@@ -9,6 +9,8 @@ import android.os.Parcelable;
 public class SmartUser implements Parcelable{
 
     private String  userId;
+    private String username;
+    private String password;
     private String firstName;
     private String middleName;
     private String lastName;
@@ -22,6 +24,8 @@ public class SmartUser implements Parcelable{
 
     protected SmartUser(Parcel in) {
         userId = in.readString();
+        username = in.readString();
+        password = in.readString();
         firstName = in.readString();
         middleName = in.readString();
         lastName = in.readString();
@@ -34,6 +38,8 @@ public class SmartUser implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(userId);
+        dest.writeString(username);
+        dest.writeString(password);
         dest.writeString(firstName);
         dest.writeString(middleName);
         dest.writeString(lastName);
@@ -66,6 +72,22 @@ public class SmartUser implements Parcelable{
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {

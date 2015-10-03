@@ -28,4 +28,8 @@
     <string name="no_email_error">You need an email to sign up</string>
     <string name="invalid_email_error">Please enter a valid email</string>
 
+    <string name="loading_holder">Please wait…</string>
+    <string name="logging_holder">Logging in…</string>
+    <string name="getting_data">Getting User Info…</string>
+
 </resources>
