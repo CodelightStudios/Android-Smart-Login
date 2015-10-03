@@ -25,5 +25,7 @@
     <string name="network_error">Something went wrong. Please check Network Connection.</string>
     <string name="username_error">Please enter your username or email</string>
     <string name="password_error">Hope you have a password</string>
+    <string name="no_email_error">You need an email to sign up</string>
+    <string name="invalid_email_error">Please enter a valid email</string>
 
 </resources>

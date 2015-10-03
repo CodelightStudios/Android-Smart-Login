@@ -6,10 +6,13 @@ import android.content.IntentSender;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -28,7 +31,6 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Collections;
@@ -38,6 +40,7 @@ import studios.codelight.smartloginlibrary.users.SmartFacebookUser;
 import studios.codelight.smartloginlibrary.users.SmartGoogleUser;
 import studios.codelight.smartloginlibrary.users.SmartUser;
 import studios.codelight.smartloginlibrary.util.DialogUtil;
+import studios.codelight.smartloginlibrary.util.UserUtil;
 
 public class SmartLoginActivity extends AppCompatActivity implements
         View.OnClickListener,
@@ -46,8 +49,10 @@ public class SmartLoginActivity extends AppCompatActivity implements
 
     CallbackManager callbackManager;
     SmartLoginConfig config;
-    EditText usernameEditText, passwordEditText;
+    EditText usernameEditText, passwordEditText, usernameSignup, emailSignup, passwordSignup;
     ProgressDialog progress;
+    LinearLayout signUpPanel;
+    ViewGroup mContainer;
 
 
     //Google Sign in related
@@ -71,9 +76,13 @@ public class SmartLoginActivity extends AppCompatActivity implements
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_smart_login);
 
+        mContainer = (ViewGroup) findViewById(R.id.main_container);
         //bind the views
         usernameEditText = (EditText) findViewById(R.id.userNameEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
+        usernameSignup = (EditText) findViewById(R.id.userNameSignUp);
+        passwordSignup = (EditText) findViewById(R.id.passwordSignUp);
+        emailSignup = (EditText) findViewById(R.id.emailSignUp);
 
         //Facebook login callback
         callbackManager = CallbackManager.Factory.create();
@@ -93,6 +102,9 @@ public class SmartLoginActivity extends AppCompatActivity implements
         findViewById(R.id.login_google_button).setOnClickListener(this);
         findViewById(R.id.custom_signin_button).setOnClickListener(this);
         findViewById(R.id.custom_signup_button).setOnClickListener(this);
+        findViewById(R.id.user_signup_button).setOnClickListener(this);
+
+        signUpPanel = (LinearLayout) findViewById(R.id.signup_panel);
     }
 
     //Required for Facebook login
@@ -167,7 +179,8 @@ public class SmartLoginActivity extends AppCompatActivity implements
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
             //From that obtained Person object populate the SmartGoogleUser object
-            SmartGoogleUser googleUser = populateGoogleuser(currentPerson);
+            UserUtil util = new UserUtil();
+            SmartGoogleUser googleUser = util.populateGoogleUser(currentPerson, mGoogleApiClient);
             progress.dismiss();
             finishLogin(googleUser);
         }
@@ -233,6 +246,8 @@ public class SmartLoginActivity extends AppCompatActivity implements
             doCustomSignin();
         } else if(id == R.id.custom_signup_button){
             //custom signup implementation
+            findViewById(R.id.userNameSignUp).requestFocus();
+        } else if(id == R.id.user_signup_button){
             doCustomSignup();
         }
     }
@@ -246,16 +261,32 @@ public class SmartLoginActivity extends AppCompatActivity implements
     }
 
     private void doCustomSignup() {
-//        final ProgressDialog progress = ProgressDialog.show(this, "", "Logging in...", true);
-//        if(SmartLoginBuilder.mSmartCustomLoginListener != null) {
-//            if(SmartLoginBuilder.mSmartCustomLoginListener.customSignup()){
-//                progress.dismiss();
-//                setResult(SmartLoginConfig.CUSTOM_SIGNUP_REQUEST);
-//            }else {
-//                setResult(RESULT_CANCELED);
-//            }
-//            finish();
-//        }
+        String username = usernameSignup.getText().toString();
+        String password = passwordSignup.getText().toString();
+        String email = emailSignup.getText().toString();
+        if(username.equals("")){
+            DialogUtil.getErrorDialog(R.string.username_error, this).show();
+        } else if(password.equals("")) {
+            DialogUtil.getErrorDialog(R.string.password_error, this).show();
+        } else if(email.equals("")){
+            DialogUtil.getErrorDialog(R.string.no_email_error, this).show();
+        } else if(Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            DialogUtil.getErrorDialog(R.string.invalid_email_error, this).show();
+        }
+        else {
+            if (SmartLoginBuilder.mSmartCustomLoginListener != null) {
+                final ProgressDialog progress = ProgressDialog.show(this, "", "Logging in...", true);
+                if (SmartLoginBuilder.mSmartCustomLoginListener.customSignin(username, password)) {
+                    progress.dismiss();
+                    setResult(SmartLoginConfig.CUSTOM_SIGNUP_REQUEST);
+                } else {
+                    progress.dismiss();
+                    setResult(RESULT_CANCELED);
+                }
+                finish();
+            }
+        }
+
     }
 
     private void doCustomSignin() {
@@ -292,46 +323,12 @@ public class SmartLoginActivity extends AppCompatActivity implements
                     GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                         @Override
                         public void onCompleted(JSONObject object, GraphResponse response) {
-                            SmartFacebookUser facebookUser = new SmartFacebookUser();
                             progress.dismiss();
-                            try {
-                                if(object.has(SmartLoginConfig.FacebookFields.EMAIL))
-                                    facebookUser.setEmail(object.getString(SmartLoginConfig.FacebookFields.EMAIL));
-                                if(object.has(SmartLoginConfig.FacebookFields.BIRTHDAY))
-                                    facebookUser.setBirthday(object.getString(SmartLoginConfig.FacebookFields.BIRTHDAY));
-                                if(object.has(SmartLoginConfig.FacebookFields.GENDER)) {
-                                    try {
-                                        SmartLoginConfig.Gender gender = SmartLoginConfig.Gender.valueOf(object.getString(SmartLoginConfig.FacebookFields.GENDER));
-                                        switch (gender) {
-                                            case male:
-                                                facebookUser.setGender(0);
-                                                break;
-                                            case female:
-                                                facebookUser.setGender(1);
-                                                break;
-                                        }
-                                    }catch (Exception e){
-                                        //if gender is not in the enum it is set to unspecified value (2)
-                                        facebookUser.setGender(2);
-                                        Log.e(getClass().getSimpleName(), e.getMessage());
-                                    }
-                                }
-                                if(object.has(SmartLoginConfig.FacebookFields.LINK))
-                                    facebookUser.setProfileLink(object.getString(SmartLoginConfig.FacebookFields.LINK));
-                                if(object.has(SmartLoginConfig.FacebookFields.ID))
-                                    facebookUser.setUserId(object.getString(SmartLoginConfig.FacebookFields.ID));
-                                if(object.has(SmartLoginConfig.FacebookFields.NAME))
-                                    facebookUser.setProfileName(object.getString(SmartLoginConfig.FacebookFields.NAME));
-                                if(object.has(SmartLoginConfig.FacebookFields.FIRST_NAME))
-                                    facebookUser.setFirstName(object.getString(SmartLoginConfig.FacebookFields.FIRST_NAME));
-                                if(object.has(SmartLoginConfig.FacebookFields.MIDDLE_NAME))
-                                    facebookUser.setMiddleName(object.getString(SmartLoginConfig.FacebookFields.MIDDLE_NAME));
-                                if(object.has(SmartLoginConfig.FacebookFields.LAST_NAME))
-                                    facebookUser.setLastName(object.getString(SmartLoginConfig.FacebookFields.LAST_NAME));
-
+                            UserUtil util = new UserUtil();
+                            SmartFacebookUser facebookUser = util.populateFacebookUser(object);
+                            if(facebookUser != null){
                                 finishLogin(facebookUser);
-                            } catch (JSONException e) {
-                                Log.e(getClass().getSimpleName(), e.getMessage());
+                            } else {
                                 finish();
                             }
                         }
@@ -354,45 +351,6 @@ public class SmartLoginActivity extends AppCompatActivity implements
                 }
             });
         }
-    }
-
-    private SmartGoogleUser populateGoogleuser(Person person){
-        //Create a new google user
-        SmartGoogleUser googleUser = new SmartGoogleUser();
-        //populate the user
-        if(person.hasName()) {
-            Person.Name name = person.getName();
-            if (name.hasGivenName())
-                googleUser.setFirstName(name.getGivenName());
-            if (name.hasFamilyName())
-                googleUser.setLastName(name.getFamilyName());
-            if (name.hasFormatted())
-                googleUser.setFullName(name.getFormatted());
-            if (name.hasMiddleName())
-                googleUser.setMiddleName(name.getMiddleName());
-        }
-        if(person.hasId())
-            googleUser.setUserId(person.getId());
-        if(person.hasNickname())
-            googleUser.setNickname(person.getNickname());
-        if(person.hasDisplayName())
-            googleUser.setDisplayName(person.getDisplayName());
-        if(person.hasBirthday())
-            googleUser.setBirthday(person.getBirthday());
-        if(person.hasAboutMe())
-            googleUser.setAboutMe(person.getAboutMe());
-        if(person.hasLanguage())
-            googleUser.setLanguage(person.getLanguage());
-        if(person.hasGender())
-            googleUser.setGender(person.getGender());
-        if(person.hasBraggingRights())
-            googleUser.setBraggingRights(person.getBraggingRights());
-        String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
-        if(email != null){
-            googleUser.setEmail(email);
-        }
-        //return the populated google user
-        return googleUser;
     }
 
     private void finishLogin(SmartUser smartUser){
