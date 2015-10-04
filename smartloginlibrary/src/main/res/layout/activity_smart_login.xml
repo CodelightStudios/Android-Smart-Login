@@ -15,6 +15,13 @@
         android:orientation="vertical"
         android:animateLayoutChanges="true">
 
+        <ImageView
+            android:id="@+id/applogo_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/app_name" />
+
         <LinearLayout
             android:id="@+id/signin_container"
             android:layout_width="match_parent"

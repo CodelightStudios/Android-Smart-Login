@@ -25,7 +25,7 @@ import studios.codelight.smartloginlibrary.users.SmartUser;
 public class MainActivity extends AppCompatActivity {
     //SmartFacebookResult smartFacebookResult;
     TextView loginResult;
-    CheckBox customLogin, facebookLogin, googleLogin;
+    CheckBox customLogin, facebookLogin, googleLogin, appLogoCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         customLogin = (CheckBox) findViewById(R.id.customCheckbox);
         facebookLogin = (CheckBox) findViewById(R.id.facebookCheckbox);
         googleLogin = (CheckBox) findViewById(R.id.googleCheckbox);
+        appLogoCheckBox = (CheckBox) findViewById(R.id.appLogoCheckbox);
 
         //get the current user details
         SmartUser currentUser = UserSessionManager.getCurrentUser(this);
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 SmartLoginBuilder loginBuilder = new SmartLoginBuilder();
+
+                //Set facebook permissions
                 ArrayList<String> permissions = new ArrayList<>();
                 permissions.add("public_profile");
                 permissions.add("email");
@@ -63,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 Intent intent = loginBuilder.with(getApplicationContext())
+                        .setAppLogo(getlogo())
                         .isFacebookLoginEnabled(facebookLogin.isChecked())
                         .withFacebookAppId(getString(R.string.facebook_app_id)).withFacebookPermissions(permissions)
                         .isGoogleLoginEnabled(googleLogin.isChecked())
@@ -88,6 +92,13 @@ public class MainActivity extends AppCompatActivity {
                 //startActivity(intent);
             }
         });
+    }
+
+    private int getlogo() {
+        if(appLogoCheckBox.isChecked()){
+            return R.mipmap.ic_launcher;
+        }
+        return 0;
     }
 
     @Override

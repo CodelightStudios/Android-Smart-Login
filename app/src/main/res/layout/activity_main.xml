@@ -13,6 +13,13 @@
         android:layout_marginBottom="20dp">
 
         <CheckBox
+            android:id="@+id/appLogoCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="App Logo"
+            android:padding="10dp"/>
+
+        <CheckBox
             android:id="@+id/customCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

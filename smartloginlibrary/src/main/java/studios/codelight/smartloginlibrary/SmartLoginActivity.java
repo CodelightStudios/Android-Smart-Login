@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -56,6 +57,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
     //LinearLayout signUpPanel;
     ViewGroup mContainer;
     LinearLayout signinContainer, signupContainer;
+    ImageView appLogo;
 
 
     //Google Sign in related
@@ -81,6 +83,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
 
         mContainer = (ViewGroup) findViewById(R.id.main_container);
         //bind the views
+        appLogo = (ImageView) findViewById(R.id.applogo_imageView);
         usernameEditText = (EditText) findViewById(R.id.userNameEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         usernameSignup = (EditText) findViewById(R.id.userNameSignUp);
@@ -88,6 +91,13 @@ public class SmartLoginActivity extends AppCompatActivity implements
         emailSignup = (EditText) findViewById(R.id.emailSignUp);
         signinContainer = (LinearLayout) findViewById(R.id.signin_container);
         signupContainer = (LinearLayout) findViewById(R.id.signup_container);
+
+        //Set app logo
+        if(config.getAppLogo() != 0) {
+            appLogo.setImageResource(config.getAppLogo());
+        } else {
+            appLogo.setVisibility(View.GONE);
+        }
 
         //Attach the views in the respective containers
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -139,7 +149,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
         //signUpPanel = (LinearLayout) findViewById(R.id.signup_panel);
     }
 
-    //Required for Facebook login
+    //Required for Facebook and google login
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -180,10 +190,6 @@ public class SmartLoginActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Dispatch onStart() to all fragments.  Ensure any created loaders are
-     * now started.
-     */
     @Override
     protected void onStart() {
         super.onStart();
