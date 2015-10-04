@@ -95,7 +95,9 @@ public class SmartLoginActivity extends AppCompatActivity implements
         //include views based on user settings
         if(config.isCustomLoginEnabled()){
             signinContainer.addView(layoutInflater.inflate(R.layout.fragment_custom_login, mContainer, false));
-            signinContainer.addView(layoutInflater.inflate(R.layout.fragment_divider, mContainer, false));
+            if(config.isFacebookEnabled() || config.isGoogleEnabled()) {
+                signinContainer.addView(layoutInflater.inflate(R.layout.fragment_divider, mContainer, false));
+            }
             signupContainer.addView(layoutInflater.inflate(R.layout.fragment_signup, mContainer, false));
 
             //listeners

@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import studios.codelight.smartloginlibrary.users.SmartUser;
 public class MainActivity extends AppCompatActivity {
     //SmartFacebookResult smartFacebookResult;
     TextView loginResult;
+    CheckBox customLogin, facebookLogin, googleLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button loginButton = (Button) findViewById(R.id.login_button);
         loginResult = (TextView) findViewById(R.id.login_result);
+        customLogin = (CheckBox) findViewById(R.id.customCheckbox);
+        facebookLogin = (CheckBox) findViewById(R.id.facebookCheckbox);
+        googleLogin = (CheckBox) findViewById(R.id.googleCheckbox);
 
         //get the current user details
         SmartUser currentUser = UserSessionManager.getCurrentUser(this);
@@ -58,10 +63,10 @@ public class MainActivity extends AppCompatActivity {
 
 
                 Intent intent = loginBuilder.with(getApplicationContext())
-                        .isFacebookLoginEnabled(true)
+                        .isFacebookLoginEnabled(facebookLogin.isChecked())
                         .withFacebookAppId(getString(R.string.facebook_app_id)).withFacebookPermissions(permissions)
-                        .isGoogleLoginEnabled(false)
-                        .isCustomLoginEnabled(false).setSmartCustomLoginHelper(new SmartCustomLoginListener() {
+                        .isGoogleLoginEnabled(googleLogin.isChecked())
+                        .isCustomLoginEnabled(customLogin.isChecked()).setSmartCustomLoginHelper(new SmartCustomLoginListener() {
                             @Override
                             public boolean customSignin(SmartUser user) {
                                 //This "user" will have only username and password set.
