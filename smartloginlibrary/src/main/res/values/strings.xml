@@ -31,5 +31,6 @@
     <string name="loading_holder">Please wait…</string>
     <string name="logging_holder">Logging in…</string>
     <string name="getting_data">Getting User Info…</string>
+    <string name="password_mismatch">Make sure your passwords match</string>
 
 </resources>

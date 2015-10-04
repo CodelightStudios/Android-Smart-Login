@@ -47,8 +47,9 @@ public class MainActivity extends AppCompatActivity {
                 display = facebookUser.getProfileName() + " (FacebookUser)is logged in";
             } else if (currentUser instanceof SmartGoogleUser) {
                 display = ((SmartGoogleUser) currentUser).getDisplayName() + " (GoogleUser) is logged in";
+            } else {
+                display = currentUser.getUsername() + " (Custom User) is logged in";
             }
-            //display = currentUser.getUserId() + " is logged in";
         }
         loginResult.setText(display);
 
@@ -125,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String fail = "Login Failed";
         if(resultCode == SmartLoginConfig.FACEBOOK_LOGIN_REQUEST){
             SmartFacebookUser user;
             try {
@@ -132,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 String userDetails = user.getProfileName() + " " + user.getEmail() + " " + user.getBirthday();
                 loginResult.setText(userDetails);
             }catch (Exception e){
-                loginResult.setText("login failed");
+                loginResult.setText(fail);
             }
         }
         else if(resultCode == SmartLoginConfig.GOOGLE_LOGIN_REQUEST){
@@ -141,13 +143,17 @@ public class MainActivity extends AppCompatActivity {
             loginResult.setText(userDetails);
         }
         else if(resultCode == SmartLoginConfig.CUSTOM_LOGIN_REQUEST){
-            loginResult.setText("Custom logged in");
+            SmartUser user = data.getParcelableExtra(SmartLoginConfig.USER);
+            String userDetails = user.getUsername() + " (Custom User)";
+            loginResult.setText(userDetails);
         }
         else if(resultCode == SmartLoginConfig.CUSTOM_SIGNUP_REQUEST){
-            loginResult.setText("Custom Signed up");
+            SmartUser user = data.getParcelableExtra(SmartLoginConfig.USER);
+            String userDetails = user.getUsername() + " (Custom User)";
+            loginResult.setText(userDetails);
         }
         else if(resultCode == RESULT_CANCELED){
-            loginResult.setText("login failed");
+            loginResult.setText(fail);
         }
 
     }

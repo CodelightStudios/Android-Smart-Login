@@ -52,7 +52,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
 
     CallbackManager callbackManager;
     SmartLoginConfig config;
-    EditText usernameEditText, passwordEditText, usernameSignup, emailSignup, passwordSignup;
+    EditText usernameEditText, passwordEditText, usernameSignup, emailSignup, passwordSignup, repeatPasswordSignup;
     ProgressDialog progress;
     //LinearLayout signUpPanel;
     ViewGroup mContainer;
@@ -82,22 +82,8 @@ public class SmartLoginActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_smart_login);
 
         mContainer = (ViewGroup) findViewById(R.id.main_container);
-        //bind the views
-        appLogo = (ImageView) findViewById(R.id.applogo_imageView);
-        usernameEditText = (EditText) findViewById(R.id.userNameEditText);
-        passwordEditText = (EditText) findViewById(R.id.passwordEditText);
-        usernameSignup = (EditText) findViewById(R.id.userNameSignUp);
-        passwordSignup = (EditText) findViewById(R.id.passwordSignUp);
-        emailSignup = (EditText) findViewById(R.id.emailSignUp);
         signinContainer = (LinearLayout) findViewById(R.id.signin_container);
         signupContainer = (LinearLayout) findViewById(R.id.signup_container);
-
-        //Set app logo
-        if(config.getAppLogo() != 0) {
-            appLogo.setImageResource(config.getAppLogo());
-        } else {
-            appLogo.setVisibility(View.GONE);
-        }
 
         //Attach the views in the respective containers
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -130,6 +116,22 @@ public class SmartLoginActivity extends AppCompatActivity implements
             }
             signinContainer.addView(layoutInflater.inflate(R.layout.fragment_google_login, mContainer, false));
             findViewById(R.id.login_google_button).setOnClickListener(this);
+        }
+
+        //bind the views
+        appLogo = (ImageView) findViewById(R.id.applogo_imageView);
+        usernameEditText = (EditText) findViewById(R.id.userNameEditText);
+        passwordEditText = (EditText) findViewById(R.id.passwordEditText);
+        usernameSignup = (EditText) findViewById(R.id.userNameSignUp);
+        passwordSignup = (EditText) findViewById(R.id.passwordSignUp);
+        repeatPasswordSignup = (EditText) findViewById(R.id.repeatPasswordSignUp);
+        emailSignup = (EditText) findViewById(R.id.emailSignUp);
+
+        //Set app logo
+        if(config.getAppLogo() != 0) {
+            appLogo.setImageResource(config.getAppLogo());
+        } else {
+            appLogo.setVisibility(View.GONE);
         }
 
         //Facebook login callback
@@ -307,6 +309,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
     private void doCustomSignup() {
         String username = usernameSignup.getText().toString();
         String password = passwordSignup.getText().toString();
+        String repeatPassword = repeatPasswordSignup.getText().toString();
         String email = emailSignup.getText().toString();
         if(username.equals("")){
             DialogUtil.getErrorDialog(R.string.username_error, this).show();
@@ -316,6 +319,8 @@ public class SmartLoginActivity extends AppCompatActivity implements
             DialogUtil.getErrorDialog(R.string.no_email_error, this).show();
         } else if(Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             DialogUtil.getErrorDialog(R.string.invalid_email_error, this).show();
+        } else if(!password.equals(repeatPassword)){
+            DialogUtil.getErrorDialog(R.string.password_mismatch, this).show();
         }
         else {
             if (SmartLoginBuilder.smartCustomLoginListener != null) {
@@ -324,11 +329,12 @@ public class SmartLoginActivity extends AppCompatActivity implements
                 if (SmartLoginBuilder.smartCustomLoginListener.customSignup(newUser)) {
                     progress.dismiss();
                     setResult(SmartLoginConfig.CUSTOM_SIGNUP_REQUEST);
+                    finishLogin(newUser);
                 } else {
                     progress.dismiss();
                     setResult(RESULT_CANCELED);
+                    finish();
                 }
-                finish();
             }
         }
 
@@ -348,11 +354,12 @@ public class SmartLoginActivity extends AppCompatActivity implements
                 if (SmartLoginBuilder.smartCustomLoginListener.customSignin(user)) {
                     progress.dismiss();
                     setResult(SmartLoginConfig.CUSTOM_LOGIN_REQUEST);
+                    finishLogin(user);
                 } else {
                     progress.dismiss();
                     setResult(RESULT_CANCELED);
+                    finish();
                 }
-                finish();
             }
         }
     }
