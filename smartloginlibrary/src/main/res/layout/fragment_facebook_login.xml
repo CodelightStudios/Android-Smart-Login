@@ -8,13 +8,6 @@
     android:layout_weight="1"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--<com.facebook.login.widget.LoginButton-->
-        <!--android:id="@+id/login_fb_button"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="60dp"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:padding="16dp"-->
-        <!--android:layout_marginBottom="10dp"/>-->
     <Button
         android:id="@+id/login_fb_button"
         android:layout_width="fill_parent"
@@ -27,33 +20,5 @@
         android:textColor="@color/white"
         android:background="@color/facebook_brand_color"
         android:layout_margin="5dp" />
-
-    <!--<Button-->
-        <!--android:id="@+id/login_twitter_button"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="60dp"-->
-        <!--android:padding="16dp"-->
-        <!--android:layout_marginBottom="10dp"-->
-        <!--android:text="@string/twitter_login_text"-->
-        <!--android:drawableLeft="@drawable/twitter_white"-->
-        <!--android:drawableStart="@drawable/twitter_white"-->
-        <!--android:textSize="20sp"-->
-        <!--android:textColor="@color/white"-->
-        <!--android:background="@color/twitter_brand_color"-->
-        <!--android:textAllCaps="false"/>-->
-
-    <!--<Button-->
-        <!--android:id="@+id/login_google_button"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="60dp"-->
-        <!--android:padding="16dp"-->
-        <!--android:layout_marginBottom="10dp"-->
-        <!--android:text="@string/twitter_login_text"-->
-        <!--android:drawableLeft="@drawable/twitter_white"-->
-        <!--android:drawableStart="@drawable/twitter_white"-->
-        <!--android:textSize="20sp"-->
-        <!--android:textColor="@color/white"-->
-        <!--android:background="@color/twitter_brand_color"-->
-        <!--android:textAllCaps="false"/>-->
 
 </LinearLayout>

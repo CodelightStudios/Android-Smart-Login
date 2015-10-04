@@ -20,18 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-        <!--<include-->
-            <!--android:id="@+id/custom_login_panel"-->
-            <!--layout="@layout/fragment_custom_login"/>-->
-
-        <!--<include-->
-            <!--android:id="@+id/divider_panel"-->
-            <!--layout="@layout/fragment_divider"/>-->
-
-        <!--<include-->
-            <!--android:id="@+id/social_panel"-->
-            <!--layout="@layout/fragment_facebook_login"/>-->
         </LinearLayout>
 
         <LinearLayout
@@ -39,11 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <!--<include-->
-            <!--android:id="@+id/signup_panel"-->
-            <!--layout="@layout/fragment_signup"/>-->
-
         </LinearLayout>
 
     </LinearLayout>
