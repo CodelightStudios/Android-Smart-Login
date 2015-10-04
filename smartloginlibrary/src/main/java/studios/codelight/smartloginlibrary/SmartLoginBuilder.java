@@ -3,6 +3,8 @@ package studios.codelight.smartloginlibrary;
 import android.content.Context;
 import android.content.Intent;
 
+import java.util.ArrayList;
+
 /**
  * Created by Kalyan on 9/9/2015.
  */
@@ -25,6 +27,11 @@ public class SmartLoginBuilder {
         return this;
     }
 
+    public SmartLoginBuilder setAppLogo(int logo){
+        config.setAppLogo(logo);
+        return this;
+    }
+
     public SmartLoginBuilder isFacebookLoginEnabled(boolean facebookLogin){
         config.setIsFacebookEnabled(facebookLogin);
         return this;
@@ -42,6 +49,11 @@ public class SmartLoginBuilder {
 
     public SmartLoginBuilder withFacebookAppId(String appId){
         config.setFacebookAppId(appId);
+        return this;
+    }
+
+    public SmartLoginBuilder withFacebookPermissions(ArrayList<String> permissions){
+        config.setFacebookPermissions(permissions);
         return this;
     }
 

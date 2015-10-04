@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import studios.codelight.smartloginlibrary.SmartCustomLoginListener;
 import studios.codelight.smartloginlibrary.SmartLoginBuilder;
 import studios.codelight.smartloginlibrary.SmartLoginConfig;
@@ -48,10 +50,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 SmartLoginBuilder loginBuilder = new SmartLoginBuilder();
+                ArrayList<String> permissions = new ArrayList<>();
+                permissions.add("public_profile");
+                permissions.add("email");
+                permissions.add("user_birthday");
+                permissions.add("user_friends");
 
 
                 Intent intent = loginBuilder.with(getApplicationContext())
-                        .isFacebookLoginEnabled(true).withFacebookAppId(getString(R.string.facebook_app_id))
+                        .isFacebookLoginEnabled(true)
+                        .withFacebookAppId(getString(R.string.facebook_app_id)).withFacebookPermissions(permissions)
                         .isGoogleLoginEnabled(false)
                         .setmSmartCustomLoginHelper(new SmartCustomLoginListener() {
                             @Override

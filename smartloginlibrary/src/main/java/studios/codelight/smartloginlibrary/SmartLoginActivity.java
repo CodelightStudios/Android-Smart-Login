@@ -32,7 +32,7 @@ import com.google.android.gms.plus.model.people.Person;
 
 import org.json.JSONObject;
 
-import java.util.Collections;
+import java.util.ArrayList;
 
 import studios.codelight.smartloginlibrary.manager.UserSessionManager;
 import studios.codelight.smartloginlibrary.users.SmartFacebookUser;
@@ -328,7 +328,11 @@ public class SmartLoginActivity extends AppCompatActivity implements
         if(config.isFacebookEnabled()) {
             Toast.makeText(SmartLoginActivity.this, "Facebook login", Toast.LENGTH_SHORT).show();
             final ProgressDialog progress = ProgressDialog.show(this, "", getString(R.string.logging_holder), true);
-            LoginManager.getInstance().logInWithReadPermissions(SmartLoginActivity.this, Collections.singletonList("public_profile, email, user_birthday, user_friends"));
+            ArrayList<String> permissions = config.getFacebookPermissions();
+            if (permissions == null){
+                permissions = SmartLoginConfig.getDefaultFacebookPermissions();
+            }
+            LoginManager.getInstance().logInWithReadPermissions(SmartLoginActivity.this, permissions);
             LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                 @Override
                 public void onSuccess(LoginResult loginResult) {

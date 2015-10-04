@@ -2,6 +2,7 @@ package studios.codelight.smartloginlibrary;
 
 import android.os.Bundle;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -12,10 +13,12 @@ public class SmartLoginConfig{
     private boolean isFacebookEnabled;
     private boolean isGoogleEnabled;
     private String facebookAppId;
+    private ArrayList<String> facebookPermissions;
 
     public static final String APPLOGO = "studios.codelight.applogo";
     public static final String USER = "studios.codelight.user";
     public static final String FACEBOOKFLAG = "studios.codelight.facebook_flag";
+    public static final String FACEBOOKPERMISSIONS = "studios.codelight.facebook_permissions";
     //public static final String TWITTERFLAG = "studios.codelight.twitter_flag";
     public static final String GOOGLEFLAG = "studios.codelight.google_flag";
     public static final String FACEBOOKID = "studios.codelight.facebook_id";
@@ -63,6 +66,22 @@ public class SmartLoginConfig{
         this.facebookAppId = facebookAppId;
     }
 
+    public ArrayList<String> getFacebookPermissions() {
+        return facebookPermissions;
+    }
+
+    public void setFacebookPermissions(ArrayList<String> facebookPermissions) {
+        this.facebookPermissions = facebookPermissions;
+    }
+
+    public static ArrayList<String> getDefaultFacebookPermissions(){
+        ArrayList<String> defaultPermissions = new ArrayList<>();
+        defaultPermissions.add("public_profile");
+        defaultPermissions.add("email");
+        defaultPermissions.add("user_birthday");
+        return defaultPermissions;
+    }
+
     public Bundle pack(){
         Bundle bundle = new Bundle();
         if(appLogo != 0) {
@@ -71,6 +90,7 @@ public class SmartLoginConfig{
         bundle.putBoolean(FACEBOOKFLAG, isFacebookEnabled);
         bundle.putBoolean(GOOGLEFLAG, isGoogleEnabled);
         bundle.putString(FACEBOOKID, facebookAppId);
+        bundle.putStringArrayList(FACEBOOKPERMISSIONS, facebookPermissions);
 //        bundle.putSerializable(LOGINHELPER, loginHelper);
         return bundle;
     }
@@ -91,6 +111,9 @@ public class SmartLoginConfig{
         }
         if(keys.contains(FACEBOOKID)){
             loginConfig.setFacebookAppId(bundle.getString(FACEBOOKID));
+        }
+        if (keys.contains(FACEBOOKPERMISSIONS)){
+            loginConfig.setFacebookPermissions(bundle.getStringArrayList(FACEBOOKPERMISSIONS));
         }
 
         return loginConfig;
