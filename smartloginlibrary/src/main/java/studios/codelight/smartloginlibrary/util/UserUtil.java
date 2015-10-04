@@ -22,6 +22,7 @@ public class UserUtil {
     public SmartGoogleUser populateGoogleUser(Person person, GoogleApiClient googleApiClient){
         //Create a new google user
         SmartGoogleUser googleUser = new SmartGoogleUser();
+        googleUser.setGender(-1);
         //populate the user
         if(person.hasName()) {
             Person.Name name = person.getName();
@@ -60,6 +61,7 @@ public class UserUtil {
 
     public SmartFacebookUser populateFacebookUser(JSONObject object){
         SmartFacebookUser facebookUser = new SmartFacebookUser();
+        facebookUser.setGender(-1);
         try {
             if (object.has(SmartLoginConfig.FacebookFields.EMAIL))
                 facebookUser.setEmail(object.getString(SmartLoginConfig.FacebookFields.EMAIL));
@@ -77,8 +79,8 @@ public class UserUtil {
                             break;
                     }
                 } catch (Exception e) {
-                    //if gender is not in the enum it is set to unspecified value (2)
-                    facebookUser.setGender(2);
+                    //if gender is not in the enum it is set to unspecified value (-1)
+                    facebookUser.setGender(-1);
                     Log.e(getClass().getSimpleName(), e.getMessage());
                 }
             }
@@ -106,6 +108,7 @@ public class UserUtil {
         user.setEmail(email);
         user.setUsername(username);
         user.setPassword(password);
+        user.setGender(-1);
         return user;
     }
 

@@ -62,6 +62,7 @@ public class UserSessionManager {
             }
 
             Gson gson = new Gson();
+            smartUser.setPassword(null);
             String sessionUser = gson.toJson(smartUser);
             Log.d("GSON", sessionUser);
             editor.putString(SESSION_KEY, sessionUser);

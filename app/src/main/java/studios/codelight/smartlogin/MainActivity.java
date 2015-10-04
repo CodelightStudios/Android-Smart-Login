@@ -147,11 +147,11 @@ public class MainActivity extends AppCompatActivity {
             String userDetails = user.getUsername() + " (Custom User)";
             loginResult.setText(userDetails);
         }
-        else if(resultCode == SmartLoginConfig.CUSTOM_SIGNUP_REQUEST){
+        /*else if(resultCode == SmartLoginConfig.CUSTOM_SIGNUP_REQUEST){
             SmartUser user = data.getParcelableExtra(SmartLoginConfig.USER);
             String userDetails = user.getUsername() + " (Custom User)";
             loginResult.setText(userDetails);
-        }
+        }*/
         else if(resultCode == RESULT_CANCELED){
             loginResult.setText(fail);
         }
