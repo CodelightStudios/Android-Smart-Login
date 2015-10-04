@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                         .isFacebookLoginEnabled(true)
                         .withFacebookAppId(getString(R.string.facebook_app_id)).withFacebookPermissions(permissions)
                         .isGoogleLoginEnabled(false)
-                        .setmSmartCustomLoginHelper(new SmartCustomLoginListener() {
+                        .isCustomLoginEnabled(false).setSmartCustomLoginHelper(new SmartCustomLoginListener() {
                             @Override
                             public boolean customSignin(SmartUser user) {
                                 //This "user" will have only username and password set.

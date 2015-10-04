@@ -12,7 +12,7 @@ public class SmartLoginBuilder {
 
     private Context context;
     private SmartLoginConfig config;
-    public static SmartCustomLoginListener mSmartCustomLoginListener;
+    public static SmartCustomLoginListener smartCustomLoginListener;
     //private static final String CONFIGDATA = "config";
 
     public SmartLoginBuilder() {
@@ -42,8 +42,8 @@ public class SmartLoginBuilder {
         return this;
     }
 
-    public SmartLoginBuilder setmSmartCustomLoginHelper(SmartCustomLoginListener mSmartCustomLoginListener) {
-        SmartLoginBuilder.mSmartCustomLoginListener = mSmartCustomLoginListener;
+    public SmartLoginBuilder setSmartCustomLoginHelper(SmartCustomLoginListener mSmartCustomLoginListener) {
+        SmartLoginBuilder.smartCustomLoginListener = mSmartCustomLoginListener;
         return this;
     }
 
@@ -54,6 +54,11 @@ public class SmartLoginBuilder {
 
     public SmartLoginBuilder withFacebookPermissions(ArrayList<String> permissions){
         config.setFacebookPermissions(permissions);
+        return this;
+    }
+
+    public SmartLoginBuilder isCustomLoginEnabled(boolean customlogin){
+        config.setIsCustomLoginEnabled(customlogin);
         return this;
     }
 

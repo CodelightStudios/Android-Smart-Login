@@ -10,6 +10,7 @@ import java.util.Set;
  */
 public class SmartLoginConfig{
     private int appLogo;
+    private boolean isCustomLoginEnabled;
     private boolean isFacebookEnabled;
     private boolean isGoogleEnabled;
     private String facebookAppId;
@@ -17,6 +18,7 @@ public class SmartLoginConfig{
 
     public static final String APPLOGO = "studios.codelight.applogo";
     public static final String USER = "studios.codelight.user";
+    public static final String CUSTOMLOGINFLAG = "studios.codelight.custom_login_flag";
     public static final String FACEBOOKFLAG = "studios.codelight.facebook_flag";
     public static final String FACEBOOKPERMISSIONS = "studios.codelight.facebook_permissions";
     //public static final String TWITTERFLAG = "studios.codelight.twitter_flag";
@@ -40,6 +42,14 @@ public class SmartLoginConfig{
 
     public void setAppLogo(int appLogo) {
         this.appLogo = appLogo;
+    }
+
+    public boolean isCustomLoginEnabled() {
+        return isCustomLoginEnabled;
+    }
+
+    public void setIsCustomLoginEnabled(boolean isCustomLoginEnabled) {
+        this.isCustomLoginEnabled = isCustomLoginEnabled;
     }
 
     public boolean isFacebookEnabled() {
@@ -91,7 +101,7 @@ public class SmartLoginConfig{
         bundle.putBoolean(GOOGLEFLAG, isGoogleEnabled);
         bundle.putString(FACEBOOKID, facebookAppId);
         bundle.putStringArrayList(FACEBOOKPERMISSIONS, facebookPermissions);
-//        bundle.putSerializable(LOGINHELPER, loginHelper);
+        bundle.putBoolean(CUSTOMLOGINFLAG, isCustomLoginEnabled);
         return bundle;
     }
 
@@ -114,6 +124,9 @@ public class SmartLoginConfig{
         }
         if (keys.contains(FACEBOOKPERMISSIONS)){
             loginConfig.setFacebookPermissions(bundle.getStringArrayList(FACEBOOKPERMISSIONS));
+        }
+        if (keys.contains(CUSTOMLOGINFLAG)){
+            loginConfig.setIsCustomLoginEnabled(bundle.getBoolean(CUSTOMLOGINFLAG));
         }
 
         return loginConfig;

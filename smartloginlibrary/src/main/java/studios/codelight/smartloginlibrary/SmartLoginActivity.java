@@ -1,15 +1,18 @@
 package studios.codelight.smartloginlibrary;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -51,7 +54,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
     EditText usernameEditText, passwordEditText, usernameSignup, emailSignup, passwordSignup;
     ProgressDialog progress;
     //LinearLayout signUpPanel;
-    //ViewGroup mContainer;
+    ViewGroup mContainer;
     LinearLayout signinContainer, signupContainer;
 
 
@@ -76,7 +79,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_smart_login);
 
-        //mContainer = (ViewGroup) findViewById(R.id.main_container);
+        mContainer = (ViewGroup) findViewById(R.id.main_container);
         //bind the views
         usernameEditText = (EditText) findViewById(R.id.userNameEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
@@ -86,8 +89,36 @@ public class SmartLoginActivity extends AppCompatActivity implements
         signinContainer = (LinearLayout) findViewById(R.id.signin_container);
         signupContainer = (LinearLayout) findViewById(R.id.signup_container);
 
-        //Hide the signup container
-        signupContainer.setVisibility(View.GONE);
+        //Attach the views in the respective containers
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        //include views based on user settings
+        if(config.isCustomLoginEnabled()){
+            signinContainer.addView(layoutInflater.inflate(R.layout.fragment_custom_login, mContainer, false));
+            signinContainer.addView(layoutInflater.inflate(R.layout.fragment_divider, mContainer, false));
+            signupContainer.addView(layoutInflater.inflate(R.layout.fragment_signup, mContainer, false));
+
+            //listeners
+            findViewById(R.id.custom_signin_button).setOnClickListener(this);
+            findViewById(R.id.custom_signup_button).setOnClickListener(this);
+            findViewById(R.id.user_signup_button).setOnClickListener(this);
+
+            //Hide necessary views
+            signupContainer.setVisibility(View.GONE);
+        }
+
+        if(config.isFacebookEnabled()){
+            signinContainer.addView(layoutInflater.inflate(R.layout.fragment_facebook_login, mContainer, false));
+            findViewById(R.id.login_fb_button).setOnClickListener(this);
+        }
+
+        if(config.isGoogleEnabled()){
+            if(!config.isCustomLoginEnabled() && config.isFacebookEnabled()){
+                signinContainer.addView(layoutInflater.inflate(R.layout.fragment_divider, mContainer, false));
+            }
+            signinContainer.addView(layoutInflater.inflate(R.layout.fragment_google_login, mContainer, false));
+            findViewById(R.id.login_google_button).setOnClickListener(this);
+        }
 
         //Facebook login callback
         callbackManager = CallbackManager.Factory.create();
@@ -102,12 +133,6 @@ public class SmartLoginActivity extends AppCompatActivity implements
                 .addScope(new Scope(Scopes.EMAIL))
                 .build();
 
-        //set the listeners for the buttons
-        findViewById(R.id.login_fb_button).setOnClickListener(this);
-        findViewById(R.id.login_google_button).setOnClickListener(this);
-        findViewById(R.id.custom_signin_button).setOnClickListener(this);
-        findViewById(R.id.custom_signup_button).setOnClickListener(this);
-        findViewById(R.id.user_signup_button).setOnClickListener(this);
 
         //signUpPanel = (LinearLayout) findViewById(R.id.signup_panel);
     }
@@ -266,7 +291,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
     private void doGoogleLogin() {
         // User clicked the sign-in button, so begin the sign-in process and automatically
         // attempt to resolve any errors that occur.
-        progress = ProgressDialog.show(this, "", "Logging in...", true);
+        progress = ProgressDialog.show(this, "", getString(R.string.logging_holder), true);
         mShouldResolve = true;
         mGoogleApiClient.connect();
     }
@@ -285,10 +310,10 @@ public class SmartLoginActivity extends AppCompatActivity implements
             DialogUtil.getErrorDialog(R.string.invalid_email_error, this).show();
         }
         else {
-            if (SmartLoginBuilder.mSmartCustomLoginListener != null) {
+            if (SmartLoginBuilder.smartCustomLoginListener != null) {
                 final ProgressDialog progress = ProgressDialog.show(this, "", getString(R.string.loading_holder), true);
                 SmartUser newUser = new UserUtil().populateCustomUser(username, email, password);
-                if (SmartLoginBuilder.mSmartCustomLoginListener.customSignin(newUser)) {
+                if (SmartLoginBuilder.smartCustomLoginListener.customSignup(newUser)) {
                     progress.dismiss();
                     setResult(SmartLoginConfig.CUSTOM_SIGNUP_REQUEST);
                 } else {
@@ -309,10 +334,10 @@ public class SmartLoginActivity extends AppCompatActivity implements
         } else if(password.equals("")){
             DialogUtil.getErrorDialog(R.string.password_error, this).show();
         } else {
-            if (SmartLoginBuilder.mSmartCustomLoginListener != null) {
+            if (SmartLoginBuilder.smartCustomLoginListener != null) {
                 final ProgressDialog progress = ProgressDialog.show(this, "", getString(R.string.logging_holder), true);
                 SmartUser user = new UserUtil().populateCustomUser(username, null, password);
-                if (SmartLoginBuilder.mSmartCustomLoginListener.customSignin(user)) {
+                if (SmartLoginBuilder.smartCustomLoginListener.customSignin(user)) {
                     progress.dismiss();
                     setResult(SmartLoginConfig.CUSTOM_LOGIN_REQUEST);
                 } else {
@@ -396,7 +421,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
-        if(signupContainer.getVisibility() == View.VISIBLE){
+        if(signupContainer.getVisibility() == View.VISIBLE && config.isCustomLoginEnabled()){
             signupContainer.setVisibility(View.GONE);
             signinContainer.setVisibility(View.VISIBLE);
         } else {
