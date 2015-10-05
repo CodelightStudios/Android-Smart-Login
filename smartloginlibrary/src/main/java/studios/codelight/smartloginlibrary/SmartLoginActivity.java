@@ -113,17 +113,23 @@ public class SmartLoginActivity extends AppCompatActivity implements
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                 facebookButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.facebook_vector, 0, 0, 0);
             } else {
-                facebookButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_facebook_box_white_48dp, 0, 0, 0);
+                facebookButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_facebook_white_36dp, 0, 0, 0);
             }
             facebookButton.setOnClickListener(this);
         }
 
         if(config.isGoogleEnabled()){
-            if(!config.isCustomLoginEnabled() && config.isFacebookEnabled()){
+            /*if(!config.isCustomLoginEnabled() && config.isFacebookEnabled()){
                 signinContainer.addView(layoutInflater.inflate(R.layout.fragment_divider, mContainer, false));
-            }
+            }*/
             signinContainer.addView(layoutInflater.inflate(R.layout.fragment_google_login, mContainer, false));
-            findViewById(R.id.login_google_button).setOnClickListener(this);
+            Button googlePlusButton = (Button) findViewById(R.id.login_google_button);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                googlePlusButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.google_plus_vector, 0, 0, 0);
+            } else {
+                googlePlusButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_google_plus_white_36dp, 0, 0, 0);
+            }
+            googlePlusButton.setOnClickListener(this);
         }
 
         //bind the views

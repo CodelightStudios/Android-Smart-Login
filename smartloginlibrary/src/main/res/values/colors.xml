@@ -5,7 +5,7 @@
     <color name="accent_color">#FF5722</color>
     <color name="card_background">#efefef</color>
     <color name="facebook_brand_color">#3B5998</color>
-    <color name="twitter_brand_color">#55ACEE</color>
+    <color name="google_plus_brand_color">#dc4e41</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
 </resources>
