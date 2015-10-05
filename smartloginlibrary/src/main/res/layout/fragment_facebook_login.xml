@@ -15,8 +15,6 @@
         android:padding="16dp"
         android:layout_marginBottom="10dp"
         android:text="@string/fb_login_text"
-        android:drawableLeft="@drawable/facebook_white_small"
-        android:drawableStart="@drawable/facebook_white_small"
         android:textColor="@color/white"
         android:background="@color/facebook_brand_color"
         android:layout_margin="5dp" />

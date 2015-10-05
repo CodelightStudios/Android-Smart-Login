@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -107,7 +109,13 @@ public class SmartLoginActivity extends AppCompatActivity implements
 
         if(config.isFacebookEnabled()){
             signinContainer.addView(layoutInflater.inflate(R.layout.fragment_facebook_login, mContainer, false));
-            findViewById(R.id.login_fb_button).setOnClickListener(this);
+            Button facebookButton = (Button) findViewById(R.id.login_fb_button);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                facebookButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.facebook_vector, 0, 0, 0);
+            } else {
+                facebookButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_facebook_box_white_48dp, 0, 0, 0);
+            }
+            facebookButton.setOnClickListener(this);
         }
 
         if(config.isGoogleEnabled()){
