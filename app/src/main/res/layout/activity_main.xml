@@ -52,7 +52,7 @@
         android:text="Show Smart Login"
         android:textSize="20sp"
         android:textColor="@color/white"
-        android:background="@color/google_plus_brand_color" />
+        android:background="@color/accent_color" />
 
     <TextView
         android:id="@+id/login_result"

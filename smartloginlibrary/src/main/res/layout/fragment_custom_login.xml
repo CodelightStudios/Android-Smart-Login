@@ -40,19 +40,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/sign_in"
-                android:background="@color/primary_color"
-                android:textColor="@color/white"
-                android:layout_margin="5dp"/>
+                android:layout_margin="5dp"
+                style="?android:attr/buttonBarButtonStyle"/>
 
             <Button
                 android:id="@+id/custom_signup_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/primary_color"
-                android:textColor="@color/white"
                 android:text="@string/sign_up"
-                android:layout_margin="5dp"/>
+                android:layout_margin="5dp"
+                style="?android:attr/buttonBarButtonStyle"/>
 
         </LinearLayout>
 

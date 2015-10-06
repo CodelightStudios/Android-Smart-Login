@@ -32,6 +32,7 @@ public class SmartLoginConfig{
     public static final int GOOGLE_LOGIN_REQUEST = 2;
     public static final int CUSTOM_LOGIN_REQUEST = 3;
     public static final int CUSTOM_SIGNUP_REQUEST = 4;
+    public static final int LOGIN_REQUEST = 5;
 
     public SmartLoginConfig() {
     }

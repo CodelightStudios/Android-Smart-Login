@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .build();
 
-                startActivityForResult(intent, SmartLoginConfig.FACEBOOK_LOGIN_REQUEST);
+                startActivityForResult(intent, SmartLoginConfig.LOGIN_REQUEST);
                 //startActivity(intent);
             }
         });
