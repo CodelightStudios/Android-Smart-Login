@@ -73,4 +73,20 @@ public class UserSessionManager {
             return false;
         }
     }
+
+    public static boolean logout(Context context){
+        SharedPreferences preferences;
+        SharedPreferences.Editor editor;
+        try {
+            preferences = context.getSharedPreferences(USER_PREFS, Context.MODE_PRIVATE);
+            editor = preferences.edit();
+            editor.remove(SmartLoginConfig.USER_TYPE);
+            editor.remove(SESSION_KEY);
+            editor.apply();
+            return true;
+        } catch (Exception e){
+            Log.e("User Logout Error", e.getMessage());
+            return false;
+        }
+    }
 }

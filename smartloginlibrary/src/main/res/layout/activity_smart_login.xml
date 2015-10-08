@@ -6,8 +6,9 @@
     android:layout_height="wrap_content">
     <LinearLayout
         android:id="@+id/main_container"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
@@ -17,7 +18,7 @@
 
         <ImageView
             android:id="@+id/applogo_imageView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="150dp"
             android:layout_gravity="center"
             android:contentDescription="@string/app_name" />

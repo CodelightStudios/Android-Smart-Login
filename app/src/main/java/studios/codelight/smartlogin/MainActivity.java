@@ -1,7 +1,9 @@
 package studios.codelight.smartlogin;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     //SmartFacebookResult smartFacebookResult;
     TextView loginResult;
     CheckBox customLogin, facebookLogin, googleLogin, appLogoCheckBox;
+    SmartUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         appLogoCheckBox = (CheckBox) findViewById(R.id.appLogoCheckbox);
 
         //get the current user details
-        SmartUser currentUser = UserSessionManager.getCurrentUser(this);
+        currentUser = UserSessionManager.getCurrentUser(this);
         String display = "no user";
         if(currentUser != null) {
             if (currentUser instanceof SmartFacebookUser) {
@@ -56,41 +59,58 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SmartLoginBuilder loginBuilder = new SmartLoginBuilder();
 
-                //Set facebook permissions
-                ArrayList<String> permissions = new ArrayList<>();
-                permissions.add("public_profile");
-                permissions.add("email");
-                permissions.add("user_birthday");
-                permissions.add("user_friends");
+                if (currentUser != null) {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setMessage(R.string.user_exists);
+                    builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            UserSessionManager.logout(MainActivity.this);
+                            currentUser = UserSessionManager.getCurrentUser(MainActivity.this);
+                        }
+                    });
+                    builder.setCancelable(true);
 
+                    builder.create().show();
+                } else {
 
-                Intent intent = loginBuilder.with(getApplicationContext())
-                        .setAppLogo(getlogo())
-                        .isFacebookLoginEnabled(facebookLogin.isChecked())
-                        .withFacebookAppId(getString(R.string.facebook_app_id)).withFacebookPermissions(permissions)
-                        .isGoogleLoginEnabled(googleLogin.isChecked())
-                        .isCustomLoginEnabled(customLogin.isChecked()).setSmartCustomLoginHelper(new SmartCustomLoginListener() {
-                            @Override
-                            public boolean customSignin(SmartUser user) {
-                                //This "user" will have only username and password set.
-                                Toast.makeText(MainActivity.this, user.getUsername() + " " + user.getPassword(), Toast.LENGTH_SHORT).show();
-                                return true;
-                            }
+                    SmartLoginBuilder loginBuilder = new SmartLoginBuilder();
 
-                            @Override
-                            public boolean customSignup(SmartUser newUser) {
-                                //Implement your our custom sign up logic and return true if success
-                                return true;
-                            }
+                    //Set facebook permissions
+                    ArrayList<String> permissions = new ArrayList<>();
+                    permissions.add("public_profile");
+                    permissions.add("email");
+                    permissions.add("user_birthday");
+                    permissions.add("user_friends");
 
 
-                        })
-                        .build();
+                    Intent intent = loginBuilder.with(getApplicationContext())
+                            .setAppLogo(getlogo())
+                            .isFacebookLoginEnabled(facebookLogin.isChecked())
+                            .withFacebookAppId(getString(R.string.facebook_app_id)).withFacebookPermissions(permissions)
+                            .isGoogleLoginEnabled(googleLogin.isChecked())
+                            .isCustomLoginEnabled(customLogin.isChecked()).setSmartCustomLoginHelper(new SmartCustomLoginListener() {
+                                @Override
+                                public boolean customSignin(SmartUser user) {
+                                    //This "user" will have only username and password set.
+                                    Toast.makeText(MainActivity.this, user.getUsername() + " " + user.getPassword(), Toast.LENGTH_SHORT).show();
+                                    return true;
+                                }
 
-                startActivityForResult(intent, SmartLoginConfig.LOGIN_REQUEST);
-                //startActivity(intent);
+                                @Override
+                                public boolean customSignup(SmartUser newUser) {
+                                    //Implement your our custom sign up logic and return true if success
+                                    return true;
+                                }
+
+
+                            })
+                            .build();
+
+                    startActivityForResult(intent, SmartLoginConfig.LOGIN_REQUEST);
+                    //startActivity(intent);
+                }
             }
         });
     }
