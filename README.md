@@ -1,5 +1,7 @@
 ![Image](https://raw.githubusercontent.com/CodelightStudios/Android-Smart-Login/master/Screenshots/About.png)
 
+**First release will be available soon(through Maven Central and jCenter)
+
 #What's in the box
 
 - A material designed login page
