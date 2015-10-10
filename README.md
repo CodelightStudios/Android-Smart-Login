@@ -1,4 +1,4 @@
-![Image](https://github.com/CodelightStudios/Android-Smart-Login/raw/master/Screenshots/Info_updated.png)
+![Image](https://raw.githubusercontent.com/CodelightStudios/Android-Smart-Login/master/Screenshots/About.png)
 
 #What's in the box
 
