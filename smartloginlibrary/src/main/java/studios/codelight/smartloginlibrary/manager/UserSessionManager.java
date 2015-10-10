@@ -28,6 +28,11 @@ public class UserSessionManager {
     static final String USER_PREFS = "codelight_studios_user_prefs";
     static final String DEFAULT_SESSION_VALUE = "No logged in user";
 
+    /*
+        This static method can be called to get the logged in user.
+        It reads from the shared preferences and builds a SmartUser object and returns it.
+        If no user is logged in it returns null
+    */
     public static SmartUser getCurrentUser(Context context){
         SmartUser smartUser = null;
         SharedPreferences preferences = context.getSharedPreferences(USER_PREFS, Context.MODE_PRIVATE);
@@ -54,6 +59,11 @@ public class UserSessionManager {
         return smartUser;
     }
 
+    /*
+        This method sets the session object for the current logged in user.
+        This is called from inside the SmartLoginActivity to save the
+        current logged in user to the shared preferences.
+    */
     public boolean setUserSession(Context context, SmartUser smartUser){
         SharedPreferences preferences;
         SharedPreferences.Editor editor;
@@ -82,6 +92,12 @@ public class UserSessionManager {
         }
     }
 
+    /*
+        This static method logs out the user that is logged in.
+        This implements facebook and google logout.
+        Custom user logout is left to the user.
+        It also removes the preference entries.
+    */
     public static boolean logout(Activity context, SmartUser user){
         SharedPreferences preferences;
         SharedPreferences.Editor editor;
