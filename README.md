@@ -2,10 +2,14 @@
 
 #What's in the box
 
-- A material designed login page.
+- A material designed login page
 - Implementation of Facebook and Google login
 - Easy way to implement custom login and sign up
 - Smart and easy way to apply the flow with SmartUser
+
+#How it works
+
+![Image](https://raw.githubusercontent.com/CodelightStudios/Android-Smart-Login/master/Screenshots/SmartLoginFlow.png)
 
 
 
