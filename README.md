@@ -1,8 +1,3 @@
-#Android Smart Login
-A smart way to add login page to your app.
-
-Every app needs a way to manage their users. Allow them to login, signup, save sessions and so on. We came up for you with a smart solution.
-
 ![Image](https://raw.githubusercontent.com/CodelightStudios/Android-Smart-Login/master/Screenshots/Info.png)
 
 **SmartLoginLibrary** is a way to add login flow to your android app. When we started developing this project, we had a thought of adding just the login page. Later we clustered all the common tasks that are necessary and implemented them for you.
