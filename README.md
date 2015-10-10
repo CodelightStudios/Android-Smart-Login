@@ -1,4 +1,4 @@
-![Image](https://raw.githubusercontent.com/CodelightStudios/Android-Smart-Login/master/Screenshots/Info.png)
+![Image](https://raw.githubusercontent.com/CodelightStudios/Android-Smart-Login/master/Screenshots/Info_new.png)
 
 **SmartLoginLibrary** is a way to add login flow to your android app. When we started developing this project, we had a thought of adding just the login page. Later we clustered all the common tasks that are necessary and implemented them for you.
 
