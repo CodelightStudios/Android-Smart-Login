@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            UserSessionManager.logout(MainActivity.this);
+                            UserSessionManager.logout(MainActivity.this, currentUser);
                             currentUser = UserSessionManager.getCurrentUser(MainActivity.this);
                         }
                     });
@@ -101,6 +101,12 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public boolean customSignup(SmartUser newUser) {
                                     //Implement your our custom sign up logic and return true if success
+                                    return true;
+                                }
+
+                                @Override
+                                public boolean customUserSignout(SmartUser smartUser) {
+                                    //Implement logout logic
                                     return true;
                                 }
 

@@ -62,7 +62,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
 
 
     //Google Sign in related
-    private GoogleApiClient mGoogleApiClient;
+    private static GoogleApiClient mGoogleApiClient;
     /* Is there a ConnectionResult resolution in progress? */
     private boolean mIsResolving = false;
 
@@ -78,19 +78,25 @@ public class SmartLoginActivity extends AppCompatActivity implements
         Bundle bundle = getIntent().getExtras();
         config = SmartLoginConfig.unpack(bundle);
 
+        //Set the facebook app id and initialize sdk
         FacebookSdk.setApplicationId(config.getFacebookAppId());
         FacebookSdk.sdkInitialize(getApplicationContext());
+
+        //Attaching the view
         setContentView(R.layout.activity_smart_login);
+
+        //Set the title and back button on the Action bar
         if(getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Login");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        //Get the containers required to inject the views
         mContainer = (ViewGroup) findViewById(R.id.main_container);
         signinContainer = (LinearLayout) findViewById(R.id.signin_container);
         signupContainer = (LinearLayout) findViewById(R.id.signup_container);
 
-        //Attach the views in the respective containers
+        //Inject the views in the respective containers
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         //include views based on user settings
@@ -164,9 +170,6 @@ public class SmartLoginActivity extends AppCompatActivity implements
                 .addScope(new Scope(Scopes.PLUS_LOGIN))
                 .addScope(new Scope(Scopes.EMAIL))
                 .build();
-
-
-        //signUpPanel = (LinearLayout) findViewById(R.id.signup_panel);
     }
 
     //Required for Facebook and google login
@@ -178,6 +181,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
 
         //For google login
         if (requestCode == SmartLoginConfig.GOOGLE_LOGIN_REQUEST) {
+            progress = ProgressDialog.show(this, "", getString(R.string.getting_data), true);
             // If the error resolution was not successful we should not resolve further.
             if (resultCode != RESULT_OK) {
                 mShouldResolve = false;
@@ -187,13 +191,6 @@ public class SmartLoginActivity extends AppCompatActivity implements
             mGoogleApiClient.connect();
         }
     }
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_smart_login, menu);
-        return true;
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -214,7 +211,6 @@ public class SmartLoginActivity extends AppCompatActivity implements
     @Override
     protected void onStart() {
         super.onStart();
-        mGoogleApiClient.disconnect();
     }
 
     @Override
@@ -230,7 +226,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
         // establish a service connection to Google Play services.
         Log.d("GOOGLE LOGIN", "onConnected:" + bundle);
         mShouldResolve = false;
-        progress = ProgressDialog.show(this, "", "Logging in...", true);
+        progress = ProgressDialog.show(this, "", getString(R.string.getting_data), true);
 
         //Get Google profile info
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
@@ -243,11 +239,6 @@ public class SmartLoginActivity extends AppCompatActivity implements
             progress.dismiss();
             finishLogin(googleUser);
         }
-
-
-
-        // Show the signed-in UI
-        //showSignedInUI();
     }
 
     @Override
@@ -262,7 +253,6 @@ public class SmartLoginActivity extends AppCompatActivity implements
         // ConnectionResult to see possible error codes.
         final String TAG = "GOOGLE LOGIN";
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
-        progress.dismiss();
 
         if (!mIsResolving && mShouldResolve) {
             if (connectionResult.hasResolution()) {
@@ -277,21 +267,15 @@ public class SmartLoginActivity extends AppCompatActivity implements
             } else {
                 // Could not resolve the connection result, show the user an
                 // error dialog.
+                progress.dismiss();
                 GooglePlayServicesUtil.getErrorDialog(connectionResult.getErrorCode(), this, 0).show();
-                /*
-                Intent intent = new Intent();
-                intent.putExtra("smartUser", "failed");
-                setResult(SmartLoginConfig.GOOGLE_LOGIN_REQUEST, intent);
-                finish();
-                */
             }
         }
-        /*
         else {
-             Show the signed-out UI
-            showSignedOutUI();
+            progress.dismiss();
+            Toast.makeText(this, R.string.network_error, Toast.LENGTH_SHORT).show();
+            finish();
         }
-        */
     }
 
     @Override
@@ -461,5 +445,9 @@ public class SmartLoginActivity extends AppCompatActivity implements
         } else {
             finish();
         }
+    }
+
+    public static GoogleApiClient getGoogleApiClient(){
+        return mGoogleApiClient;
     }
 }
