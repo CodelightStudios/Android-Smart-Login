@@ -49,7 +49,7 @@ We used
     <!-- Required for Google Login -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-    <!-- In application tag (Need to register the Login activity in your app -->
+    <!-- In application tag (Need to register the Login activity in your app) -->
     <activity
             android:name="studios.codelight.smartloginlibrary.SmartLoginActivity"
             android:theme="@style/AppTheme" />
