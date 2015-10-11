@@ -64,7 +64,6 @@ public class SmartLoginBuilder {
 
     public Intent build(){
         Intent intent = new Intent(context, SmartLoginActivity.class);
-        //intent.putExtra(context.getString(R.string.config_data), config);
         intent.putExtras(config.pack());
         return intent;
     }

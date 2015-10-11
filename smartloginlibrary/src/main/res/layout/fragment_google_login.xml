@@ -3,18 +3,13 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<com.google.android.gms.common.SignInButton-->
-        <!--android:id="@+id/login_google_button"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="60dp" />-->
-
     <Button
         android:id="@+id/login_google_button"
         android:layout_width="fill_parent"
         android:layout_height="60dp"
         android:padding="16dp"
         android:layout_marginBottom="10dp"
-        android:text="@string/common_signin_button_text_long"
+        android:text="@string/google_login_text"
         android:textColor="@color/white"
         android:background="@color/google_plus_brand_color"
         android:layout_margin="5dp"

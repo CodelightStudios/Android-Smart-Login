@@ -216,7 +216,6 @@ public class SmartLoginActivity extends AppCompatActivity implements
     @Override
     protected void onStop() {
         super.onStop();
-        mGoogleApiClient.disconnect();
     }
 
     @Override
