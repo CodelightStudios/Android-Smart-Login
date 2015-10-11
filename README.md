@@ -1,7 +1,5 @@
 ![Image](https://raw.githubusercontent.com/CodelightStudios/Android-Smart-Login/master/Screenshots/About.png)
 
-**First release will be available soon(through Maven Central and jCenter)**
-
 #What's in the box
 
 - A material designed **login page**
@@ -69,8 +67,8 @@ We used
 - **PERMISSIONS** - ArrayList<String> - Needed if Facebook login is enabled(if not specified default permissions are taken) [Permissions](https://gist.github.com/kalyandechiraju/f51771548836680e7a96) for Facebook Login [Learn more](https://developers.facebook.com/docs/facebook-login/permissions/v2.5)
 
  *Google Login setup*
-- Just enable Google login by passing *true* to isGoogleLoginEnabled
-- But you need to configure your app in Google Developers Console and get the [Configuration File](https://developers.google.com/mobile/add?platform=android&cntapi=signin). Learn more about [Google sign in](https://developers.google.com/identity/sign-in/android/start)
+- Just enable Google login by passing *true* to **isGoogleLoginEnabled** method
+- Before that, you need to configure your app in Google Developers Console and get the [Configuration File](https://developers.google.com/mobile/add?platform=android&cntapi=signin). Learn more about [Google sign in](https://developers.google.com/identity/sign-in/android/start)
 - Place the configuration file in the **app/** directory and that's it
 
 ##4. Get back the logged in User
@@ -166,7 +164,7 @@ if(currentUser != null){
 }
 ```
 #Contibution
-I would love to welcome everyone of you to contribute to this project and make it better. If you feel the LoginPage is not looking great (I know am a terrible designer), feel free to design and make it better if you think its necessary. Encounter any issue? Don't hesitate to [open an issue](https://github.com/CodelightStudios/Android-Smart-Login/issues)
+I would love to welcome everyone of you to contribute to this project and make it better. If you feel the LoginPage is not looking great (I know, I am not a great designer), feel free to design and make it better if you think its necessary. Encounter any issue? Don't hesitate to [open an issue](https://github.com/CodelightStudios/Android-Smart-Login/issues)
 
 Convention I would like to follow: **Master branch** would be the development branch. So feel free to fork from the Master branch. **Release branch** will be merged with master branch after every major release.
 
