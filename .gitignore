@@ -32,3 +32,4 @@ proguard/
 *.aar
 *.zip
 google-services.json
+!releases/*
