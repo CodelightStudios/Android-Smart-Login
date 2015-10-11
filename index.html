@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Android Smart Login by CodelightStudios</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Android Smart Login</h1>
+      <h2 class="project-tagline">A smart way to add Login functionality to your Android app</h2>
+      <a href="https://github.com/CodelightStudios/Android-Smart-Login" class="btn">View on GitHub</a>
+      <a href="https://github.com/CodelightStudios/Android-Smart-Login/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/CodelightStudios/Android-Smart-Login/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p><img src="https://raw.githubusercontent.com/CodelightStudios/Android-Smart-Login/master/Screenshots/About.png" alt="Image"></p>
+
+<h1>
+<a id="whats-in-the-box" class="anchor" href="#whats-in-the-box" aria-hidden="true"><span class="octicon octicon-link"></span></a>What's in the box</h1>
+
+<ul>
+<li>A material designed <strong>login page</strong>
+</li>
+<li>Implementation of <strong>Facebook</strong> and <strong>Google</strong> login</li>
+<li>Easy way to implement custom login and sign up</li>
+<li>Smart and easy way to apply the flow with <strong>SmartUser</strong>
+</li>
+<li>Customizable login screen (more customization will be available in upcoming versions)</li>
+</ul>
+
+<h1>
+<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h1>
+
+<h2>
+<a id="1-get-the-library-from-here-download" class="anchor" href="#1-get-the-library-from-here-download" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Get the library from here <a href="https://github.com/CodelightStudios/Android-Smart-Login/raw/master/releases/smartloginlibrary-v0.5beta.aar">Download</a>
+</h2>
+
+<p>Since it's in beta, decided not to put it in Maven Central. Will provide the gradle dependency from the first release.
+<strong>So for now please add the library as a module to your project.</strong></p>
+
+<h2>
+<a id="2-add-the-aar-as-a-module-dependency-to-your-app" class="anchor" href="#2-add-the-aar-as-a-module-dependency-to-your-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Add the AAR as a module dependency to your app.</h2>
+
+<p>You can do this by clicking File -&gt; New -&gt; New Module...
+Then choose "Import .JAR/.AAR package" option and the add the downloaded aar file as a dependency.
+Since we implemented Facebook and Google login for you, it is necessary to add the following dependencies in your <strong>app/build.gradle</strong></p>
+
+<pre><code>    //Support libraries
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:design:23.0.1'
+    //Facebook SDK
+    compile 'com.facebook.android:facebook-android-sdk:4.0.1'
+    //Google Play Services
+    compile 'com.google.android.gms:play-services:8.1.0'
+    //GSON library
+    compile 'com.google.code.gson:gson:2.3.1'
+</code></pre>
+
+<p>We used </p>
+
+<ul>
+<li>Support Library for maintaining compatibily of material design</li>
+<li>Facebook SDK and Google Play Services are necessary as we implemented social logins</li>
+<li>GSON library is must for now as we used it to set user sessions</li>
+</ul>
+
+<h2>
+<a id="3-start-the-loginactivity" class="anchor" href="#3-start-the-loginactivity" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Start the LoginActivity</h2>
+
+<div class="highlight highlight-source-java"><pre>    <span class="pl-smi">Intent</span> intent <span class="pl-k">=</span> loginBuilder<span class="pl-k">.</span>with(context)
+                        .setAppLogo(<span class="pl-c1">APP_LOGO</span>)
+                        .isFacebookLoginEnabled(<span class="pl-c1">true</span>)<span class="pl-k">.</span>withFacebookAppId(<span class="pl-s"><span class="pl-pds">"</span>APP_ID<span class="pl-pds">"</span></span>)
+                        .withFacebookPermissions(<span class="pl-c1">PERMISSIONS</span>)
+                        .isGoogleLoginEnabled(<span class="pl-c1">true</span>)
+                        .build();
+    startActivityForResult(intent, <span class="pl-smi">SmartLoginConfig</span><span class="pl-c1"><span class="pl-k">.</span>LOGIN_REQUEST</span>);</pre></div>
+
+<p><strong>Don't forget to add the following in the manifest</strong></p>
+
+<div class="highlight highlight-text-xml"><pre>    &lt;<span class="pl-ent">uses-permission</span> <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>android.permission.INTERNET<span class="pl-pds">"</span></span>/&gt;
+    <span class="pl-c">&lt;!-- Required for Google Login --&gt;</span>
+    &lt;<span class="pl-ent">uses-permission</span> <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>android.permission.GET_ACCOUNTS<span class="pl-pds">"</span></span> /&gt;
+    &lt;<span class="pl-ent">uses-permission</span> <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>android.permission.USE_CREDENTIALS<span class="pl-pds">"</span></span> /&gt;
+    <span class="pl-c">&lt;!-- In application tag (Need to register the Login activity in your app) --&gt;</span>
+    &lt;<span class="pl-ent">activity</span>
+            <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>studios.codelight.smartloginlibrary.SmartLoginActivity<span class="pl-pds">"</span></span>
+            <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">theme</span>=<span class="pl-s"><span class="pl-pds">"</span>@style/AppTheme<span class="pl-pds">"</span></span> /&gt;
+    &lt;<span class="pl-ent">activity</span> <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>com.facebook.FacebookActivity<span class="pl-pds">"</span></span>
+            <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">configChanges</span>=
+                <span class="pl-s"><span class="pl-pds">"</span>keyboard|keyboardHidden|screenLayout|screenSize|orientation<span class="pl-pds">"</span></span>
+            <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">theme</span>=<span class="pl-s"><span class="pl-pds">"</span>@android:style/Theme.Translucent.NoTitleBar<span class="pl-pds">"</span></span>
+            <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">label</span>=<span class="pl-s"><span class="pl-pds">"</span>@string/app_name<span class="pl-pds">"</span></span> /&gt;</pre></div>
+
+<p><strong>Config</strong></p>
+
+<ul>
+<li>
+<p><strong>APP_LOGO</strong> - Integer - Optional - Send your logo to display on the login page</p>
+
+<p><em>Facebook Login setup</em></p>
+</li>
+<li>
+<strong>APP_ID</strong> - String - Needed if Facebook login is enabled - App ID of your app on facebook</li>
+<li>
+<p><strong>PERMISSIONS</strong> - ArrayList - Needed if Facebook login is enabled(if not specified default permissions are taken) <a href="https://gist.github.com/kalyandechiraju/f51771548836680e7a96">Permissions</a> for Facebook Login <a href="https://developers.facebook.com/docs/facebook-login/permissions/v2.5">Learn more</a></p>
+
+<p><em>Google Login setup</em></p>
+</li>
+<li>Just enable Google login by passing <em>true</em> to <strong>isGoogleLoginEnabled</strong> method</li>
+<li>Before that, you need to configure your app in Google Developers Console and get the <a href="https://developers.google.com/mobile/add?platform=android&amp;cntapi=signin">Configuration File</a>. Learn more about <a href="https://developers.google.com/identity/sign-in/android/start">Google sign in</a>
+</li>
+<li>Place the configuration file in the <strong>app/</strong> directory and that's it</li>
+</ul>
+
+<h2>
+<a id="4-get-back-the-logged-in-user" class="anchor" href="#4-get-back-the-logged-in-user" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. Get back the logged in User</h2>
+
+<p>From the intent that you passed, Login Activity will be started. Based on user interaction, it will send back the result code along with SmartUser object(if login is successful). Hence you can catch the SmartUser object in <strong>onActivityResult</strong> method</p>
+
+<p><em>For example</em></p>
+
+<div class="highlight highlight-source-java"><pre>    @<span class="pl-smi">Override</span>
+    <span class="pl-k">protected</span> <span class="pl-k">void</span> onActivityResult(<span class="pl-k">int</span> requestCode, <span class="pl-k">int</span> resultCode, <span class="pl-smi">Intent</span> data) {
+        <span class="pl-c">//Intent "data" contains the user object</span>
+        <span class="pl-k">if</span>(resultCode <span class="pl-k">==</span> <span class="pl-smi">SmartLoginConfig</span><span class="pl-c1"><span class="pl-k">.</span>FACEBOOK_LOGIN_REQUEST</span>){
+            <span class="pl-smi">SmartFacebookUser</span> user;
+            <span class="pl-k">try</span> {
+                user <span class="pl-k">=</span> data<span class="pl-k">.</span>getParcelableExtra(<span class="pl-smi">SmartLoginConfig</span><span class="pl-c1"><span class="pl-k">.</span>USER</span>);
+                <span class="pl-c">//use this user object as per your requirement</span>
+            }<span class="pl-k">catch</span> (<span class="pl-smi">Exception</span> e){
+                <span class="pl-smi">Log</span><span class="pl-k">.</span>e(getClass()<span class="pl-k">.</span>getSimpleName(), e<span class="pl-k">.</span>getMessage());
+            }
+        }<span class="pl-k">else</span> <span class="pl-k">if</span>(resultCode <span class="pl-k">==</span> <span class="pl-smi">SmartLoginConfig</span><span class="pl-c1"><span class="pl-k">.</span>GOOGLE_LOGIN_REQUEST</span>){
+            <span class="pl-smi">SmartGoogleUser</span> user;
+            <span class="pl-k">try</span> {
+                user <span class="pl-k">=</span> data<span class="pl-k">.</span>getParcelableExtra(<span class="pl-smi">SmartLoginConfig</span><span class="pl-c1"><span class="pl-k">.</span>USER</span>);
+                <span class="pl-c">//use this user object as per your requirement</span>
+            }<span class="pl-k">catch</span> (<span class="pl-smi">Exception</span> e){
+                <span class="pl-smi">Log</span><span class="pl-k">.</span>e(getClass()<span class="pl-k">.</span>getSimpleName(), e<span class="pl-k">.</span>getMessage());
+            }
+        }<span class="pl-k">else</span> <span class="pl-k">if</span>(resultCode <span class="pl-k">==</span> <span class="pl-smi">SmartLoginConfig</span><span class="pl-c1"><span class="pl-k">.</span>CUSTOM_LOGIN_REQUEST</span>){
+            <span class="pl-smi">SmartUser</span> user <span class="pl-k">=</span> data<span class="pl-k">.</span>getParcelableExtra(<span class="pl-smi">SmartLoginConfig</span><span class="pl-c1"><span class="pl-k">.</span>USER</span>);
+            <span class="pl-c">//use this user object as per your requirement</span>
+        }<span class="pl-k">else</span> <span class="pl-k">if</span>(resultCode <span class="pl-k">==</span> <span class="pl-c1">RESULT_CANCELED</span>){
+            <span class="pl-c">//Login Failed</span>
+        }
+    }</pre></div>
+
+<p><strong>voila! that's it. You now have the entire user login functionality in your app</strong></p>
+
+<h2>
+<a id="5-implementing-custom-user-login-and-sign-up" class="anchor" href="#5-implementing-custom-user-login-and-sign-up" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. Implementing custom user login and sign up</h2>
+
+<p>Get more out of the library by easily implementing your logic to login and sign up the users.
+For this all you need to do is implement the following code</p>
+
+<div class="highlight highlight-source-java"><pre>        <span class="pl-smi">SmartCustomLoginListener</span> loginListener <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">SmartCustomLoginListener</span>() {
+            <span class="pl-k">@Override</span>
+            <span class="pl-k">public</span> <span class="pl-k">boolean</span> <span class="pl-en">customSignin</span>(<span class="pl-smi">SmartUser</span> <span class="pl-v">smartUser</span>) {
+                <span class="pl-c">//do something with smartUser</span>
+                <span class="pl-k">if</span>(<span class="pl-c1">SUCCESS</span>){
+                    <span class="pl-k">return</span> <span class="pl-c1">true</span>;
+                } <span class="pl-k">else</span> {
+                    <span class="pl-k">return</span> <span class="pl-c1">false</span>;
+                }
+            }
+
+            <span class="pl-k">@Override</span>
+            <span class="pl-k">public</span> <span class="pl-k">boolean</span> <span class="pl-en">customSignup</span>(<span class="pl-smi">SmartUser</span> <span class="pl-v">smartUser</span>) {
+                <span class="pl-c">//do something with smartUser</span>
+                <span class="pl-k">if</span>(<span class="pl-c1">SUCCESS</span>){
+                    <span class="pl-k">return</span> <span class="pl-c1">true</span>;
+                } <span class="pl-k">else</span> {
+                    <span class="pl-k">return</span> <span class="pl-c1">false</span>;
+                }
+            }
+
+            <span class="pl-k">@Override</span>
+            <span class="pl-k">public</span> <span class="pl-k">boolean</span> <span class="pl-en">customUserSignout</span>(<span class="pl-smi">SmartUser</span> <span class="pl-v">smartUser</span>) {
+                <span class="pl-c">//do something with smartUser</span>
+                <span class="pl-k">if</span>(<span class="pl-c1">SUCCESS</span>){
+                    <span class="pl-k">return</span> <span class="pl-c1">true</span>;
+                } <span class="pl-k">else</span> {
+                    <span class="pl-k">return</span> <span class="pl-c1">false</span>;
+                }
+            }
+        };</pre></div>
+
+<p>Next pass that <strong>loginListener</strong> into <strong>setSmartCustomLoginHelper</strong> method of <strong>loginBuilder</strong></p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">Intent</span> intent <span class="pl-k">=</span> loginBuilder<span class="pl-k">.</span>with(context)
+        .isCustomLoginEnabled(<span class="pl-c1">true</span>)<span class="pl-k">.</span>setSmartCustomLoginHelper(loginListener)
+        .build();
+startActivityForResult(intent, <span class="pl-smi">SmartLoginConfig</span><span class="pl-c1"><span class="pl-k">.</span>LOGIN_REQUEST</span>);</pre></div>
+
+<h1>
+<a id="how-it-works" class="anchor" href="#how-it-works" aria-hidden="true"><span class="octicon octicon-link"></span></a>How it works</h1>
+
+<p><img src="https://raw.githubusercontent.com/CodelightStudios/Android-Smart-Login/master/Screenshots/SmartLoginFlow.png" alt="Image"></p>
+
+<h1>
+<a id="other-features" class="anchor" href="#other-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other Features</h1>
+
+<p>Get the current logged in user at anytime from your application by just calling <strong>UserSessionManager.getCurrentUser</strong> method</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">SmartUser</span> currentUser <span class="pl-k">=</span> <span class="pl-smi">UserSessionManager</span><span class="pl-k">.</span>getCurrentUser(context);
+<span class="pl-k">if</span>(currentUser <span class="pl-k">!=</span> <span class="pl-c1">null</span>){
+    <span class="pl-c">//You have got what you need</span>
+}</pre></div>
+
+<h1>
+<a id="contibution" class="anchor" href="#contibution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contibution</h1>
+
+<p>I would love to welcome everyone of you to contribute to this project and make it better. If you feel the LoginPage is not looking great (I know, I am not a great designer), feel free to design and make it better if you think its necessary. Encounter any issue? Don't hesitate to <a href="https://github.com/CodelightStudios/Android-Smart-Login/issues">open an issue</a></p>
+
+<p>Convention I would like to follow: <strong>Master branch</strong> would be the development branch. So feel free to fork from the Master branch. <strong>Release branch</strong> will be merged with master branch after every major release.</p>
+
+<h1>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h1>
+
+<pre><code>Copyright 2015 Codelight Studios
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/CodelightStudios/Android-Smart-Login">Android Smart Login</a> is maintained by <a href="https://github.com/CodelightStudios">CodelightStudios</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
