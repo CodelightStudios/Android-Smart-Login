@@ -1,4 +1,3 @@
-[![Build Status](https://github.com/CodelightStudios/Android-Smart-Login/blob/master/passing.svg)](http://codelightstudios.github.io/Android-Smart-Login)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Android%20Smart%20Login-green.svg?style=true)](https://android-arsenal.com/details/1/3026)
 
 
