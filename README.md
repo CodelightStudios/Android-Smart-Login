@@ -1,3 +1,6 @@
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Android%20Smart%20Login-green.svg?style=true)](https://android-arsenal.com/details/1/3026)
+
+
 ![Image](https://raw.githubusercontent.com/CodelightStudios/Android-Smart-Login/master/Screenshots/About.png)
 
 #What's in the box
