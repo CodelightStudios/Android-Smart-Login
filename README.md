@@ -171,9 +171,13 @@ I would love to welcome everyone of you to contribute to this project and make i
 
 Convention I would like to follow: **Master branch** would be the development branch. So feel free to fork from the Master branch. **Release branch** will be merged with master branch after every major release.
 
+#Our other libraries
+##[Weather Downloader library](https://github.com/CodelightStudios/Weather-Downloader)
+An easy and efficient way to get weather information into your app.
+
 #License
 
-    Copyright 2015 Codelight Studios
+    Copyright 2016 Codelight Studios
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
