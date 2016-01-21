@@ -20,7 +20,7 @@ Since it's in beta, decided not to put it in Maven Central. Will provide the gra
 You can do this by clicking File -> New -> New Module...
 Then choose "Import .JAR/.AAR package" option and the add the downloaded aar file as a dependency.
 Since we implemented Facebook and Google login for you, it is necessary to add the following dependencies in your **app/build.gradle**
-```
+```javascript
     //Support libraries
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:design:23.0.1'
