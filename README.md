@@ -19,6 +19,10 @@ Since it's in beta, decided not to put it in Maven Central. Will provide the gra
 ##2. Add the AAR as a module dependency to your app.
 You can do this by clicking File -> New -> New Module...
 Then choose "Import .JAR/.AAR package" option and the add the downloaded aar file as a dependency.
+You need to compile this newly added module. This can be done by adding this line in your `dependencies` of your `app/build.gradle`
+```javascript
+    compile project(':smartloginlibrary-v0.5beta')
+```
 Since we implemented Facebook and Google login for you, it is necessary to add the following dependencies in your **app/build.gradle**
 ```javascript
     //Support libraries
@@ -63,16 +67,16 @@ We used
             android:label="@string/app_name" />
 ```
 **Config**
-- **APP_LOGO** - Integer - Optional - Send your logo to display on the login page
+- **APP_LOGO** - Integer - Optional - Send your logo to display on the login page.
 
- *Facebook Login setup*
+ `Facebook Login setup`
 - **APP_ID** - String - Needed if Facebook login is enabled - App ID of your app on facebook
-- **PERMISSIONS** - ArrayList<String> - Needed if Facebook login is enabled(if not specified default permissions are taken) [Permissions](https://gist.github.com/kalyandechiraju/f51771548836680e7a96) for Facebook Login [Learn more](https://developers.facebook.com/docs/facebook-login/permissions/v2.5)
+- **PERMISSIONS** - ArrayList<String> - Needed if Facebook login is enabled(if not specified default permissions are taken) [Permissions](https://gist.github.com/kalyandechiraju/f51771548836680e7a96) for Facebook Login [Learn more](https://developers.facebook.com/docs/facebook-login/permissions/v2.5).
 
- *Google Login setup*
+ `Google Login setup`
 - Just enable Google login by passing *true* to **isGoogleLoginEnabled** method
 - Before that, you need to configure your app in Google Developers Console and get the [Configuration File](https://developers.google.com/mobile/add?platform=android&cntapi=signin). Learn more about [Google sign in](https://developers.google.com/identity/sign-in/android/start)
-- Place the configuration file in the **app/** directory and that's it
+- Place the configuration file in the **app/** directory and that's it.
 
 ##4. Get back the logged in User
 From the intent that you passed, Login Activity will be started. Based on user interaction, it will send back the result code along with SmartUser object(if login is successful). Hence you can catch the SmartUser object in **onActivityResult** method
