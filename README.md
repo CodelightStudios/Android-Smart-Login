@@ -41,6 +41,11 @@ We used
 - GSON library is must for now as we used it to set user sessions
 
 ##3. Start the LoginActivity
+First instantiate the `SmartLoginBuilder` and the using the created object build the Intent to invoke the login page.
+```java
+    SmartLoginBuilder loginBuilder = new SmartLoginBuilder();
+```
+
 ```java
     Intent intent = loginBuilder.with(context)
                         .setAppLogo(APP_LOGO)
