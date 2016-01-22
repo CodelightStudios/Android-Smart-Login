@@ -76,7 +76,7 @@ First instantiate the `SmartLoginBuilder` and the using the created object build
 
  `Facebook Login setup`
 - **APP_ID** - String - Needed if Facebook login is enabled - App ID of your app on facebook
-- **PERMISSIONS** - ArrayList<String> - Needed if Facebook login is enabled(if not specified default permissions are taken) [Permissions](https://gist.github.com/kalyandechiraju/f51771548836680e7a96) for Facebook Login [Learn more](https://developers.facebook.com/docs/facebook-login/permissions/v2.5).
+- **PERMISSIONS** - ArrayList<String> - Needed if Facebook login is enabled (if not specified these [Default Permissions](https://gist.github.com/kalyandechiraju/f51771548836680e7a96) are taken). Learn more about [Facebook Login Permissions](https://developers.facebook.com/docs/facebook-login/permissions/v2.5).
 
  `Google Login setup`
 - Just enable Google login by passing *true* to **isGoogleLoginEnabled** method
