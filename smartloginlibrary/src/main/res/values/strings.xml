@@ -16,7 +16,8 @@
 
     <string name="forgot">forgot?</string>
     <string name="sign_in">Sign in</string>
-    <string name="sign_up">Sign up</string>
+    <string name="sign_up">No account yet? Create one</string>
+    <string name="sign_up_button">Sign up</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_smart_login">SmartLoginActivity</string>
 

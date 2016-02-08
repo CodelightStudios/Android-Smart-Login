@@ -8,4 +8,11 @@
     <color name="google_plus_brand_color">#dc4e41</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+
+    <color name="login_primary">#009688</color> <!-- 500 -->
+    <color name="login_primary_dark">#00796B</color> <!-- 700 -->
+    <color name="login_primary_darker">#00695C</color> <!-- 800 -->
+    <color name="login_accent">#FFFFFF</color>
+    <color name="iron">#CCCCCC</color>
+
 </resources>

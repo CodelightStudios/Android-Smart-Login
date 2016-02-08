@@ -31,26 +31,25 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_marginTop="10dp">
 
-            <Button
+            <android.support.v7.widget.AppCompatButton
                 android:id="@+id/custom_signin_button"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="@string/sign_in"
-                android:layout_margin="5dp"
-                style="?android:attr/buttonBarButtonStyle"/>
+                android:layout_margin="5dp" />
 
-            <Button
+            <TextView
                 android:id="@+id/custom_signup_button"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginTop="12dp"
                 android:text="@string/sign_up"
-                android:layout_margin="5dp"
-                style="?android:attr/buttonBarButtonStyle"/>
+                android:gravity="center"
+                android:textSize="16sp"
+                android:clickable="true"/>
 
         </LinearLayout>
 

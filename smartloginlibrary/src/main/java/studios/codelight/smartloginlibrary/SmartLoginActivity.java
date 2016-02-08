@@ -7,13 +7,13 @@ import android.content.IntentSender;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -118,7 +118,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
 
         if(config.isFacebookEnabled()){
             signinContainer.addView(layoutInflater.inflate(R.layout.fragment_facebook_login, mContainer, false));
-            Button facebookButton = (Button) findViewById(R.id.login_fb_button);
+            AppCompatButton facebookButton = (AppCompatButton) findViewById(R.id.login_fb_button);
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                 facebookButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.facebook_vector, 0, 0, 0);
             } else {
@@ -133,7 +133,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
                 signinContainer.addView(layoutInflater.inflate(R.layout.fragment_divider, mContainer, false));
             }*/
             signinContainer.addView(layoutInflater.inflate(R.layout.fragment_google_login, mContainer, false));
-            Button googlePlusButton = (Button) findViewById(R.id.login_google_button);
+            AppCompatButton googlePlusButton = (AppCompatButton) findViewById(R.id.login_google_button);
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                 googlePlusButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.google_plus_vector, 0, 0, 0);
             } else {
@@ -314,15 +314,25 @@ public class SmartLoginActivity extends AppCompatActivity implements
         String repeatPassword = repeatPasswordSignup.getText().toString();
         String email = emailSignup.getText().toString();
         if(username.equals("")){
-            DialogUtil.getErrorDialog(R.string.username_error, this).show();
+            //DialogUtil.getErrorDialog(R.string.username_error, this).show();
+            usernameSignup.setError(getResources().getText(R.string.username_error));
+            usernameSignup.requestFocus();
         } else if(password.equals("")) {
-            DialogUtil.getErrorDialog(R.string.password_error, this).show();
+            //DialogUtil.getErrorDialog(R.string.password_error, this).show();
+            passwordSignup.setError(getResources().getText(R.string.password_error));
+            passwordSignup.requestFocus();
         } else if(email.equals("")){
-            DialogUtil.getErrorDialog(R.string.no_email_error, this).show();
+            //DialogUtil.getErrorDialog(R.string.no_email_error, this).show();
+            emailSignup.setError(getResources().getText(R.string.no_email_error));
+            emailSignup.requestFocus();
         } else if(Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            DialogUtil.getErrorDialog(R.string.invalid_email_error, this).show();
+            //DialogUtil.getErrorDialog(R.string.invalid_email_error, this).show();
+            emailSignup.setError(getResources().getText(R.string.invalid_email_error));
+            emailSignup.requestFocus();
         } else if(!password.equals(repeatPassword)){
-            DialogUtil.getErrorDialog(R.string.password_mismatch, this).show();
+            //DialogUtil.getErrorDialog(R.string.password_mismatch, this).show();
+            repeatPasswordSignup.setError(getResources().getText(R.string.password_mismatch));
+            repeatPasswordSignup.requestFocus();
         }
         else {
             if (SmartLoginBuilder.smartCustomLoginListener != null) {
@@ -346,9 +356,13 @@ public class SmartLoginActivity extends AppCompatActivity implements
         String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
         if(username.equals("")){
-            DialogUtil.getErrorDialog(R.string.username_error, this).show();
+            //DialogUtil.getErrorDialog(R.string.username_error, this).show();
+            usernameEditText.setError(getResources().getText(R.string.username_error));
+            usernameEditText.requestFocus();
         } else if(password.equals("")){
-            DialogUtil.getErrorDialog(R.string.password_error, this).show();
+            //DialogUtil.getErrorDialog(R.string.password_error, this).show();
+            passwordEditText.setError(getResources().getText(R.string.password_error));
+            passwordEditText.requestFocus();
         } else {
             if (SmartLoginBuilder.smartCustomLoginListener != null) {
                 final ProgressDialog progress = ProgressDialog.show(this, "", getString(R.string.logging_holder), true);

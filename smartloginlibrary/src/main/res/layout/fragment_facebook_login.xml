@@ -8,15 +8,24 @@
     android:layout_weight="1"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Button
+    <!--<Button-->
+        <!--android:id="@+id/login_fb_button1"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:padding="16dp"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:text="@string/fb_login_text"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:background="@color/facebook_brand_color"-->
+        <!--android:layout_margin="5dp" />-->
+
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/login_fb_button"
         android:layout_width="fill_parent"
         android:layout_height="60dp"
         android:padding="16dp"
         android:layout_marginBottom="10dp"
         android:text="@string/fb_login_text"
-        android:textColor="@color/white"
-        android:background="@color/facebook_brand_color"
         android:layout_margin="5dp" />
 
 </LinearLayout>

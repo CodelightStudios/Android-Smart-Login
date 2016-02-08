@@ -3,16 +3,25 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
+    <!--<Button-->
+    <!--android:id="@+id/login_google_button1"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:padding="16dp"-->
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:text="@string/google_login_text"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:background="@color/google_plus_brand_color"-->
+    <!--android:layout_margin="5dp"-->
+    <!--/>-->
+
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/login_google_button"
         android:layout_width="fill_parent"
         android:layout_height="60dp"
         android:padding="16dp"
         android:layout_marginBottom="10dp"
         android:text="@string/google_login_text"
-        android:textColor="@color/white"
-        android:background="@color/google_plus_brand_color"
-        android:layout_margin="5dp"
-        />
+        android:layout_margin="5dp" />
 
 </LinearLayout>
