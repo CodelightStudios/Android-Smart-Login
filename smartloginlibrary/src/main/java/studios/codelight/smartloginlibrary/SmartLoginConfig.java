@@ -15,6 +15,7 @@ public class SmartLoginConfig{
     private boolean isGoogleEnabled;
     private String facebookAppId;
     private ArrayList<String> facebookPermissions;
+    private LoginType loginType;
 
     public static final String APPLOGO = "studios.codelight.applogo";
     public static final String USER = "studios.codelight.user";
@@ -25,6 +26,7 @@ public class SmartLoginConfig{
     public static final String GOOGLEFLAG = "studios.codelight.google_flag";
     public static final String FACEBOOKID = "studios.codelight.facebook_id";
     public static final String CUSTOMUSERFLAG = "studios.codelight.custom_user";
+    public static final String CUSTOMLOGINTYPE = "studios.codelight.custom_login_type";
 
     public static final String USER_TYPE = "user_type";
 
@@ -85,6 +87,14 @@ public class SmartLoginConfig{
         this.facebookPermissions = facebookPermissions;
     }
 
+    public LoginType getLoginType() {
+        return loginType;
+    }
+
+    public void setLoginType(LoginType loginType) {
+        this.loginType = loginType;
+    }
+
     public static ArrayList<String> getDefaultFacebookPermissions(){
         ArrayList<String> defaultPermissions = new ArrayList<>();
         defaultPermissions.add("public_profile");
@@ -103,6 +113,9 @@ public class SmartLoginConfig{
         bundle.putString(FACEBOOKID, facebookAppId);
         bundle.putStringArrayList(FACEBOOKPERMISSIONS, facebookPermissions);
         bundle.putBoolean(CUSTOMLOGINFLAG, isCustomLoginEnabled);
+        if(loginType != null) {
+            bundle.putSerializable(CUSTOMLOGINTYPE, loginType);
+        }
         return bundle;
     }
 
@@ -130,6 +143,12 @@ public class SmartLoginConfig{
             loginConfig.setIsCustomLoginEnabled(bundle.getBoolean(CUSTOMLOGINFLAG));
         }
 
+        if(keys.contains(CUSTOMLOGINTYPE)) {
+            loginConfig.setLoginType((LoginType) bundle.getSerializable(CUSTOMLOGINTYPE));
+        } else {
+            loginConfig.setLoginType(LoginType.withEmail);
+        }
+
         return loginConfig;
     }
 
@@ -147,6 +166,11 @@ public class SmartLoginConfig{
 
     public enum Gender{
         male, female
+    }
+
+    public enum LoginType {
+        withEmail,
+        withUsername
     }
 
 }

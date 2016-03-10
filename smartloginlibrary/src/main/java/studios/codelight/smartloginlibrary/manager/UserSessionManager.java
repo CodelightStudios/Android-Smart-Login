@@ -11,8 +11,8 @@ import com.google.android.gms.plus.Plus;
 import com.google.gson.Gson;
 
 import studios.codelight.smartloginlibrary.R;
+import studios.codelight.smartloginlibrary.SmartCustomLogoutListener;
 import studios.codelight.smartloginlibrary.SmartLoginActivity;
-import studios.codelight.smartloginlibrary.SmartLoginBuilder;
 import studios.codelight.smartloginlibrary.SmartLoginConfig;
 import studios.codelight.smartloginlibrary.users.SmartFacebookUser;
 import studios.codelight.smartloginlibrary.users.SmartGoogleUser;
@@ -98,7 +98,7 @@ public class UserSessionManager {
         Custom user logout is left to the user.
         It also removes the preference entries.
     */
-    public static boolean logout(Activity context, SmartUser user){
+    public static boolean logout(Activity context, SmartUser user, SmartCustomLogoutListener smartCustomLogoutListener){
         SharedPreferences preferences;
         SharedPreferences.Editor editor;
         try {
@@ -120,7 +120,7 @@ public class UserSessionManager {
                         }
                         break;
                     case SmartLoginConfig.CUSTOMUSERFLAG:
-                        if(!SmartLoginBuilder.smartCustomLoginListener.customUserSignout(user)){
+                        if(!smartCustomLogoutListener.customUserSignout(user)){
                             throw new Exception("User not logged out");
                         }
                         break;
@@ -134,7 +134,7 @@ public class UserSessionManager {
                 return true;
             } catch (Exception e){
                 Log.e("User Logout Error", e.getMessage());
-                DialogUtil.getErrorDialog(R.string.network_error, context);
+                DialogUtil.getErrorDialog(R.string.network_error, context).show();
                 return false;
             }
 

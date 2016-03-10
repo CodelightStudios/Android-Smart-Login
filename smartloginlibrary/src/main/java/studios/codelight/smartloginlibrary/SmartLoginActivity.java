@@ -337,7 +337,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
         else {
             if (SmartLoginBuilder.smartCustomLoginListener != null) {
                 final ProgressDialog progress = ProgressDialog.show(this, "", getString(R.string.loading_holder), true);
-                SmartUser newUser = new UserUtil().populateCustomUser(username, email, password);
+                SmartUser newUser = new UserUtil().populateCustomUserWithUserName(username, email, password);
                 if (SmartLoginBuilder.smartCustomLoginListener.customSignup(newUser)) {
                     progress.dismiss();
                     setResult(SmartLoginConfig.CUSTOM_SIGNUP_REQUEST);
@@ -357,7 +357,11 @@ public class SmartLoginActivity extends AppCompatActivity implements
         String password = passwordEditText.getText().toString();
         if(username.equals("")){
             //DialogUtil.getErrorDialog(R.string.username_error, this).show();
-            usernameEditText.setError(getResources().getText(R.string.username_error));
+            if(config.getLoginType() == SmartLoginConfig.LoginType.withUsername) {
+                usernameEditText.setError(getResources().getText(R.string.username_error));
+            } else {
+                usernameEditText.setError(getResources().getText(R.string.email_error));
+            }
             usernameEditText.requestFocus();
         } else if(password.equals("")){
             //DialogUtil.getErrorDialog(R.string.password_error, this).show();
@@ -366,7 +370,12 @@ public class SmartLoginActivity extends AppCompatActivity implements
         } else {
             if (SmartLoginBuilder.smartCustomLoginListener != null) {
                 final ProgressDialog progress = ProgressDialog.show(this, "", getString(R.string.logging_holder), true);
-                SmartUser user = new UserUtil().populateCustomUser(username, null, password);
+                SmartUser user;
+                if(config.getLoginType() == SmartLoginConfig.LoginType.withUsername) {
+                    user = new UserUtil().populateCustomUserWithUserName(username, null, password);
+                } else {
+                    user = new UserUtil().populateCustomUserWithEmail(null, username, password);
+                }
                 if (SmartLoginBuilder.smartCustomLoginListener.customSignin(user)) {
                     progress.dismiss();
                     setResult(SmartLoginConfig.CUSTOM_LOGIN_REQUEST);

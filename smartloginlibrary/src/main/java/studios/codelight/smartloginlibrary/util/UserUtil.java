@@ -103,7 +103,16 @@ public class UserUtil {
         return facebookUser;
     }
 
-    public SmartUser populateCustomUser(String username, String email, String password){
+    public SmartUser populateCustomUserWithUserName(String username, String email, String password){
+        SmartUser user = new SmartUser();
+        user.setEmail(email);
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setGender(-1);
+        return user;
+    }
+
+    public SmartUser populateCustomUserWithEmail(String username, String email, String password){
         SmartUser user = new SmartUser();
         user.setEmail(email);
         user.setUsername(username);

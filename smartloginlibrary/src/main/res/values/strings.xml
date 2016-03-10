@@ -11,6 +11,7 @@
     <!-- hints -->
     <string name="email_hint">Email</string>
     <string name="username_hint">Username</string>
+    <string name="username_email_hint">Username/Email</string>
     <string name="password_hint">Password</string>
     <string name="confirm_password_hint">Confirm Password</string>
 
@@ -25,8 +26,9 @@
     <string name="config_data">config</string>
 
     <string name="network_error">Something went wrong. Please check Network Connection.</string>
-    <string name="username_error">Please enter your username or email</string>
-    <string name="password_error">Hope you have a password</string>
+    <string name="username_error">Please enter your username</string>
+    <string name="email_error">Please enter your email</string>
+    <string name="password_error">Please choose a password</string>
     <string name="no_email_error">You need an email to sign up</string>
     <string name="invalid_email_error">Please enter a valid email</string>
 

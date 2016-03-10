@@ -57,8 +57,9 @@ public class SmartLoginBuilder {
         return this;
     }
 
-    public SmartLoginBuilder isCustomLoginEnabled(boolean customlogin){
+    public SmartLoginBuilder isCustomLoginEnabled(boolean customlogin, SmartLoginConfig.LoginType loginType){
         config.setIsCustomLoginEnabled(customlogin);
+        config.setLoginType(loginType);
         return this;
     }
 

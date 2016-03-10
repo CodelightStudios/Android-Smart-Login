@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import studios.codelight.smartloginlibrary.SmartCustomLoginListener;
+import studios.codelight.smartloginlibrary.SmartCustomLogoutListener;
 import studios.codelight.smartloginlibrary.SmartLoginBuilder;
 import studios.codelight.smartloginlibrary.SmartLoginConfig;
 import studios.codelight.smartloginlibrary.manager.UserSessionManager;
@@ -24,7 +25,7 @@ import studios.codelight.smartloginlibrary.users.SmartGoogleUser;
 import studios.codelight.smartloginlibrary.users.SmartUser;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SmartCustomLogoutListener, SmartCustomLoginListener {
     //SmartFacebookResult smartFacebookResult;
     TextView loginResult;
     CheckBox customLogin, facebookLogin, googleLogin, appLogoCheckBox;
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            UserSessionManager.logout(MainActivity.this, currentUser);
+                            UserSessionManager.logout(MainActivity.this, currentUser, MainActivity.this);
                             currentUser = UserSessionManager.getCurrentUser(MainActivity.this);
                         }
                     });
@@ -90,28 +91,8 @@ public class MainActivity extends AppCompatActivity {
                             .isFacebookLoginEnabled(facebookLogin.isChecked())
                             .withFacebookAppId(getString(R.string.facebook_app_id)).withFacebookPermissions(permissions)
                             .isGoogleLoginEnabled(googleLogin.isChecked())
-                            .isCustomLoginEnabled(customLogin.isChecked()).setSmartCustomLoginHelper(new SmartCustomLoginListener() {
-                                @Override
-                                public boolean customSignin(SmartUser user) {
-                                    //This "user" will have only username and password set.
-                                    Toast.makeText(MainActivity.this, user.getUsername() + " " + user.getPassword(), Toast.LENGTH_SHORT).show();
-                                    return true;
-                                }
-
-                                @Override
-                                public boolean customSignup(SmartUser newUser) {
-                                    //Implement your our custom sign up logic and return true if success
-                                    return true;
-                                }
-
-                                @Override
-                                public boolean customUserSignout(SmartUser smartUser) {
-                                    //Implement logout logic
-                                    return true;
-                                }
-
-
-                            })
+                            .isCustomLoginEnabled(customLogin.isChecked(), SmartLoginConfig.LoginType.withEmail)
+                            .setSmartCustomLoginHelper(MainActivity.this)
                             .build();
 
                     startActivityForResult(intent, SmartLoginConfig.LOGIN_REQUEST);
@@ -182,5 +163,25 @@ public class MainActivity extends AppCompatActivity {
             loginResult.setText(fail);
         }
 
+    }
+
+    @Override
+    public boolean customUserSignout(SmartUser smartUser) {
+        //Implement your logic
+        return true;
+    }
+
+
+    @Override
+    public boolean customSignin(SmartUser user) {
+        //This "user" will have only username and password set.
+        Toast.makeText(MainActivity.this, user.getUsername() + " " + user.getPassword(), Toast.LENGTH_SHORT).show();
+        return true;
+    }
+
+    @Override
+    public boolean customSignup(SmartUser newUser) {
+        //Implement your our custom sign up logic and return true if success
+        return true;
     }
 }

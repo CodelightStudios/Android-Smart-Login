@@ -8,5 +8,4 @@ import studios.codelight.smartloginlibrary.users.SmartUser;
 public interface SmartCustomLoginListener {
     boolean customSignin(SmartUser user);
     boolean customSignup(SmartUser newUser);
-    boolean customUserSignout(SmartUser smartUser);
 }
