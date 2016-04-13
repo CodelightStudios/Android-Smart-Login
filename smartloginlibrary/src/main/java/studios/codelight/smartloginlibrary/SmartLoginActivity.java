@@ -290,7 +290,7 @@ public class SmartLoginActivity extends AppCompatActivity implements
             //DialogUtil.getErrorDialog(R.string.no_email_error, this).show();
             emailSignup.setError(getResources().getText(R.string.no_email_error));
             emailSignup.requestFocus();
-        } else if(Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        } else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             //DialogUtil.getErrorDialog(R.string.invalid_email_error, this).show();
             emailSignup.setError(getResources().getText(R.string.invalid_email_error));
             emailSignup.requestFocus();
