@@ -13,6 +13,8 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import java.util.ArrayList;
 
 import studios.codelight.smartloginlibrary.SmartCustomLoginListener;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements SmartCustomLogout
     TextView loginResult;
     CheckBox customLogin, facebookLogin, googleLogin, appLogoCheckBox;
     SmartUser currentUser;
+    GoogleApiClient googleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements SmartCustomLogout
                     builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            UserSessionManager.logout(MainActivity.this, currentUser, MainActivity.this);
+                            UserSessionManager.logout(MainActivity.this, currentUser, MainActivity.this, null);
                             currentUser = UserSessionManager.getCurrentUser(MainActivity.this);
                         }
                     });
@@ -146,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements SmartCustomLogout
         }
         else if(resultCode == SmartLoginConfig.GOOGLE_LOGIN_REQUEST){
             SmartGoogleUser user = data.getParcelableExtra(SmartLoginConfig.USER);
-            String userDetails = user.getEmail() + " " + user.getBirthday() + " " + user.getAboutMe();
+            String userDetails = user.getEmail() + " " + user.getDisplayName();
             loginResult.setText(userDetails);
         }
         else if(resultCode == SmartLoginConfig.CUSTOM_LOGIN_REQUEST){

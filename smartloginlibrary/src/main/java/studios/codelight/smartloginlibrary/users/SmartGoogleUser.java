@@ -1,42 +1,35 @@
 package studios.codelight.smartloginlibrary.users;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
+ * Copyright (c) 2016 Codelight Studios
  * Created by Kalyan on 9/25/2015.
  */
 public class SmartGoogleUser extends SmartUser implements Parcelable{
 
     private String displayName;
-    private String aboutMe;
-    private String nickname;
-    private String braggingRights;
-    private String fullName;
-    private String language;
+    private Uri photoUrl;
+    //private String idToken;
+    //private String serverAuthCode;
 
     public SmartGoogleUser() {
     }
 
+
     protected SmartGoogleUser(Parcel in) {
         super(in);
         displayName = in.readString();
-        aboutMe = in.readString();
-        nickname = in.readString();
-        braggingRights = in.readString();
-        fullName = in.readString();
-        language = in.readString();
+        photoUrl = in.readParcelable(Uri.class.getClassLoader());
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(displayName);
-        dest.writeString(aboutMe);
-        dest.writeString(nickname);
-        dest.writeString(braggingRights);
-        dest.writeString(fullName);
-        dest.writeString(language);
+        dest.writeParcelable(photoUrl, flags);
     }
 
     @Override
@@ -64,43 +57,11 @@ public class SmartGoogleUser extends SmartUser implements Parcelable{
         this.displayName = displayName;
     }
 
-    public String getAboutMe() {
-        return aboutMe;
+    public Uri getPhotoUrl() {
+        return photoUrl;
     }
 
-    public void setAboutMe(String aboutMe) {
-        this.aboutMe = aboutMe;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getBraggingRights() {
-        return braggingRights;
-    }
-
-    public void setBraggingRights(String braggingRights) {
-        this.braggingRights = braggingRights;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
+    public void setPhotoUrl(Uri photoUrl) {
+        this.photoUrl = photoUrl;
     }
 }

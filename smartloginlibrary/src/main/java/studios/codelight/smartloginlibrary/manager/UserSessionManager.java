@@ -4,15 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.plus.Plus;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.gson.Gson;
 
 import studios.codelight.smartloginlibrary.R;
 import studios.codelight.smartloginlibrary.SmartCustomLogoutListener;
-import studios.codelight.smartloginlibrary.SmartLoginActivity;
 import studios.codelight.smartloginlibrary.SmartLoginConfig;
 import studios.codelight.smartloginlibrary.users.SmartFacebookUser;
 import studios.codelight.smartloginlibrary.users.SmartGoogleUser;
@@ -20,6 +22,7 @@ import studios.codelight.smartloginlibrary.users.SmartUser;
 import studios.codelight.smartloginlibrary.util.DialogUtil;
 
 /**
+ * Copyright (c) 2016 Codelight Studios
  * Created by Kalyan on 9/29/2015.
  */
 public class UserSessionManager {
@@ -67,27 +70,32 @@ public class UserSessionManager {
     public boolean setUserSession(Context context, SmartUser smartUser){
         SharedPreferences preferences;
         SharedPreferences.Editor editor;
-        try {
-            preferences = context.getSharedPreferences(USER_PREFS, Context.MODE_PRIVATE);
-            editor = preferences.edit();
+        if(smartUser != null) {
+            try {
+                preferences = context.getSharedPreferences(USER_PREFS, Context.MODE_PRIVATE);
+                editor = preferences.edit();
 
-            if (smartUser instanceof SmartFacebookUser){
-                editor.putString(SmartLoginConfig.USER_TYPE, SmartLoginConfig.FACEBOOKFLAG);
-            } else if(smartUser instanceof SmartGoogleUser){
-                editor.putString(SmartLoginConfig.USER_TYPE, SmartLoginConfig.GOOGLEFLAG);
-            } else {
-                editor.putString(SmartLoginConfig.USER_TYPE, SmartLoginConfig.CUSTOMUSERFLAG);
+                if (smartUser instanceof SmartFacebookUser) {
+                    editor.putString(SmartLoginConfig.USER_TYPE, SmartLoginConfig.FACEBOOKFLAG);
+                } else if (smartUser instanceof SmartGoogleUser) {
+                    editor.putString(SmartLoginConfig.USER_TYPE, SmartLoginConfig.GOOGLEFLAG);
+                } else {
+                    editor.putString(SmartLoginConfig.USER_TYPE, SmartLoginConfig.CUSTOMUSERFLAG);
+                }
+
+                Gson gson = new Gson();
+                smartUser.setPassword(null);
+                String sessionUser = gson.toJson(smartUser);
+                Log.d("GSON", sessionUser);
+                editor.putString(USER_SESSION, sessionUser);
+                editor.apply();
+                return true;
+            } catch (Exception e) {
+                Log.e("Session Error", e.getMessage());
+                return false;
             }
-
-            Gson gson = new Gson();
-            smartUser.setPassword(null);
-            String sessionUser = gson.toJson(smartUser);
-            Log.d("GSON", sessionUser);
-            editor.putString(USER_SESSION, sessionUser);
-            editor.apply();
-            return true;
-        } catch (Exception e){
-            Log.e("Session Error", e.getMessage());
+        } else {
+            Log.e("Session Error", "User is null");
             return false;
         }
     }
@@ -98,9 +106,9 @@ public class UserSessionManager {
         Custom user logout is left to the user.
         It also removes the preference entries.
     */
-    public static boolean logout(Activity context, SmartUser user, SmartCustomLogoutListener smartCustomLogoutListener){
+    static SharedPreferences.Editor editor;
+    public static boolean logout(Activity context, SmartUser user, SmartCustomLogoutListener smartCustomLogoutListener, GoogleApiClient googleApiClient){
         SharedPreferences preferences;
-        SharedPreferences.Editor editor;
         try {
             preferences = context.getSharedPreferences(USER_PREFS, Context.MODE_PRIVATE);
             editor = preferences.edit();
@@ -110,28 +118,42 @@ public class UserSessionManager {
                 switch (user_type) {
                     case SmartLoginConfig.FACEBOOKFLAG:
                         LoginManager.getInstance().logOut();
-                        break;
+                        editor.remove(SmartLoginConfig.USER_TYPE);
+                        editor.remove(USER_SESSION);
+                        editor.apply();
+                        return true;
                     case SmartLoginConfig.GOOGLEFLAG:
-                        GoogleApiClient mGoogleApiClient = SmartLoginActivity.getGoogleApiClient();
+                        /*GoogleApiClient mGoogleApiClient = SmartLoginActivity.getGoogleApiClient();
                         if(mGoogleApiClient != null) {
                             Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
                             Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient);
                             mGoogleApiClient.disconnect();
+                        }*/
+                        if(googleApiClient == null || !googleApiClient.isConnected()) {
+                            Toast.makeText(context, "GoogleApiClient should be connected.", Toast.LENGTH_SHORT).show();
+                            return false;
                         }
-                        break;
+                        final boolean[] logoutStatus = {false};
+                        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+                            @Override
+                            public void onResult(Status status) {
+                                if(status.isSuccess()) {
+                                    editor.remove(SmartLoginConfig.USER_TYPE);
+                                    editor.remove(USER_SESSION);
+                                    editor.apply();
+                                    logoutStatus[0] = true;
+                                }
+                            }
+                        });
+                        return logoutStatus[0];
                     case SmartLoginConfig.CUSTOMUSERFLAG:
                         if(!smartCustomLogoutListener.customUserSignout(user)){
                             throw new Exception("User not logged out");
                         }
-                        break;
+                        return true;
                     default:
-                        break;
+                        return false;
                 }
-
-                editor.remove(SmartLoginConfig.USER_TYPE);
-                editor.remove(USER_SESSION);
-                editor.apply();
-                return true;
             } catch (Exception e){
                 Log.e("User Logout Error", e.getMessage());
                 DialogUtil.getErrorDialog(R.string.network_error, context).show();

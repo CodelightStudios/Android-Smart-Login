@@ -2,9 +2,7 @@ package studios.codelight.smartloginlibrary.util;
 
 import android.util.Log;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.plus.Plus;
-import com.google.android.gms.plus.model.people.Person;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,46 +13,21 @@ import studios.codelight.smartloginlibrary.users.SmartGoogleUser;
 import studios.codelight.smartloginlibrary.users.SmartUser;
 
 /**
+ * Copyright (c) 2016 Codelight Studios
  * Created by Kalyan on 10/3/2015.
  */
 public class UserUtil {
 
-    public SmartGoogleUser populateGoogleUser(Person person, GoogleApiClient googleApiClient){
+    public SmartGoogleUser populateGoogleUser(GoogleSignInAccount account){
         //Create a new google user
         SmartGoogleUser googleUser = new SmartGoogleUser();
-        googleUser.setGender(-1);
         //populate the user
-        if(person.hasName()) {
-            Person.Name name = person.getName();
-            if (name.hasGivenName())
-                googleUser.setFirstName(name.getGivenName());
-            if (name.hasFamilyName())
-                googleUser.setLastName(name.getFamilyName());
-            if (name.hasFormatted())
-                googleUser.setFullName(name.getFormatted());
-            if (name.hasMiddleName())
-                googleUser.setMiddleName(name.getMiddleName());
-        }
-        if(person.hasId())
-            googleUser.setUserId(person.getId());
-        if(person.hasNickname())
-            googleUser.setNickname(person.getNickname());
-        if(person.hasDisplayName())
-            googleUser.setDisplayName(person.getDisplayName());
-        if(person.hasBirthday())
-            googleUser.setBirthday(person.getBirthday());
-        if(person.hasAboutMe())
-            googleUser.setAboutMe(person.getAboutMe());
-        if(person.hasLanguage())
-            googleUser.setLanguage(person.getLanguage());
-        if(person.hasGender())
-            googleUser.setGender(person.getGender());
-        if(person.hasBraggingRights())
-            googleUser.setBraggingRights(person.getBraggingRights());
-        String email = Plus.AccountApi.getAccountName(googleApiClient);
-        if(email != null){
-            googleUser.setEmail(email);
-        }
+        googleUser.setDisplayName(account.getDisplayName());
+        //googleUser.setIdToken(account.getIdToken());
+        googleUser.setPhotoUrl(account.getPhotoUrl());
+        googleUser.setEmail(account.getEmail());
+        //googleUser.setServerAuthCode(account.getServerAuthCode());
+
         //return the populated google user
         return googleUser;
     }
