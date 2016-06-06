@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -78,12 +79,16 @@ public class SmartLoginActivity extends AppCompatActivity implements
 
         //Set the facebook app id and initialize sdk
         FacebookSdk.setApplicationId(config.getFacebookAppId());
-        FacebookSdk.sdkInitialize(getApplicationContext());
+        //Moved to Application class
+        //FacebookSdk.sdkInitialize(getApplicationContext());
 
         //Attaching the view
+        //View v;
         setContentView(R.layout.activity_smart_login);
 
         //Set the title and back button on the Action bar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.smart_login_toolbar);
+        setSupportActionBar(toolbar);
         if(getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Login");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

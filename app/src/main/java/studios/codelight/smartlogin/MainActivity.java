@@ -13,6 +13,8 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements SmartCustomLogout
     TextView loginResult;
     CheckBox customLogin, facebookLogin, googleLogin, appLogoCheckBox;
     SmartUser currentUser;
-    GoogleApiClient googleApiClient;
+    GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,49 +62,61 @@ public class MainActivity extends AppCompatActivity implements SmartCustomLogout
         }
         loginResult.setText(display);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .requestProfile()
+                .build();
 
-                if (currentUser != null) {
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setMessage(R.string.user_exists);
-                    builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            UserSessionManager.logout(MainActivity.this, currentUser, MainActivity.this, null);
-                            currentUser = UserSessionManager.getCurrentUser(MainActivity.this);
-                        }
-                    });
-                    builder.setCancelable(true);
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, null)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
 
-                    builder.create().show();
-                } else {
+        if (loginButton != null) {
+            loginButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                    SmartLoginBuilder loginBuilder = new SmartLoginBuilder();
+                    if (currentUser != null) {
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setMessage(R.string.user_exists);
+                        builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                UserSessionManager.logout(MainActivity.this, currentUser, MainActivity.this, mGoogleApiClient);
+                                currentUser = UserSessionManager.getCurrentUser(MainActivity.this);
+                            }
+                        });
+                        builder.setCancelable(true);
 
-                    //Set facebook permissions
-                    ArrayList<String> permissions = new ArrayList<>();
-                    permissions.add("public_profile");
-                    permissions.add("email");
-                    permissions.add("user_birthday");
-                    permissions.add("user_friends");
+                        builder.create().show();
+                    } else {
+
+                        SmartLoginBuilder loginBuilder = new SmartLoginBuilder();
+
+                        //Set facebook permissions
+                        ArrayList<String> permissions = new ArrayList<>();
+                        permissions.add("public_profile");
+                        permissions.add("email");
+                        permissions.add("user_birthday");
+                        permissions.add("user_friends");
 
 
-                    Intent intent = loginBuilder.with(getApplicationContext())
-                            .setAppLogo(getlogo())
-                            .isFacebookLoginEnabled(facebookLogin.isChecked())
-                            .withFacebookAppId(getString(R.string.facebook_app_id)).withFacebookPermissions(permissions)
-                            .isGoogleLoginEnabled(googleLogin.isChecked())
-                            .isCustomLoginEnabled(customLogin.isChecked(), SmartLoginConfig.LoginType.withEmail)
-                            .setSmartCustomLoginHelper(MainActivity.this)
-                            .build();
+                        Intent intent = loginBuilder.with(getApplicationContext())
+                                .setAppLogo(getlogo())
+                                .isFacebookLoginEnabled(facebookLogin.isChecked())
+                                .withFacebookAppId(getString(R.string.facebook_app_id)).withFacebookPermissions(permissions)
+                                .isGoogleLoginEnabled(googleLogin.isChecked())
+                                .isCustomLoginEnabled(customLogin.isChecked(), SmartLoginConfig.LoginType.withEmail)
+                                .setSmartCustomLoginHelper(MainActivity.this)
+                                .build();
 
-                    startActivityForResult(intent, SmartLoginConfig.LOGIN_REQUEST);
-                    //startActivity(intent);
+                        startActivityForResult(intent, SmartLoginConfig.LOGIN_REQUEST);
+                        //startActivity(intent);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     private int getlogo() {
@@ -171,6 +185,7 @@ public class MainActivity extends AppCompatActivity implements SmartCustomLogout
     @Override
     public boolean customUserSignout(SmartUser smartUser) {
         //Implement your logic
+        UserSessionManager.logout(this, smartUser, this, mGoogleApiClient);
         return true;
     }
 
@@ -178,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements SmartCustomLogout
     @Override
     public boolean customSignin(SmartUser user) {
         //This "user" will have only username and password set.
-        Toast.makeText(MainActivity.this, user.getUsername() + " " + user.getPassword(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, user.getUsername() + " " + user.getEmail(), Toast.LENGTH_SHORT).show();
         return true;
     }
 

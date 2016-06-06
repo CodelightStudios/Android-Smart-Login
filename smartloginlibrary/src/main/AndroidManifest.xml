@@ -7,12 +7,14 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
     <application
+        android:name=".SmartLogin"
         android:label="@string/app_name">
         <activity
             android:name=".SmartLoginActivity"
             android:label="@string/app_name"
             android:exported="true"
-            android:theme="@style/AppTheme.LoginTheme">
+            android:theme="@style/AppTheme.LoginTheme"
+            android:windowSoftInputMode="adjustPan">
         </activity>
 
         <!--<meta-data android:name="com.facebook.sdk.ApplicationId"-->

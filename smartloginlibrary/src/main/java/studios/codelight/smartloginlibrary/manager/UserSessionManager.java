@@ -31,7 +31,7 @@ public class UserSessionManager {
     static final String USER_PREFS = "codelight_studios_user_prefs";
     static final String DEFAULT_SESSION_VALUE = "No logged in user";
 
-    /*
+    /**
         This static method can be called to get the logged in user.
         It reads from the shared preferences and builds a SmartUser object and returns it.
         If no user is logged in it returns null
@@ -62,7 +62,7 @@ public class UserSessionManager {
         return smartUser;
     }
 
-    /*
+    /**
         This method sets the session object for the current logged in user.
         This is called from inside the SmartLoginActivity to save the
         current logged in user to the shared preferences.
@@ -100,7 +100,7 @@ public class UserSessionManager {
         }
     }
 
-    /*
+    /**
         This static method logs out the user that is logged in.
         This implements facebook and google logout.
         Custom user logout is left to the user.
@@ -123,12 +123,6 @@ public class UserSessionManager {
                         editor.apply();
                         return true;
                     case SmartLoginConfig.GOOGLEFLAG:
-                        /*GoogleApiClient mGoogleApiClient = SmartLoginActivity.getGoogleApiClient();
-                        if(mGoogleApiClient != null) {
-                            Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-                            Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient);
-                            mGoogleApiClient.disconnect();
-                        }*/
                         if(googleApiClient == null || !googleApiClient.isConnected()) {
                             Toast.makeText(context, "GoogleApiClient should be connected.", Toast.LENGTH_SHORT).show();
                             return false;
