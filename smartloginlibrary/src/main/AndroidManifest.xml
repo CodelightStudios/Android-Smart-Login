@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="studios.codelight.smartloginlibrary" >
+    xmlns:tools="http://schemas.android.com/tools"
+    package="studios.codelight.smartloginlibrary">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
@@ -11,20 +12,19 @@
         android:label="@string/app_name">
         <activity
             android:name=".SmartLoginActivity"
-            android:label="@string/app_name"
             android:exported="true"
-            android:theme="@style/AppTheme.LoginTheme"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan"/>
 
-        <!--<meta-data android:name="com.facebook.sdk.ApplicationId"-->
-            <!--android:value="@string/facebook_app_id"/>-->
+        <!-- <meta-data android:name="com.facebook.sdk.ApplicationId" -->
+        <!-- android:value="@string/facebook_app_id"/> -->
 
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            tools:replace="android:theme"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>

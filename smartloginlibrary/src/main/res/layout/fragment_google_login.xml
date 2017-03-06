@@ -16,7 +16,7 @@
     <!--/>-->
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/login_google_button"
+        android:id="@+id/oldgoogle_login_button"
         android:layout_width="fill_parent"
         android:layout_height="60dp"
         android:padding="16dp"

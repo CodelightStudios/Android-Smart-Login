@@ -2,6 +2,7 @@ package studios.codelight.smartloginlibrary.util;
 
 import android.util.Log;
 
+import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import org.json.JSONException;
@@ -23,18 +24,19 @@ public class UserUtil {
         SmartGoogleUser googleUser = new SmartGoogleUser();
         //populate the user
         googleUser.setDisplayName(account.getDisplayName());
-        //googleUser.setIdToken(account.getIdToken());
         googleUser.setPhotoUrl(account.getPhotoUrl());
         googleUser.setEmail(account.getEmail());
+        googleUser.setIdToken(account.getIdToken());
         //googleUser.setServerAuthCode(account.getServerAuthCode());
 
         //return the populated google user
         return googleUser;
     }
 
-    public SmartFacebookUser populateFacebookUser(JSONObject object){
+    public SmartFacebookUser populateFacebookUser(JSONObject object, AccessToken accessToken){
         SmartFacebookUser facebookUser = new SmartFacebookUser();
         facebookUser.setGender(-1);
+        facebookUser.setAccessToken(accessToken);
         try {
             if (object.has(SmartLoginConfig.FacebookFields.EMAIL))
                 facebookUser.setEmail(object.getString(SmartLoginConfig.FacebookFields.EMAIL));
@@ -76,16 +78,7 @@ public class UserUtil {
         return facebookUser;
     }
 
-    public SmartUser populateCustomUserWithUserName(String username, String email, String password){
-        SmartUser user = new SmartUser();
-        user.setEmail(email);
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setGender(-1);
-        return user;
-    }
-
-    public SmartUser populateCustomUserWithEmail(String username, String email, String password){
+    public SmartUser populateCustomUser(String username, String email, String password){
         SmartUser user = new SmartUser();
         user.setEmail(email);
         user.setUsername(username);

@@ -13,10 +13,6 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.GoogleApiClient;
-
 import java.util.ArrayList;
 
 import studios.codelight.smartloginlibrary.SmartCustomLoginListener;
@@ -34,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements SmartCustomLogout
     TextView loginResult;
     CheckBox customLogin, facebookLogin, googleLogin, appLogoCheckBox;
     SmartUser currentUser;
-    GoogleApiClient mGoogleApiClient;
+    //GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,16 +58,6 @@ public class MainActivity extends AppCompatActivity implements SmartCustomLogout
         }
         loginResult.setText(display);
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .requestProfile()
-                .build();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, null)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-
         if (loginButton != null) {
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -83,8 +69,8 @@ public class MainActivity extends AppCompatActivity implements SmartCustomLogout
                         builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                UserSessionManager.logout(MainActivity.this, currentUser, MainActivity.this, mGoogleApiClient);
-                                currentUser = UserSessionManager.getCurrentUser(MainActivity.this);
+                                //UserSessionManager.logout(MainActivity.this, currentUser, MainActivity.this, mGoogleApiClient);
+                                currentUser = null;//UserSessionManager.getCurrentUser(MainActivity.this);
                             }
                         });
                         builder.setCancelable(true);
@@ -102,28 +88,23 @@ public class MainActivity extends AppCompatActivity implements SmartCustomLogout
                         permissions.add("user_friends");
 
 
-                        Intent intent = loginBuilder.with(getApplicationContext())
-                                .setAppLogo(getlogo())
+                        Intent intent = loginBuilder.with(MainActivity.this)
                                 .isFacebookLoginEnabled(facebookLogin.isChecked())
                                 .withFacebookAppId(getString(R.string.facebook_app_id)).withFacebookPermissions(permissions)
                                 .isGoogleLoginEnabled(googleLogin.isChecked())
-                                .isCustomLoginEnabled(customLogin.isChecked(), SmartLoginConfig.LoginType.withEmail)
+                                .isCustomLoginEnabled(customLogin.isChecked(), SmartLoginConfig.LoginType.withUsername)
                                 .setSmartCustomLoginHelper(MainActivity.this)
+                                .setGoogleAppServerClientId("972605113538-au43n43dimonup78ejc1i0bcdm06sv26.apps.googleusercontent.com")
                                 .build();
 
+                        intent.putExtra(SmartLoginConfig.LAYOUT_ID, R.layout.activity_login_old);
+                        intent.putExtra(SmartLoginConfig.LOGIN_THEME, R.style.LoginTheme);
                         startActivityForResult(intent, SmartLoginConfig.LOGIN_REQUEST);
                         //startActivity(intent);
                     }
                 }
             });
         }
-    }
-
-    private int getlogo() {
-        if(appLogoCheckBox.isChecked()){
-            return R.mipmap.ic_launcher;
-        }
-        return 0;
     }
 
     @Override
@@ -157,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements SmartCustomLogout
                 user = data.getParcelableExtra(SmartLoginConfig.USER);
                 String userDetails = user.getProfileName() + " " + user.getEmail() + " " + user.getBirthday();
                 loginResult.setText(userDetails);
+                Toast.makeText(MainActivity.this, user.getUserId(), Toast.LENGTH_SHORT).show();
             }catch (Exception e){
                 loginResult.setText(fail);
             }
@@ -185,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements SmartCustomLogout
     @Override
     public boolean customUserSignout(SmartUser smartUser) {
         //Implement your logic
-        UserSessionManager.logout(this, smartUser, this, mGoogleApiClient);
+        UserSessionManager.logout(this, smartUser, this, null);
         return true;
     }
 
@@ -198,8 +180,7 @@ public class MainActivity extends AppCompatActivity implements SmartCustomLogout
     }
 
     @Override
-    public boolean customSignup(SmartUser newUser) {
+    public void customSignup() {
         //Implement your our custom sign up logic and return true if success
-        return true;
     }
 }

@@ -3,11 +3,15 @@ package studios.codelight.smartloginlibrary.users;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.facebook.AccessToken;
+
 /**
+ * Copyright (c) 2016 Codelight Studios
  * Created by Kalyan on 9/23/2015.
  */
 public class SmartFacebookUser extends SmartUser implements Parcelable {
     private String profileName;
+    private AccessToken accessToken;
 
     public SmartFacebookUser() {
     }
@@ -15,12 +19,14 @@ public class SmartFacebookUser extends SmartUser implements Parcelable {
     protected SmartFacebookUser(Parcel in) {
         super(in);
         profileName = in.readString();
+        accessToken = in.readParcelable(AccessToken.class.getClassLoader());
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(profileName);
+        dest.writeParcelable(accessToken, flags);
     }
 
     @Override
@@ -46,5 +52,13 @@ public class SmartFacebookUser extends SmartUser implements Parcelable {
 
     public void setProfileName(String profileName) {
         this.profileName = profileName;
+    }
+
+    public AccessToken getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(AccessToken accessToken) {
+        this.accessToken = accessToken;
     }
 }

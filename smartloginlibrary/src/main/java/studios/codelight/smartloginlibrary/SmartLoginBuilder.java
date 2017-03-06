@@ -6,29 +6,23 @@ import android.content.Intent;
 import java.util.ArrayList;
 
 /**
+ * Copyright (c) 2016 Codelight Studios
  * Created by Kalyan on 9/9/2015.
  */
 public class SmartLoginBuilder {
 
     private Context context;
     private SmartLoginConfig config;
-    public static SmartCustomLoginListener smartCustomLoginListener;
     //private static final String CONFIGDATA = "config";
 
     public SmartLoginBuilder() {
         config = new SmartLoginConfig();
-        config.setAppLogo(0);
         config.setIsFacebookEnabled(false);
         config.setIsGoogleEnabled(false);
     }
 
     public SmartLoginBuilder with(Context context){
         this.context = context;
-        return this;
-    }
-
-    public SmartLoginBuilder setAppLogo(int logo){
-        config.setAppLogo(logo);
         return this;
     }
 
@@ -43,7 +37,7 @@ public class SmartLoginBuilder {
     }
 
     public SmartLoginBuilder setSmartCustomLoginHelper(SmartCustomLoginListener mSmartCustomLoginListener) {
-        SmartLoginBuilder.smartCustomLoginListener = mSmartCustomLoginListener;
+        config.setLoginListener(mSmartCustomLoginListener);
         return this;
     }
 
@@ -60,6 +54,11 @@ public class SmartLoginBuilder {
     public SmartLoginBuilder isCustomLoginEnabled(boolean customlogin, SmartLoginConfig.LoginType loginType){
         config.setIsCustomLoginEnabled(customlogin);
         config.setLoginType(loginType);
+        return this;
+    }
+
+    public SmartLoginBuilder setGoogleAppServerClientId(String clientId) {
+        config.setGoogleAppServerClientId(clientId);
         return this;
     }
 

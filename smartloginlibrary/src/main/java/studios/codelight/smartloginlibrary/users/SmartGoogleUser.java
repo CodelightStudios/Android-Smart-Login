@@ -12,17 +12,16 @@ public class SmartGoogleUser extends SmartUser implements Parcelable{
 
     private String displayName;
     private Uri photoUrl;
-    //private String idToken;
-    //private String serverAuthCode;
+    private String idToken;
 
     public SmartGoogleUser() {
     }
-
 
     protected SmartGoogleUser(Parcel in) {
         super(in);
         displayName = in.readString();
         photoUrl = in.readParcelable(Uri.class.getClassLoader());
+        idToken = in.readString();
     }
 
     @Override
@@ -30,6 +29,7 @@ public class SmartGoogleUser extends SmartUser implements Parcelable{
         super.writeToParcel(dest, flags);
         dest.writeString(displayName);
         dest.writeParcelable(photoUrl, flags);
+        dest.writeString(idToken);
     }
 
     @Override
@@ -63,5 +63,13 @@ public class SmartGoogleUser extends SmartUser implements Parcelable{
 
     public void setPhotoUrl(Uri photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    public String getIdToken() {
+        return idToken;
+    }
+
+    public void setIdToken(String idToken) {
+        this.idToken = idToken;
     }
 }
