@@ -1,8 +1,8 @@
-#Android Smart Login Steps
+# Android Smart Login Steps
 
-##Facebook Login
+## Facebook Login
 
-###Prerequisites
+### Prerequisites
 Before we begin, we need to setup our application with Facebook.
 
 - Go to [Facebook Developers Quick start guide](https://developers.facebook.com/quickstarts/) and select your App to configure (or create a new one)
@@ -13,7 +13,7 @@ Before we begin, we need to setup our application with Facebook.
 - Add these two sections with proper data and copy your APP ID before you leave. (Rest every thing is taken care by this Library)
 - Next step is to enable single sign on for your app by choosing your app from `My Apps` on the [Facebook Developer site](developers.facebook.com/apps/), choosing `Settings` for your app, and setting `Single Sign On` to `Yes`.
 
-###Steps to add Facebook Login to your app
+### Steps to add Facebook Login to your app
 
 - Add the below code in `AndroidManifest.xml` of your App
 
