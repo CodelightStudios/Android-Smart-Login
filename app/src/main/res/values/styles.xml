@@ -10,12 +10,6 @@
         <item name="colorPrimaryDark">@color/dark_primary_color</item>
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">@color/accent_color</item>
-    </style>
-
-    <style name="LoginTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/primary_color</item>
-        <item name="colorPrimaryDark">@color/dark_primary_color</item>
-        <item name="colorAccent">@color/login_accent</item>
 
         <item name="android:windowBackground">@color/primary_color</item>
 
@@ -28,7 +22,6 @@
         <item name="android:colorButtonNormal" tools:targetApi="lollipop">
             @color/dark_primary_color
         </item>
-        <!--<item name="cardBackgroundColor">@color/colorAccent</item>-->
     </style>
 
 </resources>

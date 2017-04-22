@@ -8,7 +8,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import studios.codelight.smartloginlibrary.SmartLoginConfig;
 import studios.codelight.smartloginlibrary.users.SmartFacebookUser;
 import studios.codelight.smartloginlibrary.users.SmartGoogleUser;
 import studios.codelight.smartloginlibrary.users.SmartUser;
@@ -19,32 +18,37 @@ import studios.codelight.smartloginlibrary.users.SmartUser;
  */
 public class UserUtil {
 
-    public SmartGoogleUser populateGoogleUser(GoogleSignInAccount account){
+    public static SmartGoogleUser populateGoogleUser(GoogleSignInAccount account){
         //Create a new google user
         SmartGoogleUser googleUser = new SmartGoogleUser();
         //populate the user
         googleUser.setDisplayName(account.getDisplayName());
-        googleUser.setPhotoUrl(account.getPhotoUrl());
+        if (account.getPhotoUrl() != null) {
+            googleUser.setPhotoUrl(account.getPhotoUrl().toString());
+        }
         googleUser.setEmail(account.getEmail());
         googleUser.setIdToken(account.getIdToken());
-        //googleUser.setServerAuthCode(account.getServerAuthCode());
+        googleUser.setUserId(account.getId());
+        if (account.getAccount() != null) {
+            googleUser.setUsername(account.getAccount().name);
+        }
 
         //return the populated google user
         return googleUser;
     }
 
-    public SmartFacebookUser populateFacebookUser(JSONObject object, AccessToken accessToken){
+    public static SmartFacebookUser populateFacebookUser(JSONObject object, AccessToken accessToken){
         SmartFacebookUser facebookUser = new SmartFacebookUser();
         facebookUser.setGender(-1);
         facebookUser.setAccessToken(accessToken);
         try {
-            if (object.has(SmartLoginConfig.FacebookFields.EMAIL))
-                facebookUser.setEmail(object.getString(SmartLoginConfig.FacebookFields.EMAIL));
-            if (object.has(SmartLoginConfig.FacebookFields.BIRTHDAY))
-                facebookUser.setBirthday(object.getString(SmartLoginConfig.FacebookFields.BIRTHDAY));
-            if (object.has(SmartLoginConfig.FacebookFields.GENDER)) {
+            if (object.has(Constants.FacebookFields.EMAIL))
+                facebookUser.setEmail(object.getString(Constants.FacebookFields.EMAIL));
+            if (object.has(Constants.FacebookFields.BIRTHDAY))
+                facebookUser.setBirthday(object.getString(Constants.FacebookFields.BIRTHDAY));
+            if (object.has(Constants.FacebookFields.GENDER)) {
                 try {
-                    SmartLoginConfig.Gender gender = SmartLoginConfig.Gender.valueOf(object.getString(SmartLoginConfig.FacebookFields.GENDER));
+                    Constants.Gender gender = Constants.Gender.valueOf(object.getString(Constants.FacebookFields.GENDER));
                     switch (gender) {
                         case male:
                             facebookUser.setGender(0);
@@ -54,36 +58,34 @@ public class UserUtil {
                             break;
                     }
                 } catch (Exception e) {
-                    //if gender is not in the enum it is set to unspecified value (-1)
-                    facebookUser.setGender(-1);
-                    Log.e(getClass().getSimpleName(), e.getMessage());
+                    //if gender is not in the enum it is already set to unspecified value (-1)
+                    Log.e("UserUtil", e.getMessage());
                 }
             }
-            if (object.has(SmartLoginConfig.FacebookFields.LINK))
-                facebookUser.setProfileLink(object.getString(SmartLoginConfig.FacebookFields.LINK));
-            if (object.has(SmartLoginConfig.FacebookFields.ID))
-                facebookUser.setUserId(object.getString(SmartLoginConfig.FacebookFields.ID));
-            if (object.has(SmartLoginConfig.FacebookFields.NAME))
-                facebookUser.setProfileName(object.getString(SmartLoginConfig.FacebookFields.NAME));
-            if (object.has(SmartLoginConfig.FacebookFields.FIRST_NAME))
-                facebookUser.setFirstName(object.getString(SmartLoginConfig.FacebookFields.FIRST_NAME));
-            if (object.has(SmartLoginConfig.FacebookFields.MIDDLE_NAME))
-                facebookUser.setMiddleName(object.getString(SmartLoginConfig.FacebookFields.MIDDLE_NAME));
-            if (object.has(SmartLoginConfig.FacebookFields.LAST_NAME))
-                facebookUser.setLastName(object.getString(SmartLoginConfig.FacebookFields.LAST_NAME));
+            if (object.has(Constants.FacebookFields.LINK))
+                facebookUser.setProfileLink(object.getString(Constants.FacebookFields.LINK));
+            if (object.has(Constants.FacebookFields.ID))
+                facebookUser.setUserId(object.getString(Constants.FacebookFields.ID));
+            if (object.has(Constants.FacebookFields.NAME))
+                facebookUser.setProfileName(object.getString(Constants.FacebookFields.NAME));
+            if (object.has(Constants.FacebookFields.FIRST_NAME))
+                facebookUser.setFirstName(object.getString(Constants.FacebookFields.FIRST_NAME));
+            if (object.has(Constants.FacebookFields.MIDDLE_NAME))
+                facebookUser.setMiddleName(object.getString(Constants.FacebookFields.MIDDLE_NAME));
+            if (object.has(Constants.FacebookFields.LAST_NAME))
+                facebookUser.setLastName(object.getString(Constants.FacebookFields.LAST_NAME));
         } catch (JSONException e){
-            Log.e(getClass().getSimpleName(), e.getMessage());
+            Log.e("UserUtil", e.getMessage());
             facebookUser = null;
         }
         return facebookUser;
     }
 
-    public SmartUser populateCustomUser(String username, String email, String password){
+    public static SmartUser populateCustomUser(String username, String email, String userId){
         SmartUser user = new SmartUser();
         user.setEmail(email);
         user.setUsername(username);
-        user.setPassword(password);
-        user.setGender(-1);
+        user.setUserId(userId);
         return user;
     }
 

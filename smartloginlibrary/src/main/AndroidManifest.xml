@@ -2,22 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="studios.codelight.smartloginlibrary">
-
+<!--
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />-->
 
     <application
-        android:name=".SmartLogin"
         android:label="@string/app_name">
-        <activity
-            android:name=".SmartLoginActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:windowSoftInputMode="adjustPan"/>
-
-        <!-- <meta-data android:name="com.facebook.sdk.ApplicationId" -->
-        <!-- android:value="@string/facebook_app_id"/> -->
 
         <activity
             android:name="com.facebook.FacebookActivity"

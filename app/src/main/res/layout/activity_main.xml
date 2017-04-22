@@ -1,62 +1,124 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/checkboxlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="20dp">
-
-        <CheckBox
-            android:id="@+id/appLogoCheckbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="App Logo"
-            android:padding="10dp"/>
-
-        <CheckBox
-            android:id="@+id/customCheckbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Custom Login"
-            android:padding="10dp"/>
-
-        <CheckBox
-            android:id="@+id/facebookCheckbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Facebook Login"
-            android:padding="10dp"/>
-
-        <CheckBox
-            android:id="@+id/googleCheckbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Google Login"
-            android:padding="10dp"/>
-
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:gravity="center"
+            android:padding="32dp"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="42sp" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/login_button"
-        android:layout_below="@+id/checkboxlayout"
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:padding="16dp"
-        android:layout_marginBottom="10dp"
-        android:text="Show Smart Login"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:background="@color/accent_color" />
-
-    <TextView
-        android:id="@+id/login_result"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/login_button"/>
-</RelativeLayout>
+        android:layout_gravity="center"
+        android:background="@color/white"
+        android:layout_margin="16dp"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <EditText
+                android:id="@+id/email_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/password_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Password"
+                android:inputType="textPassword" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <Button
+                    android:id="@+id/custom_signin_button"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:tag="custom_login_button"
+                    android:text="@string/sign_in" />
+
+                <Button
+                    android:id="@+id/custom_signup_button"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:tag="custom_signup_button"
+                    android:text="@string/sign_up_button" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/facebook_login_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_weight="1"
+                    android:tag="facebook_login_button"
+                    android:drawableLeft="@drawable/ic_facebook_white_36dp"
+                    android:drawableStart="@drawable/ic_facebook_white_36dp"
+                    android:textColor="@color/white"
+                    android:text="@string/sign_in_facebook" />
+
+                <Button
+                    android:id="@+id/google_login_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:tag="google_login_button"
+                    android:drawableLeft="@drawable/ic_google_plus_white_36dp"
+                    android:drawableStart="@drawable/ic_google_plus_white_36dp"
+                    android:textColor="@color/white"
+                    android:text="@string/sign_in_google" />
+
+                <Button
+                    android:id="@+id/logout_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:text="@string/logout_text" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>
