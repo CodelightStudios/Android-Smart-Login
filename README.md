@@ -84,7 +84,7 @@ All contributions are welcome. Encounter any issue? Don't hesitate to [open an i
 Convention: **Master branch** would be the development branch. So feel free to fork from the Master branch. **Release branch** will be merged with master branch after every major release.
 
 # Our other libraries
-## [Weather Downloader library](https://github.com/CodelightStudios/Weather-Downloader)
+### [Weather Downloader library](https://github.com/CodelightStudios/Weather-Downloader)
 An easy and efficient way to get weather information into your app.
 
 # License
