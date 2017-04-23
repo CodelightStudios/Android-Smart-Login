@@ -1,12 +1,10 @@
-#####Help needed in maintaining this library along with me.
+##### Help needed in maintaining this library along with me.
 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Android%20Smart%20Login-green.svg?style=true)](https://android-arsenal.com/details/1/3026)
 
-###Update: An improved login page (in material design) is ready to roll out soon.
-
 ![Image](https://raw.githubusercontent.com/CodelightStudios/Android-Smart-Login/master/Screenshots/Info_new.png)
 
-#What's in the box
+# What's in the box
 
 - A material designed **login page**
 - Implementation of **Facebook** and **Google** login
@@ -14,12 +12,12 @@
 - Smart and easy way to apply the flow with **SmartUser**
 - Customizable login screen (more customization will be available in upcoming versions)
 
-#Setup
-##1. Get the library from here [Download](https://github.com/CodelightStudios/Android-Smart-Login/raw/master/releases/smartloginlibrary-v0.5beta.aar)
+# Setup
+## 1. Get the library from here [Download](https://github.com/CodelightStudios/Android-Smart-Login/raw/master/releases/smartloginlibrary-v0.5beta.aar)
 Since it's in beta, decided not to put it in Maven Central. Will provide the gradle dependency from the first release.
 **So for now please add the library as a module to your project.**
 
-##2. Add the AAR as a module dependency to your app.
+## 2. Add the AAR as a module dependency to your app.
 You can do this by clicking File -> New -> New Module...
 Then choose "Import .JAR/.AAR package" option and the add the downloaded aar file as a dependency.
 You need to compile this newly added module. This can be done by adding this line in your `dependencies` of your `app/build.gradle`
@@ -43,7 +41,7 @@ We used
 - Facebook SDK and Google Play Services are necessary as we implemented social logins
 - GSON library is must for now as we used it to set user sessions
 
-##3. Start the LoginActivity
+## 3. Start the LoginActivity
 First instantiate the `SmartLoginBuilder` and the using the created object build the Intent to invoke the login page.
 ```java
     SmartLoginBuilder loginBuilder = new SmartLoginBuilder();
@@ -86,7 +84,7 @@ First instantiate the `SmartLoginBuilder` and the using the created object build
 - Before that, you need to configure your app in Google Developers Console and get the [Configuration File](https://developers.google.com/mobile/add?platform=android&cntapi=signin). Learn more about [Google sign in](https://developers.google.com/identity/sign-in/android/start)
 - Place the configuration file in the **app/** directory and that's it.
 
-##4. Get back the logged in User
+## 4. Get back the logged in User
 From the intent that you passed, Login Activity will be started. Based on user interaction, it will send back the result code along with SmartUser object(if login is successful). Hence you can catch the SmartUser object in **onActivityResult** method
 
 *For example*
@@ -120,7 +118,7 @@ From the intent that you passed, Login Activity will be started. Based on user i
 ```
 **Voilà! That's it. You now have the entire user login functionality in your app**
 
-##5. Implementing custom user login and sign up
+## 5. Implementing custom user login and sign up
 Get more out of the library by easily implementing your logic to login and sign up the users.
 For this, all you need to do is implement the following code:
 
@@ -166,11 +164,11 @@ Intent intent = loginBuilder.with(context)
 startActivityForResult(intent, SmartLoginConfig.LOGIN_REQUEST);
 ```
 
-#How it works
+# How it works
 
 ![Image](https://raw.githubusercontent.com/CodelightStudios/Android-Smart-Login/master/Screenshots/SmartLoginFlow.png)
 
-#Other Features
+# Other Features
 Get the current logged in user at anytime from your application by just calling **UserSessionManager.getCurrentUser** method
 ```java
 SmartUser currentUser = UserSessionManager.getCurrentUser(context);
@@ -178,16 +176,16 @@ if(currentUser != null){
     //You have got what you need
 }
 ```
-#Contribution
+# Contribution
 I would love to welcome everyone of you to contribute to this project and make it better. If you feel the LoginPage is not looking great (I know, I am not a great designer), feel free to design and make it better if you think it's necessary. Encounter any issue? Don't hesitate to [open an issue](https://github.com/CodelightStudios/Android-Smart-Login/issues)
 
 Convention I would like to follow: **Master branch** would be the development branch. So feel free to fork from the Master branch. **Release branch** will be merged with master branch after every major release.
 
-#Our other libraries
-##[Weather Downloader library](https://github.com/CodelightStudios/Weather-Downloader)
+# Our other libraries
+## [Weather Downloader library](https://github.com/CodelightStudios/Weather-Downloader)
 An easy and efficient way to get weather information into your app.
 
-#License
+# License
 
     Copyright 2016 Codelight Studios
 
