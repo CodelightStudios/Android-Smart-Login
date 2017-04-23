@@ -86,9 +86,9 @@ public class FacebookLogin extends SmartLogin {
     }
 
     @Override
-    public boolean logout(SmartLoginConfig config) {
+    public boolean logout(Context context) {
         try {
-            SharedPreferences preferences = config.getActivity().getSharedPreferences(Constants.USER_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences preferences = context.getSharedPreferences(Constants.USER_PREFS, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             LoginManager.getInstance().logOut();
             editor.remove(Constants.USER_TYPE);

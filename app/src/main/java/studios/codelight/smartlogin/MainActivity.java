@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements SmartLoginCallbac
                     } else {
                         smartLogin = SmartLoginFactory.build(LoginType.CustomLogin);
                     }
-                    boolean result = smartLogin.logout(config);
+                    boolean result = smartLogin.logout(MainActivity.this);
                     if (result) {
                         refreshLayout();
                         Toast.makeText(MainActivity.this, "User logged out successfully", Toast.LENGTH_SHORT).show();
