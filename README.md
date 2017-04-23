@@ -45,6 +45,16 @@ config.setFacebookAppId(getString(R.string.facebook_app_id));
 ```
 This is the simplest way to configure the library to enable Custom login mode along with `Facebook` and `Google` login modes.
 
+Next step is to override the `onActivityResult` of your Activity.
+
+```java
+@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    smartLogin.onActivityResult(requestCode, resultCode, data, config);
+}
+```
+
 Final step is to call the `login` method when user clicks on the login button.
 
 ```java
